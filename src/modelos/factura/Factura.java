@@ -9,20 +9,23 @@ public class Factura  {
     private Integer numeroCaja;
     private DatosFiscales datosfiscales;
     private Cliente cliente;
-    private List<Pago> pago;
+    private List<Pago> pagos;
     private List<LineaFactura> lineas;
     private FacturaTotal totales;
+    private Moneda moneda;
 
-
+    private Boolean Activa;
     private Boolean Imprimible;
     private Boolean Pagada;
     private Boolean Cancelada;
     private Boolean Error;
     private Boolean Espera;
 
+    private String  Mensaje;
+
     private void Inicializa() {
 
-        this.pago = new ArrayList<>();
+        this.pagos = new ArrayList<>();
         this.lineas = new ArrayList<>();
         this.totales = new FacturaTotal();
         this.totales = new FacturaTotal();
@@ -32,16 +35,23 @@ public class Factura  {
         Cancelada = false;
         Error = false;
         Espera = false;
+        Mensaje = "";
 
     }
 
-
-    Factura() {
-        Inicializa();
-    }
 
     Factura(Moneda mon) {
+        if (mon.getEsMonedaBase()==false) {
+
+            this.Error = true;
+            this.Activa = false;
+            this.Mensaje = "Se debe especificar una moneda con condicion de moneda base.";
+            return;
+        }
+        this.Activa  = true;
         this.totales = new FacturaTotal(mon);
+        this.moneda  = mon;
+        this.Activa  = true;
         Inicializa();
     }
 
@@ -61,7 +71,9 @@ public class Factura  {
 
 
     public void agregarPago(Pago pago) {
-        this.pago.add(pago);
+        System.out.println( "Agregando pago "+pago.getMoneda().getCodmoneda()+" monto "+pago.getMoneda().getValor());
+        this.pagos.add(pago);
+        actualizarPago();
     }
 
     public Integer getId() {
@@ -104,12 +116,12 @@ public class Factura  {
         this.cliente = cliente;
     }
 
-    public List<Pago> getPago() {
-        return pago;
+    public List<Pago> getPagos() {
+        return pagos;
     }
 
-    public void setPago(List<Pago> pago) {
-        this.pago = pago;
+    public void setPagos(List<Pago> pagos) {
+        this.pagos = pagos;
     }
 
     public List<LineaFactura> getLineas() {
@@ -121,8 +133,28 @@ public class Factura  {
     }
 
     private void actualizarPago() {
-        
+        Double totalpago = 0.0;
 
+        for (Pago pago : pagos)
+        {
+
+            if (pago.getMoneda().getCodmoneda().equals(this.moneda.getCodmoneda())) {
+                System.out.println( "Registrando pago "+pago.getMoneda().getCodmoneda()+" monto "+pago.getMoneda().getValor());
+
+                totalpago += pago.getTotal();
+            }else {
+                System.out.println("Convirtiendo de "+pago.getMoneda().getCodmoneda()+" ->"+this.moneda.getCodmoneda()+" "+pago.getTotal());
+                //this.moneda.setValor(pago.getTotal());
+
+                double resul = MonedaUtil.ConvertirValor(this.moneda, pago.getMoneda(),pago.getTotal());
+                System.out.println("               -> Resultado ="+this.moneda.getValorFormato(resul));
+
+                totalpago += resul;
+            }
+
+        }
+        System.out.println("Total pagos "+ pagos.size());
+        this.totales.setTotalPago(totalpago);
     }
 
 
@@ -174,5 +206,17 @@ public class Factura  {
 
     public void setEspera(Boolean espera) {
         Espera = espera;
+    }
+
+    public Moneda getMoneda() {
+        return moneda;
+    }
+
+    public Boolean getActiva() {
+        return Activa;
+    }
+
+    public String getMensaje() {
+        return Mensaje;
     }
 }
