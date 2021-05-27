@@ -7,6 +7,7 @@ public class FacturaTotal {
     private Double montoDescuento;
     private Double montoTotal;
     private Double totalPago;
+    private Double totalSaldo;
     private Moneda moneda;
 
     private void asignaMonedaDefault() {
@@ -21,6 +22,7 @@ public class FacturaTotal {
         this.montoDescuento = 0.0;
         this.montoTotal = 0.0;
         this.totalPago = 0.0;
+        this.totalSaldo = 0.0;
     }
 
     FacturaTotal() {
@@ -44,6 +46,7 @@ public class FacturaTotal {
         Total.setMontoDescuento(this.montoDescuento * destino.getTasacambio());
         Total.setMontoTotal(this.montoTotal * destino.getTasacambio());
         Total.setTotalPago(this.totalPago * destino.getTasacambio());
+        Total.setTotalSaldo(this.totalSaldo * destino.getTasacambio());
 
         return Total;
     }
@@ -54,8 +57,33 @@ public class FacturaTotal {
 
         this.montoBase += linea.getCantidad() * linea.getProducto().getPrecio();
         this.montoImpuesto += (this.montoBase * linea.getProducto().getAlicuota()) /100;
-        this.montoTotal = this.montoBase + this.montoImpuesto;
+        totalizar();
 
+
+    }
+
+
+    public void totalizar() {
+        this.montoTotal = this.montoBase + this.montoImpuesto;
+        this.totalSaldo = montoTotal - this.totalPago;
+    }
+
+
+
+
+
+    public void imprimirTotal() {
+        totalizar();
+        System.out.println("- - - - - MONEDA : "+this.moneda.getCodmoneda()+" -> "+this.moneda.getDescripcion()+
+                " Tasa de Cambio :"+this.moneda.getValorFormato(this.moneda.getTasacambio())+
+                " - - - - - -");
+
+        System.out.println("Monto Base   : "+this.moneda.getValorFormato(this.montoBase)+" "+this.moneda.getSimbolo());
+        System.out.println("Monto IVA    : "+this.moneda.getValorFormato(this.montoImpuesto)+" "+this.moneda.getSimbolo() );
+        System.out.println("Total        : "+this.moneda.getValorFormato(this.montoTotal)+" "+this.moneda.getSimbolo() );
+        System.out.println("Total Pagado : "+this.moneda.getValorFormato(this.totalPago)+" "+this.moneda.getSimbolo() );
+        System.out.println("Total Saldo  : "+this.moneda.getValorFormato(this.totalSaldo)+" "+this.moneda.getSimbolo() );
+        System.out.println("- - - - - - - - - - - - - - - - - - - - - - - - - -  -");
     }
 
     public Double getMontoBase() {
@@ -98,24 +126,19 @@ public class FacturaTotal {
         this.totalPago = totalPago;
     }
 
+    public Double getTotalSaldo() {
+        return totalSaldo;
+    }
+
+    public void setTotalSaldo(Double totalSaldo) {
+        this.totalSaldo = totalSaldo;
+    }
+
     public Moneda getMoneda() {
         return moneda;
     }
 
     public void setMoneda(Moneda moneda) {
         this.moneda = moneda;
-    }
-
-    public void imprimirTotal() {
-        System.out.println("- - - - - MONEDA : "+this.moneda.getCodmoneda()+" -> "+this.moneda.getDescripcion()+
-                " Tasa de Cambio :"+this.moneda.getValorFormato(this.moneda.getTasacambio())+
-                " - - - - - -");
-
-        System.out.println("Monto Base : "+this.moneda.getValorFormato(this.montoBase)+" "+this.moneda.getSimbolo());
-        System.out.println("Monto IVA  : "+this.moneda.getValorFormato(this.montoImpuesto)+" "+this.moneda.getSimbolo() );
-        System.out.println("Total      : "+this.moneda.getValorFormato(this.montoTotal)+" "+this.moneda.getSimbolo() );
-        System.out.println("- - - - - - - - - - - - - - - - - - - - - - - - - -  -");
-
-
     }
 }

@@ -3,13 +3,14 @@ package modelos.factura;
 import java.text.DecimalFormat;
 
 public class Moneda {
-    Integer id;
-    String  codmoneda;
-    String  descripcion;
-    String  simbolo;
-    Double  valor;
-    Double  tasacambio;
-    DecimalFormat formato;
+    private Integer id;
+    private String  codmoneda;
+    private String  descripcion;
+    private String  simbolo;
+    private Double  valor;
+    private Double  tasacambio;
+    private Boolean esMonedaBase;
+    private  DecimalFormat formato;
 
 
 
@@ -21,6 +22,8 @@ public class Moneda {
         this.simbolo = simbolo;
         this.tasacambio = tasacambio;
         this.formato = formato;
+        this.esMonedaBase = false;
+        this.valor = 0.0;
     }
 
     public String getValorFormato(Double monto) {
@@ -82,5 +85,13 @@ public class Moneda {
 
     public void setFormato(DecimalFormat formato) {
         this.formato = formato;
+    }
+
+    public Boolean getEsMonedaBase() {
+        return esMonedaBase;
+    }
+
+    public void setEsMonedaBase(Boolean esMonedaBase) {
+        this.esMonedaBase = esMonedaBase;
     }
 }

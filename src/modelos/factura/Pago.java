@@ -9,6 +9,7 @@ public class Pago {
     private String  referencia;
     private Banco   banco;
     private Double  vuelto;
+    private Double  total;
     private Date    fechapago;
     private Date    fechareg;
 
@@ -16,6 +17,9 @@ public class Pago {
         this.moneda = moneda;
         this.monto = monto;
         this.vuelto = vuelto;
+        this.total = monto - vuelto;
+
+        this.moneda.setValor(total);
     }
 
     public Moneda getMoneda() {
@@ -80,5 +84,9 @@ public class Pago {
 
     public void setFechareg(Date fechareg) {
         this.fechareg = fechareg;
+    }
+
+    public Double getTotal() {
+        return total;
     }
 }

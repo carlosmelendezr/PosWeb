@@ -13,7 +13,7 @@ public class FacturaPrueba {
 
         Producto p = new Producto(1,
                 "PRODUCTO DE PRUEBA",
-                "001",1.00,16.0,barras);
+                "001",10.00,16.0,barras);
 
         List<Direccion> dir1 = Arrays.asList(new Direccion("AV. FRANCISCO LAZO MARTI"));
         List<Telefono> tel1 = Arrays.asList(new Telefono(212,6616263));
@@ -23,28 +23,39 @@ public class FacturaPrueba {
         DatosFiscales fis = new DatosFiscales(65265,"TTB001195");
 
         Moneda Dolar = new Moneda(1,"USD","DOLAR","$",1.0,MonedaUtil.formatoUsd);
+        Dolar.setEsMonedaBase(true);
         Moneda Bolivar = new Moneda(2,"VES","BOLIVAR","Bs.",tasaDolarHoy, MonedaUtil.formatoBs);
         Moneda Petro = new Moneda(3,"PTR","PETRO","Pt.",tasaPetroHoy,MonedaUtil.formatoPetro);
 
         Factura f = new Factura(Dolar);
-        f.asignarCliente(c);
+        if (f.getActiva()) {
+            f.asignarCliente(c);
+            LineaFactura ln = new LineaFactura(1, p, 1.0);
+            f.agregarLinea(ln);
 
-        LineaFactura ln = new LineaFactura(1, p, 1.0 );
+            //Pago Efe1 = new Pago(Dolar, 5.0, 0.0);
+            Pago Efe2 = new Pago(Bolivar, 5.0 * tasaDolarHoy, 0.0);
+            //Pago Efe3  = new Pago(Bolivar, 100000.0, 0.0);
 
-        f.agregarLinea(ln);
+            //f.agregarPago(Efe1);
 
-        f.getTotales().imprimirTotal();
-        FacturaTotal totBolivar = f.getTotales().Covertir(Bolivar);
-        totBolivar.imprimirTotal();
+            f.agregarPago(Efe2);
+            //f.agregarPago(Efe3);
 
-        FacturaTotal totPetro = totBolivar.Covertir(Petro);
-        totPetro.imprimirTotal();
+            f.getTotales().imprimirTotal();
+            FacturaTotal totBolivar = f.getTotales().Covertir(Bolivar);
+            totBolivar.imprimirTotal();
 
-        Pago Efe1 = new Pago(Dolar,5.0, 0.0);
-        Pago Efe2 = new Pago(Bolivar,5.0*tasaDolarHoy, 0.0);
+            FacturaTotal totPetro = totBolivar.Covertir(Petro);
+            totPetro.imprimirTotal();
 
-        f.agregarPago(Efe1);
-        f.agregarPago(Efe2);
+
+
+        } else {
+            System.out.println("Error :" + f.getMensaje());
+        }
+
+
 
     }
 }
