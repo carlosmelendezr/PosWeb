@@ -130,6 +130,7 @@ public class FacturaTotal {
 
     public void setTotalPago(BigDecimal totalPago) {
         this.totalPago = totalPago;
+        totalizar();
     }
 
     public BigDecimal getTotalSaldo() {

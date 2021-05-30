@@ -156,6 +156,13 @@ public class Factura  {
         }
         System.out.println("Total pagos "+ pagos.size());
         this.totales.setTotalPago(totalpago);
+        System.out.println("Salgo  "+ this.totales.getTotalSaldo() );
+
+        if (this.totales.getTotalSaldo().compareTo(BigDecimal.ZERO) == 0 ) {
+            System.out.println("!!! La Factura es Imprimible !!!");
+            this.Imprimible = true;
+
+        }
     }
 
 
