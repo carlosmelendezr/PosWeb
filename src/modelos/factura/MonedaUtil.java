@@ -1,6 +1,10 @@
 package modelos.factura;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MonedaUtil {
 
@@ -8,28 +12,44 @@ public class MonedaUtil {
     public static DecimalFormat formatoBs = new DecimalFormat("###,###,###,###,###,###.##");
     public static DecimalFormat formatoPetro = new DecimalFormat("###.##########" );
 
+    public static MonedaConversion dolarToBs = new MonedaConversion("USD", "VES","*");
+    public static List<MonedaConversion> listaMonedaConversion;
+    public static MathContext precision ;
 
-    public static Double Convertir(Moneda origen, Moneda destino) {
-         Double resultante = 0.0;
-         if (origen.getEsMonedaBase()) {
-             resultante = origen.getValor() * destino.getTasacambio();
+    public static void inicializar() {
+        listaMonedaConversion = new ArrayList<>();
+        listaMonedaConversion.add(dolarToBs);
+        MathContext precision = new MathContext(2);
+    }
+
+
+
+    public static BigDecimal ConvertirValor(Moneda origen, Moneda destino, BigDecimal valor) {
+        MathContext precision = new MathContext(2);
+
+        BigDecimal resultante = new BigDecimal("0",precision);
+
+
+        String Operacion="*";
+
+        for (MonedaConversion mon:listaMonedaConversion) {
+            if (mon.getCodigoDestino().equals(origen.getCodmoneda())) {
+                Operacion="/";
+            }
+
+        }
+        if (Operacion.equals("*")) {
+             //resultante = valor * destino.getTasacambio();
+            resultante = valor.multiply(destino.getTasacambio());
          } else {
-             if (destino.getTasacambio()>0)
-                resultante = origen.getValor() / destino.getTasacambio();
+             // resultante = valor / origen.getTasacambio();
+            System.out.println("Valor = "+valor);
+            System.out.println("Tasa = "+origen.getTasacambio());
+            resultante = valor.divide(origen.getTasacambio(),precision);
          }
          return resultante;
     }
 
-    public static Double ConvertirValor(Moneda origen, Moneda destino, Double Valor) {
-        Double resultante = 0.0;
-        if (origen.getEsMonedaBase() && !destino.getEsMonedaBase()) {
-            resultante = Valor * destino.getTasacambio();
-        } else {
-            if (destino.getTasacambio()>0)
-                resultante = Valor / destino.getTasacambio();
-        }
-        return resultante;
-    }
 
 
 

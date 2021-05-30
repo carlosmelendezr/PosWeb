@@ -1,28 +1,30 @@
 package modelos.factura;
 
+import java.math.BigDecimal;
+
 public class FacturaTotal {
 
-    private Double montoBase;
-    private Double montoImpuesto;
-    private Double montoDescuento;
-    private Double montoTotal;
-    private Double totalPago;
-    private Double totalSaldo;
+    private BigDecimal montoBase;
+    private BigDecimal montoImpuesto;
+    private BigDecimal montoDescuento;
+    private BigDecimal montoTotal;
+    private BigDecimal totalPago;
+    private BigDecimal totalSaldo;
     private Moneda moneda;
 
     private void asignaMonedaDefault() {
         /* Poneda por Defecto USD$ */
-        Moneda Dolar = new Moneda(1,"USD","DOLAR","$",1.0,MonedaUtil.formatoUsd);
+        Moneda Dolar = new Moneda(1,"USD","DOLAR","$",new BigDecimal("1"),MonedaUtil.formatoUsd);
         this.moneda = Dolar;
     }
 
     private void inicializa() {
-        this.montoBase = 0.0;
-        this.montoImpuesto = 0.0;
-        this.montoDescuento = 0.0;
-        this.montoTotal = 0.0;
-        this.totalPago = 0.0;
-        this.totalSaldo = 0.0;
+        this.montoBase = new BigDecimal("0");
+        this.montoImpuesto = new BigDecimal("0");
+        this.montoDescuento = new BigDecimal("0");
+        this.montoTotal = new BigDecimal("0");
+        this.totalPago = new BigDecimal("0");
+        this.totalSaldo = new BigDecimal("0");
     }
 
     FacturaTotal() {
@@ -41,12 +43,12 @@ public class FacturaTotal {
     public FacturaTotal Covertir( Moneda destino ) {
         FacturaTotal Total = new FacturaTotal(destino);
 
-        Total.setMontoBase(this.montoBase * destino.getTasacambio() );
-        Total.setMontoImpuesto(this.montoImpuesto * destino.getTasacambio());
-        Total.setMontoDescuento(this.montoDescuento * destino.getTasacambio());
-        Total.setMontoTotal(this.montoTotal * destino.getTasacambio());
-        Total.setTotalPago(this.totalPago * destino.getTasacambio());
-        Total.setTotalSaldo(this.totalSaldo * destino.getTasacambio());
+        Total.setMontoBase(this.montoBase.multiply( destino.getTasacambio() ));
+        Total.setMontoImpuesto(this.montoImpuesto.multiply(destino.getTasacambio()));
+        Total.setMontoDescuento(this.montoDescuento.multiply( destino.getTasacambio()));
+        Total.setMontoTotal(this.montoTotal.multiply( destino.getTasacambio()));
+        Total.setTotalPago(this.totalPago.multiply( destino.getTasacambio()));
+        //Total.setTotalSaldo(this.totalSaldo * destino.getTasacambio());
 
         return Total;
     }
@@ -54,9 +56,16 @@ public class FacturaTotal {
 
 
     public void agregarMonto(LineaFactura linea) {
+        BigDecimal addmonto = linea.getProducto().getPrecio().multiply(BigDecimal.valueOf(linea.getCantidad()));
 
-        this.montoBase += linea.getCantidad() * linea.getProducto().getPrecio();
-        this.montoImpuesto += (this.montoBase * linea.getProducto().getAlicuota()) /100;
+
+        this.montoBase = this.montoBase.add( addmonto );
+
+        BigDecimal Imp = this.montoBase.multiply(linea.getProducto().getAlicuota());
+        Imp = Imp.divide(new BigDecimal("100"));
+
+        this.montoImpuesto = this.montoImpuesto.add(Imp);
+
         totalizar();
 
 
@@ -64,12 +73,9 @@ public class FacturaTotal {
 
 
     public void totalizar() {
-        this.montoTotal = this.montoBase + this.montoImpuesto;
-        this.totalSaldo = montoTotal - this.totalPago;
+        this.montoTotal = this.montoBase.add(this.montoImpuesto);
+        this.totalSaldo = this.montoTotal.subtract(this.totalPago);
     }
-
-
-
 
 
     public void imprimirTotal() {
@@ -86,51 +92,51 @@ public class FacturaTotal {
         System.out.println("- - - - - - - - - - - - - - - - - - - - - - - - - -  -");
     }
 
-    public Double getMontoBase() {
+    public BigDecimal getMontoBase() {
         return montoBase;
     }
 
-    public void setMontoBase(Double montoBase) {
+    public void setMontoBase(BigDecimal montoBase) {
         this.montoBase = montoBase;
     }
 
-    public Double getMontoImpuesto() {
+    public BigDecimal getMontoImpuesto() {
         return montoImpuesto;
     }
 
-    public void setMontoImpuesto(Double montoImpuesto) {
+    public void setMontoImpuesto(BigDecimal montoImpuesto) {
         this.montoImpuesto = montoImpuesto;
     }
 
-    public Double getMontoDescuento() {
+    public BigDecimal getMontoDescuento() {
         return montoDescuento;
     }
 
-    public void setMontoDescuento(Double montoDescuento) {
+    public void setMontoDescuento(BigDecimal montoDescuento) {
         this.montoDescuento = montoDescuento;
     }
 
-    public Double getMontoTotal() {
+    public BigDecimal getMontoTotal() {
         return montoTotal;
     }
 
-    public void setMontoTotal(Double montoTotal) {
+    public void setMontoTotal(BigDecimal montoTotal) {
         this.montoTotal = montoTotal;
     }
 
-    public Double getTotalPago() {
+    public BigDecimal getTotalPago() {
         return totalPago;
     }
 
-    public void setTotalPago(Double totalPago) {
+    public void setTotalPago(BigDecimal totalPago) {
         this.totalPago = totalPago;
     }
 
-    public Double getTotalSaldo() {
+    public BigDecimal getTotalSaldo() {
         return totalSaldo;
     }
 
-    public void setTotalSaldo(Double totalSaldo) {
+    public void setTotalSaldo(BigDecimal totalSaldo) {
         this.totalSaldo = totalSaldo;
     }
 

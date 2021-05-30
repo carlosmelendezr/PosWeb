@@ -1,5 +1,6 @@
 package modelos.factura;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class Factura  {
 
 
     Factura(Moneda mon) {
-        if (mon.getEsMonedaBase()==false) {
+        if (!mon.getEsMonedaBase()) {
 
             this.Error = true;
             this.Activa = false;
@@ -71,7 +72,7 @@ public class Factura  {
 
 
     public void agregarPago(Pago pago) {
-        System.out.println( "Agregando pago "+pago.getMoneda().getCodmoneda()+" monto "+pago.getMoneda().getValor());
+        System.out.println( "Agregando pago "+pago.getMoneda().getCodmoneda()+" monto "+pago.getMonto());
         this.pagos.add(pago);
         actualizarPago();
     }
@@ -133,23 +134,23 @@ public class Factura  {
     }
 
     private void actualizarPago() {
-        Double totalpago = 0.0;
+        BigDecimal totalpago = new BigDecimal("0");
 
         for (Pago pago : pagos)
         {
 
             if (pago.getMoneda().getCodmoneda().equals(this.moneda.getCodmoneda())) {
-                System.out.println( "Registrando pago "+pago.getMoneda().getCodmoneda()+" monto "+pago.getMoneda().getValor());
+                System.out.println( "Registrando pago "+pago.getMoneda().getCodmoneda()+" monto "+pago.getTotal());
 
-                totalpago += pago.getTotal();
+                totalpago = totalpago.add(pago.getTotal());
             }else {
                 System.out.println("Convirtiendo de "+pago.getMoneda().getCodmoneda()+" ->"+this.moneda.getCodmoneda()+" "+pago.getTotal());
                 //this.moneda.setValor(pago.getTotal());
 
-                double resul = MonedaUtil.ConvertirValor(this.moneda, pago.getMoneda(),pago.getTotal());
+                BigDecimal resul = MonedaUtil.ConvertirValor(pago.getMoneda(), this.moneda ,pago.getTotal());
                 System.out.println("               -> Resultado ="+this.moneda.getValorFormato(resul));
 
-                totalpago += resul;
+                totalpago = totalpago.add(resul)  ;
             }
 
         }

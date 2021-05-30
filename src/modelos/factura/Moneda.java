@@ -1,5 +1,6 @@
 package modelos.factura;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 
 public class Moneda {
@@ -7,15 +8,15 @@ public class Moneda {
     private String  codmoneda;
     private String  descripcion;
     private String  simbolo;
-    private Double  valor;
-    private Double  tasacambio;
+    //private Double  valor;
+    private BigDecimal tasacambio;
     private Boolean esMonedaBase;
     private  DecimalFormat formato;
 
 
 
     public Moneda(Integer id, String codmoneda, String descripcion, String simbolo,
-                  Double tasacambio,DecimalFormat formato ) {
+                  BigDecimal tasacambio, DecimalFormat formato ) {
         this.id = id;
         this.codmoneda = codmoneda;
         this.descripcion = descripcion;
@@ -23,10 +24,10 @@ public class Moneda {
         this.tasacambio = tasacambio;
         this.formato = formato;
         this.esMonedaBase = false;
-        this.valor = 0.0;
+        //this.valor = 0.0;
     }
 
-    public String getValorFormato(Double monto) {
+    public String getValorFormato(BigDecimal monto) {
         return formato.format( monto );
     }
 
@@ -63,21 +64,15 @@ public class Moneda {
         this.simbolo = simbolo;
     }
 
-    public Double getTasacambio() {
+    public BigDecimal getTasacambio() {
         return tasacambio;
     }
 
-    public void setTasacambio(Double tasacambio) {
+    public void setTasacambio(BigDecimal tasacambio) {
         this.tasacambio = tasacambio;
     }
 
-    public Double getValor() {
-        return valor;
-    }
 
-    public void setValor(Double valor) {
-        this.valor = valor;
-    }
 
     public DecimalFormat getFormato() {
         return formato;

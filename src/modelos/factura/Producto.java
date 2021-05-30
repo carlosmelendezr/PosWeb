@@ -1,5 +1,6 @@
 package modelos.factura;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class Producto {
@@ -13,16 +14,16 @@ public class Producto {
     private Integer idCategoria;
     private Integer idMarca;
     private String  unMedida;
-    private Double  precio;
-    private Double  costo;
-    private Double  alicuota;
+    private BigDecimal precio;
+    private BigDecimal costo;
+    private BigDecimal  alicuota;
     private Double  stock;
     private Integer idProveedor;
     private List<String> codbarra;
 
-   Producto(Integer id,String descripcion,
-                        String referencia,
-                        Double precio,Double alicuota,List<String> codbarra ) {
+   Producto(Integer id, String descripcion,
+            String referencia,
+            BigDecimal precio, BigDecimal alicuota, List<String> codbarra ) {
        this.id = id;
        this.descripcion = descripcion;
        this.referencia = referencia;
@@ -111,20 +112,28 @@ public class Producto {
         this.unMedida = unMedida;
     }
 
-    public Double getPrecio() {
+    public BigDecimal getPrecio() {
         return precio;
     }
 
-    public void setPrecio(Double precio) {
+    public void setPrecio(BigDecimal precio) {
         this.precio = precio;
     }
 
-    public Double getCosto() {
+    public BigDecimal getCosto() {
         return costo;
     }
 
-    public void setCosto(Double costo) {
+    public void setCosto(BigDecimal costo) {
         this.costo = costo;
+    }
+
+    public BigDecimal getAlicuota() {
+        return alicuota;
+    }
+
+    public void setAlicuota(BigDecimal alicuota) {
+        this.alicuota = alicuota;
     }
 
     public Double getStock() {
@@ -141,14 +150,6 @@ public class Producto {
 
     public void setIdProveedor(Integer idProveedor) {
         this.idProveedor = idProveedor;
-    }
-
-    public Double getAlicuota() {
-        return alicuota;
-    }
-
-    public void setAlicuota(Double alicuota) {
-        this.alicuota = alicuota;
     }
 
     public List<String> getCodbarra() {

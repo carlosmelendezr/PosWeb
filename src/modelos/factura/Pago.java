@@ -1,25 +1,26 @@
 package modelos.factura;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class Pago {
     private Integer id;
     private Moneda  moneda;
-    private Double  monto;
+    private BigDecimal monto;
     private String  referencia;
     private Banco   banco;
-    private Double  vuelto;
-    private Double  total;
+    private BigDecimal vuelto;
+    private BigDecimal total;
     private Date    fechapago;
     private Date    fechareg;
 
-    public Pago(Moneda moneda, Double monto, Double vuelto) {
+    public Pago(Moneda moneda, BigDecimal monto, BigDecimal vuelto) {
         this.moneda = moneda;
         this.monto = monto;
         this.vuelto = vuelto;
-        this.total = monto - vuelto;
+        this.total = monto.subtract(vuelto);
 
-        this.moneda.setValor(total);
+
     }
 
     public Moneda getMoneda() {
@@ -38,11 +39,11 @@ public class Pago {
         this.id = id;
     }
 
-    public Double getMonto() {
+    public BigDecimal getMonto() {
         return monto;
     }
 
-    public void setMonto(Double monto) {
+    public void setMonto(BigDecimal monto) {
         this.monto = monto;
     }
 
@@ -62,11 +63,11 @@ public class Pago {
         this.banco = banco;
     }
 
-    public Double getVuelto() {
+    public BigDecimal getVuelto() {
         return vuelto;
     }
 
-    public void setVuelto(Double vuelto) {
+    public void setVuelto(BigDecimal vuelto) {
         this.vuelto = vuelto;
     }
 
@@ -86,7 +87,7 @@ public class Pago {
         this.fechareg = fechareg;
     }
 
-    public Double getTotal() {
+    public BigDecimal getTotal() {
         return total;
     }
 }
