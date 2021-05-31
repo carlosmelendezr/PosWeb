@@ -5,30 +5,22 @@ import java.util.Date;
 
 public class Pago {
     private Integer id;
-    private Moneda  moneda;
-    private BigDecimal monto;
-    private String  referencia;
-    private Banco   banco;
-    private BigDecimal vuelto;
-    private BigDecimal total;
-    private Date    fechapago;
-    private Date    fechareg;
+    private TipoMoneda tipoMoneda;
+    private Moneda monto;
+    private String referencia;
+    private Banco  banco;
+    private Moneda vuelto;
+    private Moneda total;
+    private Date   fechapago;
+    private Date   fechareg;
 
-    public Pago(Moneda moneda, BigDecimal monto, BigDecimal vuelto) {
-        this.moneda = moneda;
+    public Pago(TipoMoneda tipoMoneda, Moneda monto, Moneda vuelto) {
+        this.tipoMoneda = tipoMoneda;
         this.monto = monto;
         this.vuelto = vuelto;
-        this.total = monto.subtract(vuelto);
+        this.total =  monto;
+        total.restar(vuelto);
 
-
-    }
-
-    public Moneda getMoneda() {
-        return moneda;
-    }
-
-    public void setMoneda(Moneda moneda) {
-        this.moneda = moneda;
     }
 
     public Integer getId() {
@@ -39,11 +31,19 @@ public class Pago {
         this.id = id;
     }
 
-    public BigDecimal getMonto() {
+    public TipoMoneda getTipoMoneda() {
+        return tipoMoneda;
+    }
+
+    public void setTipoMoneda(TipoMoneda tipoMoneda) {
+        this.tipoMoneda = tipoMoneda;
+    }
+
+    public Moneda getMonto() {
         return monto;
     }
 
-    public void setMonto(BigDecimal monto) {
+    public void setMonto(Moneda monto) {
         this.monto = monto;
     }
 
@@ -63,12 +63,20 @@ public class Pago {
         this.banco = banco;
     }
 
-    public BigDecimal getVuelto() {
+    public Moneda getVuelto() {
         return vuelto;
     }
 
-    public void setVuelto(BigDecimal vuelto) {
+    public void setVuelto(Moneda vuelto) {
         this.vuelto = vuelto;
+    }
+
+    public Moneda getTotal() {
+        return total;
+    }
+
+    public void setTotal(Moneda total) {
+        this.total = total;
     }
 
     public Date getFechapago() {
@@ -85,9 +93,5 @@ public class Pago {
 
     public void setFechareg(Date fechareg) {
         this.fechareg = fechareg;
-    }
-
-    public BigDecimal getTotal() {
-        return total;
     }
 }

@@ -8,8 +8,9 @@ import java.util.List;
 public class FacturaPrueba {
 
     public static void main(String args[]) {
-        BigDecimal tasaDolarHoy = new BigDecimal("3256225.23");
-        BigDecimal tasaPetroHoy = new BigDecimal("0.000000003600");
+        Moneda tasaDolarHoy = new Moneda("3256225.23");
+        // Moneda tasaDolarHoy = new Moneda("65dd");
+        Moneda tasaPetroHoy = new Moneda("0.000000003600");
         List<String> barras = Arrays.asList("759355622235");
 
 
@@ -19,7 +20,7 @@ public class FacturaPrueba {
 
         Producto p = new Producto(1,
                 "PRODUCTO DE PRUEBA",
-                "001",new BigDecimal("10"),new BigDecimal("16"),barras);
+                "001",new Moneda("10"),new Moneda("16"),barras);
 
         List<Direccion> dir1 = Arrays.asList(new Direccion("AV. FRANCISCO LAZO MARTI"));
         List<Telefono> tel1 = Arrays.asList(new Telefono(212,6616263));
@@ -28,10 +29,10 @@ public class FacturaPrueba {
 
         DatosFiscales fis = new DatosFiscales(65265,"TTB001195");
 
-        Moneda Dolar = new Moneda(1,"USD","DOLAR","$",new BigDecimal("1"),MonedaUtil.formatoUsd);
+        TipoMoneda Dolar = new TipoMoneda(1,"USD","DOLAR","$",new Moneda("1"),MonedaUtil.formatoUsd);
         Dolar.setEsMonedaBase(true);
-        Moneda Bolivar = new Moneda(2,"VES","BOLIVAR","Bs.",tasaDolarHoy, MonedaUtil.formatoBs);
-        Moneda Petro = new Moneda(3,"PTR","PETRO","Pt.",tasaPetroHoy,MonedaUtil.formatoPetro);
+        TipoMoneda Bolivar = new TipoMoneda(2,"VES","BOLIVAR","Bs.",tasaDolarHoy, MonedaUtil.formatoBs);
+        TipoMoneda Petro = new TipoMoneda(3,"PTR","PETRO","Pt.",tasaPetroHoy,MonedaUtil.formatoPetro,9);
 
 
         Factura f = new Factura(Dolar);
@@ -41,10 +42,10 @@ public class FacturaPrueba {
             f.agregarLinea(ln);
 
 
-            Pago Efe1 = new Pago(Dolar,new BigDecimal("5"), new BigDecimal("0.0"));
-            Pago Efe2 = new Pago(Bolivar, new BigDecimal("16281126.2"), new BigDecimal("0.0"));
-            Pago Efe3  = new Pago(Bolivar, new BigDecimal("2500000"), new BigDecimal("0.0"));
-            Pago Efe4  = new Pago(Bolivar, new BigDecimal("2702666.75"), new BigDecimal("0.0"));
+            Pago Efe1 = new Pago(Dolar,new Moneda(5.0), new Moneda("0.0"));
+            Pago Efe2 = new Pago(Bolivar, new Moneda("16281126.2"), new Moneda("0.0"));
+            Pago Efe3  = new Pago(Bolivar, new Moneda("2500000"), new Moneda("0.0"));
+            Pago Efe4  = new Pago(Bolivar, new Moneda("2702666.75"), new Moneda("0.0"));
 
             f.agregarPago(Efe1);
 
@@ -57,6 +58,8 @@ public class FacturaPrueba {
             totBolivar.imprimirTotal();
 
             FacturaTotal totPetro = totBolivar.Covertir(Petro);
+
+
             totPetro.imprimirTotal();
 
 

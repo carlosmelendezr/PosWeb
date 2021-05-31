@@ -14,16 +14,16 @@ public class Producto {
     private Integer idCategoria;
     private Integer idMarca;
     private String  unMedida;
-    private BigDecimal precio;
-    private BigDecimal costo;
-    private BigDecimal  alicuota;
+    private Moneda precio;
+    private Moneda costo;
+    private Moneda  alicuota;
     private Double  stock;
     private Integer idProveedor;
     private List<String> codbarra;
 
    Producto(Integer id, String descripcion,
             String referencia,
-            BigDecimal precio, BigDecimal alicuota, List<String> codbarra ) {
+            Moneda precio, Moneda alicuota, List<String> codbarra ) {
        this.id = id;
        this.descripcion = descripcion;
        this.referencia = referencia;
@@ -112,29 +112,6 @@ public class Producto {
         this.unMedida = unMedida;
     }
 
-    public BigDecimal getPrecio() {
-        return precio;
-    }
-
-    public void setPrecio(BigDecimal precio) {
-        this.precio = precio;
-    }
-
-    public BigDecimal getCosto() {
-        return costo;
-    }
-
-    public void setCosto(BigDecimal costo) {
-        this.costo = costo;
-    }
-
-    public BigDecimal getAlicuota() {
-        return alicuota;
-    }
-
-    public void setAlicuota(BigDecimal alicuota) {
-        this.alicuota = alicuota;
-    }
 
     public Double getStock() {
         return stock;
@@ -158,5 +135,29 @@ public class Producto {
 
     public void setCodbarra(List<String> codbarra) {
         this.codbarra = codbarra;
+    }
+
+    public Moneda getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(Moneda precio) {
+        this.precio = precio;
+    }
+
+    public Moneda getCosto() {
+        return costo;
+    }
+
+    public void setCosto(Moneda costo) {
+        this.costo = costo;
+    }
+
+    public Moneda getAlicuota() {
+        return alicuota;
+    }
+
+    public void setAlicuota(Moneda alicuota) {
+        this.alicuota = alicuota;
     }
 }

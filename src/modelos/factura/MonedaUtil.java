@@ -24,12 +24,9 @@ public class MonedaUtil {
 
 
 
-    public static BigDecimal ConvertirValor(Moneda origen, Moneda destino, BigDecimal valor) {
-        MathContext precision = new MathContext(2);
+    public static Moneda ConvertirValor(TipoMoneda origen, TipoMoneda destino, Moneda valor) {
 
-        BigDecimal resultante = new BigDecimal("0",precision);
-
-
+        Moneda resultante = new Moneda(valor) ;
         String Operacion="*";
 
         for (MonedaConversion mon:listaMonedaConversion) {
@@ -40,12 +37,13 @@ public class MonedaUtil {
         }
         if (Operacion.equals("*")) {
              //resultante = valor * destino.getTasacambio();
-            resultante = valor.multiply(destino.getTasacambio());
+            resultante.multiplicar(destino.getTasacambio());
          } else {
              // resultante = valor / origen.getTasacambio();
-            System.out.println("Valor = "+valor);
-            System.out.println("Tasa = "+origen.getTasacambio());
-            resultante = valor.divide(origen.getTasacambio(),precision);
+            System.out.println("Valor = "+valor.getValor());
+            System.out.println("Tasa = "+origen.getTasacambio().getValor());
+            resultante.dividir(origen.getTasacambio());
+            //resultante = valor.divide(origen.getTasacambio(),precision);
          }
          return resultante;
     }

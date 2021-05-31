@@ -13,7 +13,7 @@ public class Factura  {
     private List<Pago> pagos;
     private List<LineaFactura> lineas;
     private FacturaTotal totales;
-    private Moneda moneda;
+    private TipoMoneda tipoMoneda;
 
     private Boolean Activa;
     private Boolean Imprimible;
@@ -41,7 +41,7 @@ public class Factura  {
     }
 
 
-    Factura(Moneda mon) {
+    Factura(TipoMoneda mon) {
         if (!mon.getEsMonedaBase()) {
 
             this.Error = true;
@@ -51,7 +51,7 @@ public class Factura  {
         }
         this.Activa  = true;
         this.totales = new FacturaTotal(mon);
-        this.moneda  = mon;
+        this.tipoMoneda = mon;
         this.Activa  = true;
         Inicializa();
     }
@@ -72,7 +72,7 @@ public class Factura  {
 
 
     public void agregarPago(Pago pago) {
-        System.out.println( "Agregando pago "+pago.getMoneda().getCodmoneda()+" monto "+pago.getMonto());
+        System.out.println( "Agregando pago "+pago.getTipoMoneda().getCodmoneda()+" monto "+pago.getMonto().getValor());
         this.pagos.add(pago);
         actualizarPago();
     }
@@ -134,31 +134,33 @@ public class Factura  {
     }
 
     private void actualizarPago() {
-        BigDecimal totalpago = new BigDecimal("0");
+        Moneda totalpago = new Moneda("0");
 
         for (Pago pago : pagos)
         {
 
-            if (pago.getMoneda().getCodmoneda().equals(this.moneda.getCodmoneda())) {
-                System.out.println( "Registrando pago "+pago.getMoneda().getCodmoneda()+" monto "+pago.getTotal());
+            if (pago.getTipoMoneda().getCodmoneda().equals(this.tipoMoneda.getCodmoneda())) {
+                /*System.out.println( "Registrando pago "+pago.getTipoMoneda().getCodmoneda()+" monto "+
+                        pago.getTotal().getValor());*/
 
-                totalpago = totalpago.add(pago.getTotal());
+                totalpago.sumar(pago.getTotal());
             }else {
-                System.out.println("Convirtiendo de "+pago.getMoneda().getCodmoneda()+" ->"+this.moneda.getCodmoneda()+" "+pago.getTotal());
-                //this.moneda.setValor(pago.getTotal());
+                /*System.out.println("Convirtiendo de "+pago.getTipoMoneda().getCodmoneda()+" ->"+
+                        this.tipoMoneda.getCodmoneda()+" "+pago.getTotal().getValor());
+                //this.moneda.setValor(pago.getTotal());*/
 
-                BigDecimal resul = MonedaUtil.ConvertirValor(pago.getMoneda(), this.moneda ,pago.getTotal());
-                System.out.println("               -> Resultado ="+this.moneda.getValorFormato(resul));
+                Moneda resul = MonedaUtil.ConvertirValor(pago.getTipoMoneda(), this.tipoMoneda,pago.getTotal());
+                System.out.println("               -> Resultado ="+this.tipoMoneda.getValorFormato(resul));
 
-                totalpago = totalpago.add(resul)  ;
+                totalpago.sumar(resul)  ;
             }
 
         }
-        System.out.println("Total pagos "+ pagos.size());
+        //System.out.println("Total pagos "+ pagos.size());
         this.totales.setTotalPago(totalpago);
-        System.out.println("Salgo  "+ this.totales.getTotalSaldo() );
 
-        if (this.totales.getTotalSaldo().compareTo(BigDecimal.ZERO) == 0 ) {
+
+        if (this.totales.getTotalSaldo().igualZero()) {
             System.out.println("!!! La Factura es Imprimible !!!");
             this.Imprimible = true;
 
@@ -216,8 +218,8 @@ public class Factura  {
         Espera = espera;
     }
 
-    public Moneda getMoneda() {
-        return moneda;
+    public TipoMoneda getMoneda() {
+        return tipoMoneda;
     }
 
     public Boolean getActiva() {
