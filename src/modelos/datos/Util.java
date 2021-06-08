@@ -11,4 +11,11 @@ public class Util {
         dateForMySql = sdf.format(c.getTime());
         return dateForMySql;
     }
+
+    public static String calendarToHora(Calendar c) {
+        String hora;
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        hora = sdf.format(c.getTime());
+        return hora;
+    }
 }

@@ -22,14 +22,15 @@ public class Constantes {
             + "	error integer, "
             + "	espera integer, "
             + "	fecha date, "
+            + " hora text, "
             + "	docweb text, "
             + "	fecsync date "
             + ");";
 
     public static String SQL_INSERTAR_FACTURA = "INSERT INTO factura " +
             "(numero,idcliente,moneda,caja,total,impuesto,base,descuento," +
-            "imprime,activa,pagada,cancelada,error,espera,fecha) " +
-            "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            "imprime,activa,pagada,cancelada,error,espera,fecha,hora) " +
+            "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     public static String SQL_CREAR_LINEAFAC = "CREATE TABLE IF NOT EXISTS fac_articulos ("
             + "	id integer PRIMARY KEY,"

@@ -13,6 +13,7 @@ import java.sql.SQLException;
                 String url = "jdbc:sqlite:"+Constantes.dirLocal+nombreArchivo;
                 // create a connection to the database
                 conn = DriverManager.getConnection(url);
+                conn.setAutoCommit(true);
 
                 System.out.println("La conexion to SQLite ha sido establecida. Archivo "+Constantes.dirLocal+nombreArchivo);
 

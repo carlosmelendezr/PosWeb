@@ -9,14 +9,12 @@ public class Operaciones {
 
 
     public static Integer InsertarFactura(Factura fac) {
-        boolean exito = false;
+
         Integer lastId = 0;
         try {
 
             Connection conn = Connect.connect(Constantes.dbPrincipal);
-            PreparedStatement pstmt = conn.prepareStatement(Constantes.SQL_INSERTAR_FACTURA,
-                    Statement.RETURN_GENERATED_KEYS);
-
+            PreparedStatement pstmt = conn.prepareStatement(Constantes.SQL_INSERTAR_FACTURA);
 
             pstmt.setInt(1, fac.getNumeroFactura());
             pstmt.setInt(2, fac.getCliente().getId());
@@ -33,12 +31,14 @@ public class Operaciones {
             pstmt.setBoolean(13, fac.getError() );
             pstmt.setBoolean(14, fac.getEspera() );
             pstmt.setString(15, Util.calendarToSql(fac.getFecha()));
+            pstmt.setString(16, Util.calendarToHora(fac.getFecha()));
+            pstmt.execute();
+            pstmt.close();
 
-            exito = true;
             lastId = Tabla.lastId(conn,"factura");
 
             try {
-                conn.close();
+                  conn.close();
             } catch(SQLException e) {
                 System.out.println(e.getMessage());
 
