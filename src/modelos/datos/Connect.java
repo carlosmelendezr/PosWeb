@@ -27,7 +27,7 @@ import java.sql.SQLException;
          */
         public static void main(String[] args) {
             Connection conn = connect("posweb.db");
-            Tabla.crear(conn,Constantes.Factura);
+            Tabla.crear(conn,Constantes.SQL_CREAR_FACTURA);
             try {
                 conn.close();
             } catch(SQLException e) {

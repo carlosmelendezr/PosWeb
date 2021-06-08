@@ -2,6 +2,7 @@ package modelos.factura;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class Factura  {
@@ -14,6 +15,7 @@ public class Factura  {
     private List<LineaFactura> lineas;
     private FacturaTotal totales;
     private TipoMoneda tipoMoneda;
+    private Calendar fecha;
 
     private Boolean Activa;
     private Boolean Imprimible;
@@ -25,6 +27,9 @@ public class Factura  {
     private String  Mensaje;
 
     private void Inicializa() {
+        this.numeroFactura = 0;
+        this.numeroCaja    = 0;
+        this.fecha = Calendar.getInstance();
 
         this.pagos = new ArrayList<>();
         this.lineas = new ArrayList<>();
@@ -228,5 +233,29 @@ public class Factura  {
 
     public String getMensaje() {
         return Mensaje;
+    }
+
+    public TipoMoneda getTipoMoneda() {
+        return tipoMoneda;
+    }
+
+    public void setTipoMoneda(TipoMoneda tipoMoneda) {
+        this.tipoMoneda = tipoMoneda;
+    }
+
+    public Calendar getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Calendar fecha) {
+        this.fecha = fecha;
+    }
+
+    public void setActiva(Boolean activa) {
+        Activa = activa;
+    }
+
+    public void setMensaje(String mensaje) {
+        Mensaje = mensaje;
     }
 }

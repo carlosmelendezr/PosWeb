@@ -1,19 +1,28 @@
 package modelos.factura;
 
 public class LineaFactura {
-    private Integer id;
-
+    private Integer  id;
     private Producto producto;
+    private Double   cantidad;
+    private String   codbarra;
+    private String   referencia;
+    private Moneda   precio;
+    private Moneda   descuento;
 
-    private Double  cantidad;
 
 
-
-    public LineaFactura(Integer id, Producto producto, Double cantidad) {
+    public LineaFactura(Integer id, Producto producto, Double cantidad, String codbarra) {
         this.id = id;
         this.producto = producto;
         this.cantidad = cantidad;
+        this.codbarra = codbarra;
+        this.referencia = producto.getReferencia();
+        this.precio = producto.getPrecio();
 
+    }
+
+    public void aplicarDescuenot(Moneda desc) {
+        this.descuento = desc;
     }
 
     public Integer getId() {
@@ -40,6 +49,35 @@ public class LineaFactura {
         this.cantidad = cantidad;
     }
 
+    public String getCodbarra() {
+        return codbarra;
+    }
 
+    public void setCodbarra(String codbarra) {
+        this.codbarra = codbarra;
+    }
 
+    public String getReferencia() {
+        return referencia;
+    }
+
+    public void setReferencia(String referencia) {
+        this.referencia = referencia;
+    }
+
+    public Moneda getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(Moneda precio) {
+        this.precio = precio;
+    }
+
+    public Moneda getDescuento() {
+        return descuento;
+    }
+
+    public void setDescuento(Moneda descuento) {
+        this.descuento = descuento;
+    }
 }

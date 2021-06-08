@@ -1,6 +1,8 @@
 package modelos.factura;
 
 
+import modelos.datos.Operaciones;
+
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
@@ -38,7 +40,7 @@ public class FacturaPrueba {
         Factura f = new Factura(Dolar);
         if (f.getActiva()) {
             f.asignarCliente(c);
-            LineaFactura ln = new LineaFactura(1, p, 1.0);
+            LineaFactura ln = new LineaFactura(1, p, 1.0, "759355622235");
             f.agregarLinea(ln);
 
 
@@ -57,11 +59,9 @@ public class FacturaPrueba {
             FacturaTotal totBolivar = f.getTotales().Covertir(Bolivar);
             totBolivar.imprimirTotal();
 
-            FacturaTotal totPetro = totBolivar.Covertir(Petro);
-
-
-            totPetro.imprimirTotal();
-
+            /*FacturaTotal totPetro = totBolivar.Covertir(Petro);
+            totPetro.imprimirTotal();*/
+            Operaciones.InsertarFactura(f);
 
 
         } else {
