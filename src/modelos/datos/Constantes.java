@@ -35,8 +35,11 @@ public class Constantes {
             + "	id integer PRIMARY KEY,"
             + " idfactura integer,"
             + " idproducto integer,"
-            + " codigo text,"
+            + " referencia text,"
+            + " codbarra text,"
             + "	cantidad real ,"
+            + "	precio real ,"
+            + "	descuento real "
             + ");";
 
     public static String FacturaDatosFiscales= "CREATE TABLE IF NOT EXISTS fac_fiscal ("

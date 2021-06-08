@@ -2,22 +2,20 @@ package modelos.datos;
 
 import modelos.factura.Factura;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class Operaciones {
 
 
 
-    public static boolean InsertarFactura(Factura fac) {
+    public static Integer InsertarFactura(Factura fac) {
         boolean exito = false;
-
+        Integer lastId = 0;
         try {
 
             Connection conn = Connect.connect(Constantes.dbPrincipal);
-            PreparedStatement pstmt = conn.prepareStatement(Constantes.SQL_INSERTAR_FACTURA);
+            PreparedStatement pstmt = conn.prepareStatement(Constantes.SQL_INSERTAR_FACTURA,
+                    Statement.RETURN_GENERATED_KEYS);
 
 
             pstmt.setInt(1, fac.getNumeroFactura());
@@ -36,15 +34,24 @@ public class Operaciones {
             pstmt.setBoolean(14, fac.getEspera() );
             pstmt.setString(15, Util.calendarToSql(fac.getFecha()));
 
-
-            pstmt.executeUpdate();
             exito = true;
+            lastId = Tabla.lastId(conn,"factura");
+
+            try {
+                conn.close();
+            } catch(SQLException e) {
+                System.out.println(e.getMessage());
+
+            }
+
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
 
+        System.out.println("Last ID="+lastId);
 
-        return exito;
+        return lastId;
+
     }
 
 }

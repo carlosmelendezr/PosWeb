@@ -21,7 +21,7 @@ public class LineaFactura {
 
     }
 
-    public void aplicarDescuenot(Moneda desc) {
+    public void aplicarDescuento(Moneda desc) {
         this.descuento = desc;
     }
 
