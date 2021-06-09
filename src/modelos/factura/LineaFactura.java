@@ -18,6 +18,7 @@ public class LineaFactura {
         this.codbarra = codbarra;
         this.referencia = producto.getReferencia();
         this.precio = producto.getPrecio();
+        this.descuento = new Moneda(0);
 
     }
 

@@ -40,8 +40,13 @@ public class Constantes {
             + " codbarra text,"
             + "	cantidad real ,"
             + "	precio real ,"
+            + "	alicuota real ,"
             + "	descuento real "
-            + ");";
+            + "); CREATE INDEX IF NOT EXISTS idx_idfac ON fac_articulos (idfactura)";
+
+    public static String SQL_INSERTAR_LINEA_FACTURA = "INSERT INTO fac_articulos " +
+            "(idfactura,idproducto,referencia,codbarra,cantidad,precio,alicuota,descuento) VALUES " +
+            "(  ?      ,    ?     ,     ?    ,   ?     ,   ?    ,  ?   ,    ?  ,    ?    ) ";
 
     public static String FacturaDatosFiscales= "CREATE TABLE IF NOT EXISTS fac_fiscal ("
             + "	id integer PRIMARY KEY,"

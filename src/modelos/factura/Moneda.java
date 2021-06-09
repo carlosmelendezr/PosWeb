@@ -101,6 +101,13 @@ public class Moneda {
         this.valor = valor;
     }
 
+    public void setValor(Double valor) {
+        this.valor = BigDecimal.valueOf(valor);
+    }
+    public void setValor(Integer valor) {
+        this.valor = BigDecimal.valueOf(valor);
+    }
+
     public MathContext getPrecision() {
         return precision;
     }
