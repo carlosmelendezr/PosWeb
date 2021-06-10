@@ -2,6 +2,7 @@ package modelos.datos;
 
 import modelos.factura.Factura;
 import modelos.factura.LineaFactura;
+import modelos.factura.Pago;
 
 import java.sql.*;
 import java.util.List;
@@ -12,6 +13,7 @@ public class Operaciones {
         Integer lastId = InsertarFactura(fac);
         if (lastId > 0) {
             InsertarLineaFactura(fac.getLineas(),lastId);
+            InsertarPagoFactura(fac.getPagos(),lastId);
         }
         return lastId;
     }
@@ -42,6 +44,7 @@ public class Operaciones {
             pstmt.setBoolean(14, fac.getEspera() );
             pstmt.setString(15, Util.calendarToSql(fac.getFecha()));
             pstmt.setString(16, Util.calendarToHora(fac.getFecha()));
+            pstmt.setDouble(17,fac.getTipoMoneda().getTasacambio().getValor().doubleValue());
             pstmt.execute();
             pstmt.close();
 
@@ -81,6 +84,48 @@ public class Operaciones {
                 pstmt.setDouble(6, lin.getPrecio().getValor().doubleValue());
                 pstmt.setDouble(7, lin.getProducto().getAlicuota().getValor().doubleValue());
                 pstmt.setDouble(8, lin.getDescuento().getValor().doubleValue());
+                pstmt.execute();
+            }
+            pstmt.close();
+            Exito = true;
+            try {
+                conn.close();
+            } catch(SQLException e) {
+                System.out.println(e.getMessage());
+
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+
+        return Exito;
+
+    }
+
+    public static boolean InsertarPagoFactura(List<Pago> pagos, int idfactura) {
+        boolean Exito=false;
+
+
+        try {
+
+            Connection conn = Connect.connect(Constantes.dbPrincipal);
+            PreparedStatement pstmt = conn.prepareStatement(Constantes.SQL_INSERTAR_PAGO);
+
+            for(Pago pag:pagos) {
+                pstmt.setInt(1, idfactura);
+                pstmt.setString(2, pag.getTipoMoneda().getCodmoneda());
+                pstmt.setDouble(3,pag.getMonto().getValor().doubleValue());
+                pstmt.setDouble(4,pag.getVuelto().getValor().doubleValue());
+                pstmt.setDouble(5,pag.getTotal().getValor().doubleValue());
+                pstmt.setString(6,pag.getReferencia());
+                pstmt.setInt(7, pag.getBanco().getId());
+                pstmt.setString(8, Util.calendarToSql(pag.getFechapago()));
+                pstmt.setString(9, Util.calendarToHora(pag.getFechapago()));
+                pstmt.setString(10, Util.calendarToSql(pag.getFechareg()));
+                pstmt.setString(11, Util.calendarToHora(pag.getFechareg()));
+                pstmt.setDouble(12, pag.getTipoMoneda().getTasacambio().getValor().doubleValue());
                 pstmt.execute();
             }
             pstmt.close();

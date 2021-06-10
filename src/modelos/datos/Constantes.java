@@ -24,13 +24,14 @@ public class Constantes {
             + "	fecha date, "
             + " hora text, "
             + "	docweb text, "
-            + "	fecsync date "
+            + "	fecsync date, "
+            + "	tasacambio real "
             + ");";
 
     public static String SQL_INSERTAR_FACTURA = "INSERT INTO factura " +
             "(numero,idcliente,moneda,caja,total,impuesto,base,descuento," +
-            "imprime,activa,pagada,cancelada,error,espera,fecha,hora) " +
-            "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            "imprime,activa,pagada,cancelada,error,espera,fecha,hora, tasacambio) " +
+            "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     public static String SQL_CREAR_LINEAFAC = "CREATE TABLE IF NOT EXISTS fac_articulos ("
             + "	id integer PRIMARY KEY,"
@@ -47,6 +48,25 @@ public class Constantes {
     public static String SQL_INSERTAR_LINEA_FACTURA = "INSERT INTO fac_articulos " +
             "(idfactura,idproducto,referencia,codbarra,cantidad,precio,alicuota,descuento) VALUES " +
             "(  ?      ,    ?     ,     ?    ,   ?     ,   ?    ,  ?   ,    ?  ,    ?    ) ";
+
+    public static String SQL_CREAR_PAGOS = "CREATE TABLE IF NOT EXISTS fac_pagos ("
+            + "id integer PRIMARY KEY,"
+            + "idfactura integer, "
+            + "moneda text, "
+            + "monto real, "
+            + "vuelto real, "
+            + "total real, "
+            + "referencia text, "
+            + "idbanco integer, "
+            + "fecpago date,"
+            + "horpago text,"
+            + "fecreg date,"
+            + "horreg text,"
+            + "tasacambio real)";
+
+    public static String SQL_INSERTAR_PAGO = "INSERT INTO fac_pagos " +
+            "(idfactura,moneda,monto,vuelto,total,referencia,idbanco,fecpago,horpago,fecreg,horreg,tasacambio) VALUES " +
+            "(    ?,      ?   ,  ?,     ?,    ?,      ?,        ?,      ?,      ?,      ?,     ?  ,    ?  )";
 
     public static String FacturaDatosFiscales= "CREATE TABLE IF NOT EXISTS fac_fiscal ("
             + "	id integer PRIMARY KEY,"

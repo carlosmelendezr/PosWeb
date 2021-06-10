@@ -1,6 +1,7 @@
 package modelos.factura;
 
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.Date;
 
 public class Pago {
@@ -11,14 +12,17 @@ public class Pago {
     private Banco  banco;
     private Moneda vuelto;
     private Moneda total;
-    private Date   fechapago;
-    private Date   fechareg;
+    private Calendar fechapago;
+    private Calendar   fechareg;
 
     public Pago(TipoMoneda tipoMoneda, Moneda monto, Moneda vuelto) {
         this.tipoMoneda = tipoMoneda;
         this.monto = monto;
         this.vuelto = vuelto;
         this.total =  monto;
+        this.fechapago = Calendar.getInstance();
+        this.fechareg = Calendar.getInstance();
+        this.banco = new Banco();
         total.restar(vuelto);
 
     }
@@ -79,19 +83,19 @@ public class Pago {
         this.total = total;
     }
 
-    public Date getFechapago() {
+    public Calendar getFechapago() {
         return fechapago;
     }
 
-    public void setFechapago(Date fechapago) {
+    public void setFechapago(Calendar fechapago) {
         this.fechapago = fechapago;
     }
 
-    public Date getFechareg() {
+    public Calendar getFechareg() {
         return fechareg;
     }
 
-    public void setFechareg(Date fechareg) {
+    public void setFechareg(Calendar fechareg) {
         this.fechareg = fechareg;
     }
 }

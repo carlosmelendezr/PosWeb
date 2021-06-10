@@ -6,6 +6,13 @@ public class Banco {
     private String  descripcion;
     private Integer activo;
 
+    public Banco() {
+        this.id = 0;
+        this.codigo = "";
+        this.descripcion = "";
+        this.activo=1;
+    }
+
     public Integer getId() {
         return id;
     }

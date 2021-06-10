@@ -30,6 +30,7 @@ import java.sql.SQLException;
             Connection conn = connect("posweb.db");
             Tabla.crear(conn,Constantes.SQL_CREAR_FACTURA);
             Tabla.crear(conn,Constantes.SQL_CREAR_LINEAFAC);
+            Tabla.crear(conn,Constantes.SQL_CREAR_PAGOS);
             try {
                 conn.close();
             } catch(SQLException e) {
