@@ -1,0 +1,265 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+  
+  <impresora>
+    <definiciones>
+    <marca>
+      Bixolon
+    </marca>
+  <modelo>
+    SRP-812
+  </modelo>
+    <puerto>
+      <numero>1</numero>
+      <baudrate>9600</baudrate>
+      <databit>8</databit>
+      <parity>p</parity>
+      <stop>1</stop>
+    </puerto>
+    <protocolo>
+      <iniciotrama>
+        <etiqueta>STX</etiqueta>
+        <hex>02h</hex>
+      </iniciotrama>
+      <fintrama>
+        <etiqueta>ETX</etiqueta>
+        <hex>03h</hex>
+     </fintrama>
+      <estatus>
+        <etiqueta>ENQ</etiqueta>
+        <hex>05h</hex>
+        <recibido>
+          <valor>40h</valor>
+          <descripcion>Modo entrenamiento y en espera</descripcion>
+          <valor>41h</valor>
+          <descripcion>Modo entrenamiento y en medio de una trasaccion fiscal</descripcion>
+          <valor>42h</valor>
+          <descripcion>Modo entrenamiento y en medio de una trasaccion NO fiscal</descripcion>
+          <valor>60h</valor>
+          <descripcion>Modo fiscal y en espera</descripcion>
+          <valor>68h</valor>
+          <descripcion>Modo fiscal con memoria fiscal llena y en espera</descripcion>
+          <valor>61h</valor>
+          <descripcion>Modo fiscal y en medio de una trasaccion fiscal</descripcion>
+          <valor>69h</valor>
+          <descripcion>Modo fiscal  con memoria fiscal llena y en medio de una trasaccion fiscal</descripcion>
+          <valor>62h</valor>
+          <descripcion>Modo fiscal  y en medio de una trasaccion NO fiscal</descripcion>
+          <valor>6Ah</valor>
+          <descripcion>Modo fiscal  con memoria fiscal llena y en medio de una trasaccion NO fiscal</descripcion>
+          <valor>40h</valor>
+          <descripcion>Ningun error</descripcion>
+          <valor>48h</valor>
+          <descripcion>Error de gaveta</descripcion>
+          <valor>41h</valor>
+          <descripcion>Error sin papel</descripcion>
+          <valor>42h</valor>
+          <descripcion>Error mecanico de la impresora/papel</descripcion>
+          <valor>43h</valor>
+          <descripcion>Error mecanico de la impresora fin de papel</descripcion>
+          <valor>60h</valor>
+          <descripcion>Error fiscal</descripcion>
+          <valor>64h</valor>
+          <descripcion>Error en la memoria fical</descripcion>
+          <valor>6Ch</valor>
+          <descripcion>Error memoria fical llena</descripcion>
+        </recibido>
+      
+      </estatus>
+      <reconocimiento>
+         <etiqueta>ACK</etiqueta>
+        <hex>05h</hex>
+      </reconocimiento>
+      <noreconocimiento>
+         <etiqueta>NAK</etiqueta>
+        <hex>15h</hex>
+      </noreconocimiento>
+      <finbloque>
+         <etiqueta>ETB</etiqueta>
+        <hex>17h</hex>
+      </finbloque>
+      <fintansmision>
+         <etiqueta>EOT</etiqueta>
+        <hex>04h</hex>
+      </fintansmision>
+    </protocolo>
+    <definir-hora>
+      <comando>PF</comando>
+        <param>
+          <hh max="2">13</hh>
+          <mm max="2">30</mm>
+          <ss max="2">30</ss>
+        </param>
+    </definir-hora>
+  <definir-fecha>
+      <previo>reportez</previo>
+      <comando>PG</comando>
+        <param>
+          <dd max="2">01</dd>
+          <mm max="2">01</mm>
+          <yy max="2">21</yy>
+        </param>
+    </definir-fecha>
+   <definir-tasa>
+      <previo>reportez</previo>
+      <comando>PT</comando>
+        <param>
+          <tasa1>1</tasa1>
+          <valor1>1600</valor1>
+          <tasa2>2</tasa2>
+          <valor2>0800</valor2>
+          <tasa3>3</tasa3>
+          <valor3>2700</valor3>
+        </param>
+        <comando>Pt</comando>
+    </definir-tasa>
+    <encabezado >
+      <previo>reportez</previo>
+      <comando>PH</comando>
+      <lineas max="8">
+        <linea>
+          <numero>1</numero>
+          <texto max="40">Prueba </texto>
+        </linea>
+      </lineas>
+      
+    </encabezado>
+  </definiciones>
+  
+  
+    
+  <factura>
+   
+    <cajero>
+      <registro>
+        <comando>PC</comando>
+        <param>
+          <id>02</id>
+          <codigo max="5">12345</codigo>
+          <nombre max="16">Pedro</nombre>
+        </param>
+      </registro>
+      <inicio-cajero>
+        <comando>5</comando>
+        <param>
+          <codigo>12345</codigo>
+        </param>
+      </inicio-cajero>
+      <fin-cajero>
+        <comando>6</comando>
+      </fin-cajero>
+    </cajero>
+    <medios-pago>
+      <registrar>
+        <maximo>24</maximo>
+        <comando>PE</comando>
+        <param>
+          <codigo>1</codigo>
+          <descripcion max="14">Efectivo</descripcion>
+        </param>
+      </registrar>
+    </medios-pago>
+    <cliente>
+      <identificacion>
+         <comando>iR*</comando>
+         <rif></rif>
+         <cedula></cedula>
+      </identificacion> 
+      
+      <razonsocial>
+        <comando>iS*</comando>
+        <nombre>Prueba</nombre>
+      </razonsocial>
+      <direccion>
+        <linea max="9">
+          <comando>i</comando>
+          <numero>1</numero>
+          <nombre>Linea nn</nombre>
+        </linea>
+      </direccion>
+      
+    </cliente>
+    <comentario-producto>
+        <comando>@</comando>
+        <mesaje></mesaje>
+    </comentario-producto>
+    <producto-excento>
+      <comando>20h</comando>
+      <param>
+      <precio max="16"></precio>
+      <cantidad max="8"></cantidad>
+      <literal>|</literal>
+      <codigo max="12"></codigo>
+      <literal>|</literal>
+      <descripcion></descripcion>
+    </param>
+
+    </producto-excento>
+    <producto-tasa1>
+      <comando>21h</comando>
+      <param>
+       <precio max="16"></precio>
+       <cantidad max="8"></cantidad>
+       <literal>|</literal>
+       <codigo max="12"></codigo>
+       <literal>|</literal>
+       <descripcion></descripcion>
+      </param>
+    </producto-tasa1>
+    <producto-tasa2>
+      <comando>22h</comando>
+      <param>
+        <precio max="16"></precio>
+        <cantidad max="8"></cantidad>
+        <literal>|</literal>
+        <codigo max="12"></codigo>
+        <literal>|</literal>
+        <descripcion></descripcion>
+      </param>
+    </producto-tasa2>
+    <producto-tasa3>
+      <comando>23h</comando>
+      <param>
+        <precio max="16"></precio>
+        <cantidad max="8"></cantidad>
+        <literal>|</literal>
+        <codigo max="12"></codigo>
+        <literal>|</literal>
+        <descripcion></descripcion>
+      </param>
+    </producto-tasa3>
+    <producto-cancelar>
+      <comando>k</comando>
+    </producto-cancelar>
+    <subtotal>
+      <comando>3</comando>
+    </subtotal>
+    <anular-factura>
+      <comando>7</comando>
+    </anular-factura>
+    <codigo-barra-cuerpo>
+      <comando>Y</comando>
+      <codigo>15656555</codigo>
+    </codigo-barra-cuerpo>
+    <codigo-barra-pie>
+      <comando>y</comando>
+      <codigo>15656555</codigo>
+    </codigo-barra-pie>
+    
+    <totalizar-parcial>
+      <comando>2</comando>
+      <param>
+        <medio>01</medio>
+        <monto>0100</monto>
+      </param>
+    </totalizar-parcial>
+        
+    
+    <totalizar-directo>
+      <comando>1</comando>
+      <param>
+        <medio>01</medio>
+      </param>
+    </totalizar-directo>
+  </factura>
+
+</impresora>
