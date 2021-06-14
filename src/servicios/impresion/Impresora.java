@@ -5,38 +5,29 @@ import java.util.List;
 public class Impresora {
     String marca;
     String modelo;
-    int puerto;
+    String puerto;
 
-    Trama inicioTrama;
-    Trama finTrama;
-    Trama estatus;
-    Trama ACK;
-    Trama NAK;
-    Trama finBloque;
-    Trama finTranmision;
-    List<Estatus> listaEstatus;
+    List<EstatusImpresora> listaEstatus;
+    List<Comando> tablaComandos;
     List<Comando> listaComandos;
 
+    public void cargarTablaComandos() {
 
-    class Trama {
-        String etiqueta;
-        short comando;
-
-        public Trama(String etiqueta, short valor) {
-            this.etiqueta = etiqueta;
-            this.comando = valor;
-        }
     }
 
-    class Estatus {
-        short valor;
-        String descripcion;
+    public void agregarComando(String nombre, List<Param> param) {
+        Comando comm = buscarComando(nombre);
+        comm.setParam(param);
+        this.listaComandos.add(comm);
 
-        public Estatus(short valor, String descripcion) {
-            this.valor = valor;
-            this.descripcion = descripcion;
-        }
     }
+
+    public Comando buscarComando(String nombre) {
+        Comando comm = listaComandos.stream().filter(comando -> nombre.equals(comando.getNombre())).findAny()
+                .orElse(null);
+        return comm;
+    }
+
 
 
 
