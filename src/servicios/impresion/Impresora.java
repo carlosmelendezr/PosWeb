@@ -1,5 +1,8 @@
 package servicios.impresion;
 
+import modelos.factura.Cliente;
+import modelos.factura.Direccion;
+
 import java.util.List;
 
 public class Impresora {
@@ -7,11 +10,26 @@ public class Impresora {
     String modelo;
     String puerto;
 
+    String rif;
+    String cedula;
+    String razonsocial;
+    List<String> direccion;
+
     List<EstatusImpresora> listaEstatus;
     List<Comando> tablaComandos;
     List<Comando> listaComandos;
 
     public void cargarTablaComandos() {
+
+    }
+
+    public void agregarCliente(Cliente cli) {
+        this.rif = cli.getTiporif()+cli.getRif();
+        this.cedula = rif;
+        this.razonsocial = cli.getRazonsocial();
+        for(Direccion dir:cli.getDirecciones()) {
+            direccion.add(dir.getTexto());
+        }
 
     }
 
