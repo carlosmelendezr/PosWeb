@@ -2,7 +2,9 @@ package servicios.impresion;
 
 import modelos.factura.Cliente;
 import modelos.factura.Direccion;
+import modelos.factura.LineaFactura;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Impresora {
@@ -14,10 +16,33 @@ public class Impresora {
     String cedula;
     String razonsocial;
     List<String> direccion;
+    List<LineaItemBixolon> items;
 
     List<EstatusImpresora> listaEstatus;
     List<Comando> tablaComandos;
     List<Comando> listaComandos;
+    List<Integer> tasas;
+
+    public Impresora(String marca, String modelo, String puerto) {
+        this.marca = marca;
+        this.modelo = modelo;
+        this.puerto = puerto;
+        this.tasas = new ArrayList<Integer>();
+        tasas.add(0);
+        tasas.add(16);
+    }
+
+    public void agregarItem(LineaFactura lin) {
+        LineaItemBixolon item = new LineaItemBixolon();
+
+        item.setCodigo(lin.getReferencia());
+        item.setCantidad(lin.getCantidad());
+        item.setPrecio(lin.getPrecio());
+        item.setDescripcion(lin.getProducto().getDescripcion());
+        item.setTasa(lin.getProducto().getAlicuota());
+
+    }
+
 
     public void cargarTablaComandos() {
 
