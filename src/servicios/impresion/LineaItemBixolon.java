@@ -24,6 +24,9 @@ public class LineaItemBixolon
 
     @Override
     public String armarComando() {
+        StringBuilder comm = new StringBuilder();
+
+
         return null;
     }
 

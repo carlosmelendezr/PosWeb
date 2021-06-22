@@ -3,6 +3,7 @@ package servicios.impresion;
 import modelos.factura.Cliente;
 import modelos.factura.Direccion;
 import modelos.factura.LineaFactura;
+import modelos.factura.Moneda;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,15 +22,22 @@ public class Impresora {
     List<EstatusImpresora> listaEstatus;
     List<Comando> tablaComandos;
     List<Comando> listaComandos;
-    List<Integer> tasas;
+    List<TasaImpresora> tasas;
 
     public Impresora(String marca, String modelo, String puerto) {
         this.marca = marca;
         this.modelo = modelo;
         this.puerto = puerto;
-        this.tasas = new ArrayList<Integer>();
-        tasas.add(0);
-        tasas.add(16);
+        this.tasas = new ArrayList<TasaImpresora>();
+
+        TasaImpresora Excento = new TasaImpresora(new Moneda(0)," ");
+        TasaImpresora Tasa1   = new TasaImpresora(new Moneda(16),"!");
+        TasaImpresora Tasa2   = new TasaImpresora(new Moneda(8),"%");
+
+        tasas.add(Excento);
+        tasas.add(Tasa1);
+        tasas.add(Tasa2);
+
     }
 
     public void agregarItem(LineaFactura lin) {
@@ -58,12 +66,13 @@ public class Impresora {
 
     }
 
-    public void agregarComando(String nombre, List<Param> param) {
+    public void agregarFuncion (String nombre, List<Param> param) {
         Comando comm = buscarComando(nombre);
         comm.setParam(param);
         this.listaComandos.add(comm);
-
     }
+
+
 
     public Comando buscarComando(String nombre) {
         Comando comm = listaComandos.stream().filter(comando -> nombre.equals(comando.getNombre())).findAny()

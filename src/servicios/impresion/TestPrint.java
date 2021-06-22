@@ -7,7 +7,7 @@ public class TestPrint {
 
 
     public static void main(String args[]) {
-        Impresora Bixolon = new Impresora();
+        Impresora Bixolon = new Impresora("Bixolon","SRP-812","COM1");
         Bixolon.cargarTablaComandos();
 
         Comando AbrirGaveta = new Comando("Abrir Gaveta","y");
@@ -23,7 +23,16 @@ public class TestPrint {
         pList.add(p2);
         pList.add(p3);
 
-        Bixolon.agregarComando("producto",pList);
+        List<Param> pCli = new ArrayList();
+        Param pRif = new Param("rif", "V12345678-2" );
+        pCli.add(pRif);
+        Bixolon.agregarFuncion("cliente.identificacion",pCli);
+
+        pList.add(p1);
+        pList.add(p2);
+        pList.add(p3);
+
+        Bixolon.agregarFuncion("producto",pList);
 
 
 
