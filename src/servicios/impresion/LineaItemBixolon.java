@@ -11,7 +11,7 @@ public class LineaItemBixolon
     private Double cantidad;
     private String codigo;
     private String descripcion;
-    private List<Integer> tasas;
+    private List<TasaImpresora> tasas;
     private Moneda tasa;
 
 
@@ -22,12 +22,29 @@ public class LineaItemBixolon
 
     private String Comando;
 
+    public LineaItemBixolon(List<TasaImpresora> tasas) {
+        this.tasas = tasas;
+    }
+
     @Override
     public String armarComando() {
         StringBuilder comm = new StringBuilder();
+        for(TasaImpresora tas:tasas) {
+            System.out.println("tas="+tas.getTasa().getValor()+" itm "+this.tasa.getValor());
+            if (this.tasa.getValor().equals(tas.getTasa().getValor())) {
+                System.out.println("comando = "+tas.getComando());
+                comm.append(tas.getComando());
+            }
+        }
+        String sPrecio = Util.llenarCeros(this.precio,18);
+        comm.append(sPrecio);
+        String sCantidad = Util.llenarCeros(this.cantidad,8);
+        comm.append(sCantidad);
+        comm.append(this.descripcion);
 
+        System.out.println("Agregar Item :"+comm);
 
-        return null;
+        return comm.toString();
     }
 
     public Moneda getPrecio() {
@@ -62,11 +79,11 @@ public class LineaItemBixolon
         this.descripcion = descripcion;
     }
 
-    public List<Integer> getTasas() {
+    public List<TasaImpresora> getTasas() {
         return tasas;
     }
 
-    public void setTasas(List<Integer> tasas) {
+    public void setTasas(List<TasaImpresora> tasas) {
         this.tasas = tasas;
     }
 

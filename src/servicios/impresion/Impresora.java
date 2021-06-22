@@ -32,22 +32,25 @@ public class Impresora {
 
         TasaImpresora Excento = new TasaImpresora(new Moneda(0)," ");
         TasaImpresora Tasa1   = new TasaImpresora(new Moneda(16),"!");
-        TasaImpresora Tasa2   = new TasaImpresora(new Moneda(8),"%");
+        TasaImpresora Tasa2   = new TasaImpresora(new Moneda(8),"\"");
+        TasaImpresora Tasa3   = new TasaImpresora(new Moneda(8),"#");
 
         tasas.add(Excento);
         tasas.add(Tasa1);
         tasas.add(Tasa2);
+        tasas.add(Tasa3);
 
     }
 
     public void agregarItem(LineaFactura lin) {
-        LineaItemBixolon item = new LineaItemBixolon();
+        LineaItemBixolon item = new LineaItemBixolon(tasas);
 
         item.setCodigo(lin.getReferencia());
         item.setCantidad(lin.getCantidad());
         item.setPrecio(lin.getPrecio());
         item.setDescripcion(lin.getProducto().getDescripcion());
         item.setTasa(lin.getProducto().getAlicuota());
+        item.armarComando();
 
     }
 

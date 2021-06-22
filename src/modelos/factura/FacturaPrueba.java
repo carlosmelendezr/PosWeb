@@ -2,6 +2,7 @@ package modelos.factura;
 
 
 import modelos.datos.Operaciones;
+import servicios.impresion.TestPrint;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -22,7 +23,7 @@ public class FacturaPrueba {
 
         Producto p = new Producto(1,
                 "PRODUCTO DE PRUEBA",
-                "001",new Moneda("10"),new Moneda("16"),barras);
+                "001",new Moneda("8.95"),new Moneda("16"),barras);
 
         List<Direccion> dir1 = Arrays.asList(new Direccion("AV. FRANCISCO LAZO MARTI"));
         List<Telefono> tel1 = Arrays.asList(new Telefono(212,6616263));
@@ -40,7 +41,7 @@ public class FacturaPrueba {
         Factura f = new Factura(Dolar);
         if (f.getActiva()) {
             f.asignarCliente(c);
-            LineaFactura ln = new LineaFactura(1, p, 1.0, "759355622235");
+            LineaFactura ln = new LineaFactura(1, p, 2.0, "759355622235");
             f.agregarLinea(ln);
 
 
@@ -68,7 +69,7 @@ public class FacturaPrueba {
             System.out.println("Error :" + f.getMensaje());
         }
 
-
+        TestPrint.imprimir(f);
 
     }
 }
