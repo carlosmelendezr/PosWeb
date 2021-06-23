@@ -30,9 +30,9 @@ public class LineaItemBixolon
     public String armarComando() {
         StringBuilder comm = new StringBuilder();
         for(TasaImpresora tas:tasas) {
-            System.out.println("tas="+tas.getTasa().getValor()+" itm "+this.tasa.getValor());
+
             if (this.tasa.getValor().equals(tas.getTasa().getValor())) {
-                System.out.println("comando = "+tas.getComando());
+
                 comm.append(tas.getComando());
 
             }

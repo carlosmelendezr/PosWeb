@@ -5,6 +5,7 @@ import modelos.datos.Operaciones;
 import servicios.impresion.TestPrint;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -25,7 +26,11 @@ public class FacturaPrueba {
                 "PRODUCTO DE PRUEBA",
                 "001",new Moneda("8.95"),new Moneda("16"),barras);
 
-        List<Direccion> dir1 = Arrays.asList(new Direccion("AV. FRANCISCO LAZO MARTI"));
+        List<Direccion> dir1 = new ArrayList<>();
+        //List<Direccion> dir1 = Arrays.asList(new Direccion("AV. FRANCISCO LAZO MARTI"));
+
+        dir1.add( new Direccion("AV. FRANCISCO LAZO MARTI"));
+        dir1.add( new Direccion("RES. MAYORAL PLAZA"));
         List<Telefono> tel1 = Arrays.asList(new Telefono(212,6616263));
 
         Cliente c = new Cliente(1,"CLIENTE DE PRUEBA",309269577,"J",dir1,tel1);
@@ -69,7 +74,7 @@ public class FacturaPrueba {
             System.out.println("Error :" + f.getMensaje());
         }
 
-        TestPrint.imprimir(f);
+        TestPrint.imprimir(f, Bolivar);
 
     }
 }

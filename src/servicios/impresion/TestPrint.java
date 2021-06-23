@@ -1,6 +1,7 @@
 package servicios.impresion;
 
 import modelos.factura.Factura;
+import modelos.factura.TipoMoneda;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,24 +17,17 @@ public class TestPrint {
 
     }
 
-    public static void imprimir(Factura fac) {
+    public static void imprimir(Factura fac, TipoMoneda mon) {
 
-        Impresora Bixolon = new Impresora("Bixolon","SRP-812","COM1");
+        ImpBixolonSRP812 Bixolon = new ImpBixolonSRP812();
+
+        Bixolon.inicializar("COM1", mon);
         Bixolon.cargarTablaComandos();
 
-        Comando AbrirGaveta = new Comando("Abrir Gaveta","y");
-        Comando AgregarProducto = new Comando("producto"," ");
-
-
-
-        /*List<Param> pCli = new ArrayList();
-        Param pRif = new Param("rif", "V12345678-2" );
-        pCli.add(pRif);
-        Bixolon.agregarFuncion("cliente.identificacion",pCli);*/
-
-
+        Bixolon.agregarCliente(fac.getCliente());
         Bixolon.agregarItem(fac.getLineas().get(0));
-
+        Bixolon.Totalizar();
+        Bixolon.enviarImpresora();
 
 
     }
