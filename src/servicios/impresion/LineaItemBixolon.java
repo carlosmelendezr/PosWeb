@@ -34,6 +34,7 @@ public class LineaItemBixolon
             if (this.tasa.getValor().equals(tas.getTasa().getValor())) {
                 System.out.println("comando = "+tas.getComando());
                 comm.append(tas.getComando());
+
             }
         }
         String sPrecio = Util.llenarCeros(this.precio,18);
