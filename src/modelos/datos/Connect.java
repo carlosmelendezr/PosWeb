@@ -31,6 +31,7 @@ import java.sql.SQLException;
             Tabla.crear(conn,Constantes.SQL_CREAR_FACTURA);
             Tabla.crear(conn,Constantes.SQL_CREAR_LINEAFAC);
             Tabla.crear(conn,Constantes.SQL_CREAR_PAGOS);
+            Tabla.crear(conn,Constantes.SQL_CREAR_PRODUCTOS);
             try {
                 conn.close();
             } catch(SQLException e) {

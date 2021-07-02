@@ -27,8 +27,6 @@ public class FacturaPrueba {
                 "001",new Moneda("8.95"),new Moneda("16"),barras);
 
         List<Direccion> dir1 = new ArrayList<>();
-        //List<Direccion> dir1 = Arrays.asList(new Direccion("AV. FRANCISCO LAZO MARTI"));
-
         dir1.add( new Direccion("AV. FRANCISCO LAZO MARTI"));
         dir1.add( new Direccion("RES. MAYORAL PLAZA"));
         List<Telefono> tel1 = Arrays.asList(new Telefono(212,6616263));

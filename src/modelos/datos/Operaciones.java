@@ -18,6 +18,20 @@ public class Operaciones {
         return lastId;
     }
 
+    public static void InsertarProducto(String sql) {
+
+        Connection conn;
+        try {
+            conn = Connect.connect(Constantes.dbPrincipal);
+            Statement comando = conn.createStatement() ;
+            comando.execute(sql);
+            conn.close();
+        }catch (Exception e) {
+           System.out.println(e.getMessage());
+        }
+
+    }
+
 
 
     public static Integer InsertarFactura(Factura fac) {

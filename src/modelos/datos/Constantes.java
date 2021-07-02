@@ -82,4 +82,21 @@ public class Constantes {
             + "	serial text ,"
             + ");";
 
+    public static String SQL_CREAR_PRODUCTOS = "CREATE TABLE IF NOT EXISTS productos ("
+            + "id integer PRIMARY KEY,"
+            + "idtipoprod integer, "
+            + "descrip text, "
+            + "imagen text, "
+            + "idtipoimp integer, "
+            + "idcategoria integer, "
+            + "idmarca integer, "
+            + "unmedida text, "
+            + "precio real,"
+            + "costo real,"
+            + "stock real,"
+            + "ref text,"
+            + "refprov text,"
+            + "codigo text,"
+            + "idprov integer)";
+
 }

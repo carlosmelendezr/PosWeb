@@ -11,10 +11,6 @@ public class TestPrint {
 
     public static void main(String args[]) {
 
-
-
-
-
     }
 
     public static void imprimir(Factura fac, TipoMoneda mon) {
