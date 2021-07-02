@@ -65,7 +65,11 @@ public class servicios {
                     sql.append(")");
                     String SQL_INSERT = campos.toString() + sql.toString();
                     System.out.println(SQL_INSERT);
-                    comando.execute(SQL_INSERT);
+                    try {
+                        comando.execute(SQL_INSERT);
+                    }catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
                     //Operaciones.InsertarProducto(SQL_INSERT);
                 }
 
