@@ -3,9 +3,13 @@ package modelos.datos;
 import modelos.factura.Factura;
 import modelos.factura.LineaFactura;
 import modelos.factura.Pago;
+import modelos.factura.ProductoBuscar;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
+
+import static modelos.datos.Connect.connect;
 
 public class Operaciones {
 
@@ -22,7 +26,7 @@ public class Operaciones {
 
         Connection conn;
         try {
-            conn = Connect.connect(Constantes.dbPrincipal);
+            conn = connect(Constantes.dbPrincipal);
             Statement comando = conn.createStatement() ;
             comando.execute(sql);
             conn.close();
@@ -39,7 +43,7 @@ public class Operaciones {
         Integer lastId = 0;
         try {
 
-            Connection conn = Connect.connect(Constantes.dbPrincipal);
+            Connection conn = connect(Constantes.dbPrincipal);
             PreparedStatement pstmt = conn.prepareStatement(Constantes.SQL_INSERTAR_FACTURA);
 
             pstmt.setInt(1, fac.getNumeroFactura());
@@ -86,7 +90,7 @@ public class Operaciones {
 
         try {
 
-            Connection conn = Connect.connect(Constantes.dbPrincipal);
+            Connection conn = connect(Constantes.dbPrincipal);
             PreparedStatement pstmt = conn.prepareStatement(Constantes.SQL_INSERTAR_LINEA_FACTURA);
 
             for(LineaFactura lin:lineas) {
@@ -124,7 +128,7 @@ public class Operaciones {
 
         try {
 
-            Connection conn = Connect.connect(Constantes.dbPrincipal);
+            Connection conn = connect(Constantes.dbPrincipal);
             PreparedStatement pstmt = conn.prepareStatement(Constantes.SQL_INSERTAR_PAGO);
 
             for(Pago pag:pagos) {
@@ -157,6 +161,31 @@ public class Operaciones {
 
 
         return Exito;
+
+    }
+
+    public static List<ProductoBuscar> buscarProductoDescrip(String desc) {
+        List<ProductoBuscar> lista = new ArrayList<>();
+        Connection conn = connect(Constantes.dbPrincipal);
+
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT descrip,codigo,ref  " +
+                    "FROM producbuscar WHERE descrip MATCH '"+desc.trim()+"'  ");
+            while (rs.next()) {
+                ProductoBuscar pro = new ProductoBuscar(rs.getString("descrip"),
+                        rs.getString("codigo"), rs.getString("ref"));
+
+                lista.add(pro);
+                System.out.println(pro.getDescripcion());
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return lista;
+
 
     }
 

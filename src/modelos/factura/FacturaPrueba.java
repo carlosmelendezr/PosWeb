@@ -72,7 +72,8 @@ public class FacturaPrueba {
             System.out.println("Error :" + f.getMensaje());
         }
 
-        TestPrint.imprimir(f, Bolivar);
+        //TestPrint.imprimir(f, Bolivar);
+        Operaciones.buscarProductoDescrip("adorno disney");
 
     }
 }
