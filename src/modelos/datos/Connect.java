@@ -28,10 +28,10 @@ import java.sql.SQLException;
          */
         public static void main(String[] args) {
             Connection conn = connect("posweb.db");
-            Tabla.crear(conn,Constantes.SQL_CREAR_FACTURA);
-            Tabla.crear(conn,Constantes.SQL_CREAR_LINEAFAC);
-            Tabla.crear(conn,Constantes.SQL_CREAR_PAGOS);
-            Tabla.crear(conn,Constantes.SQL_CREAR_PRODUCTOS);
+
+            Tabla.crearBatch(conn,Constantes.crearTablasFactura());
+            Tabla.crearBatch(conn,Constantes.crearTablasProductos());
+
             try {
                 conn.close();
             } catch(SQLException e) {
