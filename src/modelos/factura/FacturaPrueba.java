@@ -22,9 +22,13 @@ public class FacturaPrueba {
         MonedaUtil.inicializar();
 
 
-        Producto p = new Producto(1,
-                "PRODUCTO DE PRUEBA",
+        Producto p1 = new Producto(1,
+                "PRODUCTO DE PRUEBA 1",
                 "001",new Moneda("8.95"),new Moneda("16"),barras);
+
+        Producto p2 = new Producto(2,
+                "PRODUCTO DE PRUEBA 2",
+                "001",new Moneda("1.33"),new Moneda("16"),barras);
 
         List<Direccion> dir1 = new ArrayList<>();
         dir1.add( new Direccion("AV. FRANCISCO LAZO MARTI"));
@@ -44,8 +48,11 @@ public class FacturaPrueba {
         Factura f = new Factura(Dolar);
         if (f.getActiva()) {
             f.asignarCliente(c);
-            LineaFactura ln = new LineaFactura(1, p, 2.0, "759355622235");
+            LineaFactura ln = new LineaFactura(1, p1, 2.0, "759355622235");
             f.agregarLinea(ln);
+
+            LineaFactura ln2 = new LineaFactura(2, p2, 4.0, "759355656223");
+            f.agregarLinea(ln2);
 
 
             Pago Efe1 = new Pago(Dolar,new Moneda(5.0), new Moneda("0.0"));

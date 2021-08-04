@@ -20,5 +20,13 @@ public interface ImpresoraFiscal {
 
     public void enviarImpresora();
 
+    public boolean enviarComando(String comm);
+
+    public void cerrarPuerto();
+
+    public boolean abrirPuerto();
+
+    public void finalizar();
+
 
 }

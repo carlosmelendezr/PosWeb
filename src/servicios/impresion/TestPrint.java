@@ -1,6 +1,7 @@
 package servicios.impresion;
 
 import modelos.factura.Factura;
+import modelos.factura.LineaFactura;
 import modelos.factura.TipoMoneda;
 
 import java.util.ArrayList;
@@ -17,13 +18,17 @@ public class TestPrint {
 
         ImpBixolonSRP812 Bixolon = new ImpBixolonSRP812();
 
-        Bixolon.inicializar("COM1", mon);
+        Bixolon.inicializar("COM99", mon);
         Bixolon.cargarTablaComandos();
 
         Bixolon.agregarCliente(fac.getCliente());
-        Bixolon.agregarItem(fac.getLineas().get(0));
+        for (LineaFactura lin:fac.getLineas()) {
+            Bixolon.agregarItem(lin);
+        }
+
         Bixolon.Totalizar();
         Bixolon.enviarImpresora();
+        Bixolon.finalizar();
 
 
     }

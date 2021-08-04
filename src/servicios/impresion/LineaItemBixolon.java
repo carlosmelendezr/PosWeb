@@ -37,9 +37,9 @@ public class LineaItemBixolon
 
             }
         }
-        String sPrecio = Util.llenarCeros(this.precio,18);
+        String sPrecio = Util.llenarCeros(this.precio,10);
         comm.append(sPrecio);
-        String sCantidad = Util.llenarCeros(this.cantidad,8);
+        String sCantidad = Util.llenarCeros(this.cantidad,5,3);
         comm.append(sCantidad);
         comm.append(this.descripcion);
 

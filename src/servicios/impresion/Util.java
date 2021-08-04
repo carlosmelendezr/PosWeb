@@ -20,6 +20,14 @@ public class Util {
         return sMonto;
     }
 
+    public static String llenarCeros(Double valor,int enteros,int decimales) {
+        String sMonto = String.format("%,."+decimales+"f",valor);
+        sMonto = sMonto.replace(".", "");
+        sMonto = sMonto.replace(",", "");
+        sMonto = llenarIzq(sMonto,enteros+decimales,"0");
+        return sMonto;
+    }
+
     public static String llenarDerecha(String original, int longitud, String Caracter) {
         StringBuilder sb = new StringBuilder();
         sb.append(original);

@@ -4,14 +4,12 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
-public class servicios {
+public class Servicios {
 
     public static void main(String arg[]) {
-        servicios svr = new servicios();
+        Servicios svr = new Servicios();
 
         svr.importarProductos("c:\\tmp\\prodbuscar.csv");
     }
@@ -70,7 +68,7 @@ public class servicios {
                     }catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
-                    //Operaciones.InsertarProducto(SQL_INSERT);
+
                 }
 
             }
