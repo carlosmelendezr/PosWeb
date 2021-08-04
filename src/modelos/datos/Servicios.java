@@ -11,22 +11,23 @@ public class Servicios {
     public static void main(String arg[]) {
         Servicios svr = new Servicios();
 
-        svr.importarProductos("c:\\tmp\\prodbuscar.csv");
+        svr.importarProductos("c:\\tmp\\catbuscar.csv","producbuscar");
     }
 
 
 
 
-    public void importarProductos(String FileName) {
+    public void importarProductos(String FileName, String tabla) {
         Connection conn;
         StringBuilder sql = new StringBuilder();
         StringBuilder campos = new StringBuilder();
-        campos.append("INSERT INTO producbuscar (");
+        campos.append("INSERT INTO "+tabla+" (");
 
         try {
 
             conn = Connect.connect(Constantes.dbPrincipal);
             Statement comando = conn.createStatement() ;
+
             BufferedReader br = new BufferedReader(new FileReader(FileName));
             String line;
             int count = 0;

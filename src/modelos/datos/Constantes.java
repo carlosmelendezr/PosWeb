@@ -1,5 +1,8 @@
 package modelos.datos;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Constantes {
     public static String dirLocal    = "C:/posweb/db/";
     public static String dbPrincipal = "posweb.db";
@@ -28,6 +31,12 @@ public class Constantes {
             + "	tasacambio real "
             + ");";
 
+    public static String SQL_IND_FACTURA_NUM = "CREATE UNIQUE INDEX IF NOT EXISTS ifacnum ON factura (numero)";
+    public static String SQL_IND_FACTURA_CLI = "CREATE INDEX IF NOT EXISTS ifaccli ON factura (idcliente)";
+    public static String SQL_IND_FACTURA_FEC = "CREATE INDEX IF NOT EXISTS ifacfec ON factura (fecha)";
+
+
+
     public static String SQL_INSERTAR_FACTURA = "INSERT INTO factura " +
             "(numero,idcliente,moneda,caja,total,impuesto,base,descuento," +
             "imprime,activa,pagada,cancelada,error,espera,fecha,hora, tasacambio) " +
@@ -43,7 +52,29 @@ public class Constantes {
             + "	precio real ,"
             + "	alicuota real ,"
             + "	descuento real "
-            + "); CREATE INDEX IF NOT EXISTS idx_idfac ON fac_articulos (idfactura)";
+            + ")";
+    public static String SQL_IND_LINFAC_IDFAC = "CREATE UNIQUE INDEX  IF NOT EXISTS ilinfacid  ON fac_articulos (idfactura)";
+    public static String SQL_IND_LINFAC_IDPRO = "CREATE INDEX IF NOT EXISTS ilinfacpr  ON fac_articulos (idproducto)";
+    public static String SQL_IND_LINFAC_BARRA = "CREATE INDEX IF NOT EXISTS ilinfacbar ON fac_articulos (codbarra)";
+
+    public static List<String> crearTablasFactura() {
+        List<String> queris = new ArrayList<>();
+        queris.add(SQL_CREAR_FACTURA);
+        queris.add(SQL_IND_FACTURA_NUM);
+        queris.add(SQL_IND_FACTURA_CLI);
+        queris.add(SQL_IND_FACTURA_FEC);
+
+        queris.add(SQL_CREAR_LINEAFAC);
+        queris.add(SQL_IND_LINFAC_IDFAC);
+        queris.add(SQL_IND_LINFAC_IDPRO);
+        queris.add(SQL_IND_LINFAC_BARRA);
+
+        queris.add(SQL_CREAR_PAGOS);
+        queris.add(SQL_IND_PAGO_IDFAC);
+        queris.add(SQL_IND_PAGO_IDBAN);
+        return queris;
+
+    }
 
     public static String SQL_INSERTAR_LINEA_FACTURA = "INSERT INTO fac_articulos " +
             "(idfactura,idproducto,referencia,codbarra,cantidad,precio,alicuota,descuento) VALUES " +
@@ -64,9 +95,13 @@ public class Constantes {
             + "horreg text,"
             + "tasacambio real)";
 
+    public static String SQL_IND_PAGO_IDFAC = "CREATE INDEX IF NOT EXISTS ipagoidfac  ON fac_pagos (idfactura)";
+    public static String SQL_IND_PAGO_IDBAN = "CREATE INDEX IF NOT EXISTS ipagoidban  ON fac_pagos (idbanco)";
+
     public static String SQL_INSERTAR_PAGO = "INSERT INTO fac_pagos " +
             "(idfactura,moneda,monto,vuelto,total,referencia,idbanco,fecpago,horpago,fecreg,horreg,tasacambio) VALUES " +
             "(    ?,      ?   ,  ?,     ?,    ?,      ?,        ?,      ?,      ?,      ?,     ?  ,    ?  )";
+
 
     public static String FacturaDatosFiscales= "CREATE TABLE IF NOT EXISTS fac_fiscal ("
             + "	id integer PRIMARY KEY,"
@@ -74,6 +109,8 @@ public class Constantes {
             + " numero integer,"
             + "	serial text ,"
             + ");";
+
+    public static String SQL_IND_DATFIS_IDFAC = "CREATE INDEX IF NOT EXISTS idatfisidfac  ON fac_fiscal (idfactura)";
 
     public static String FacturaCliente= "CREATE TABLE IF NOT EXISTS fac_cliente ("
             + "	id integer PRIMARY KEY,"
@@ -98,5 +135,29 @@ public class Constantes {
             + "refprov text,"
             + "codigo text,"
             + "idprov integer)";
+
+    public static String SQL_IND_PRODUCTOS_REF = "CREATE UNIQUE INDEX  iprodref ON productos (ref)";
+    public static String SQL_IND_PRODUCTOS_COD = "CREATE UNIQUE INDEX  iprodcod ON productos (codigo)";
+    public static String SQL_IND_PRODUCTOS_DES = "CREATE INDEX iproddes ON productos (descrip)";
+
+    public static String SQL_PRODUC_BUSCAR = "CREATE VIRTUAL TABLE producbuscar USING FTS5(descrip,ref,codigo)";
+
+    public static List<String> crearTablasProductos() {
+        List<String> queris = new ArrayList<>();
+        queris.add(SQL_CREAR_PRODUCTOS);
+        queris.add(SQL_IND_PRODUCTOS_REF);
+        queris.add(SQL_IND_PRODUCTOS_COD);
+        queris.add(SQL_IND_PRODUCTOS_DES);
+        queris.add(SQL_PRODUC_BUSCAR);
+
+        return queris;
+
+    }
+
+
+
+
+
+
 
 }

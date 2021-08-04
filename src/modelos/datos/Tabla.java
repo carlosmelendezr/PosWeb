@@ -1,20 +1,27 @@
 package modelos.datos;
 
 import java.sql.*;
+import java.util.List;
 
 public class Tabla {
 
+    public static void crearBatch(Connection conn, List<String> sqllist) {
+        for (String sql:sqllist) {
+            crear(conn,sql);
+        }
+    }
+
+
     public static void crear(Connection conn, String sql) {
-
-
-
         try {
-             Statement stmt = conn.createStatement();
-
+            Statement stmt = conn.createStatement();
             stmt.execute(sql);
+
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+            System.out.println("Sentencia : "+sql);
+
         }
     }
 
