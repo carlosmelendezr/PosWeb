@@ -35,7 +35,10 @@ public class FacturaPrueba {
         dir1.add( new Direccion("RES. MAYORAL PLAZA"));
         List<Telefono> tel1 = Arrays.asList(new Telefono(212,6616263));
 
-        Cliente c = new Cliente(1,"CLIENTE DE PRUEBA",309269577,"J",dir1,tel1);
+        Cliente c = new Cliente(1,"CARLOS MELENDEZ",12641955,"V",dir1,tel1);
+        c.setCorreo("carlosmelendezr@gmail.com");
+
+        Operaciones.InsertarCliente(c);
 
         DatosFiscales fis = new DatosFiscales(65265,"TTB001195");
 

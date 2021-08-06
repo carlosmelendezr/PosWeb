@@ -1,9 +1,6 @@
 package modelos.datos;
 
-import modelos.factura.Factura;
-import modelos.factura.LineaFactura;
-import modelos.factura.Pago;
-import modelos.factura.ProductoBuscar;
+import modelos.factura.*;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -187,6 +184,66 @@ public class Operaciones {
         return lista;
 
 
+    }
+
+    public static boolean InsertarCliente(Cliente cli) {
+        boolean Exito=false;
+        String Dir2="";
+        String Dir3="";
+
+        String Tel2="";
+        String Tel3="";
+
+        if (cli.getDirecciones().size()>=2) {
+            Dir2 = cli.getDirecciones().get(1).getTexto();
+        }
+        if (cli.getDirecciones().size()==3) {
+            Dir3 = cli.getDirecciones().get(2).getTexto();
+        }
+
+        if (cli.getTelefonos().size()>=2) {
+            Tel2 = cli.getTelefonos().get(1).toString();
+        }
+
+        if (cli.getTelefonos().size()==2) {
+            Tel3 = cli.getTelefonos().get(2).toString();
+        }
+
+        try {
+
+            Connection conn = connect(Constantes.dbPrincipal);
+            PreparedStatement pstmt = conn.prepareStatement(Constantes.SQL_INSERTAR_CLIENTE);
+
+
+                pstmt.setString(1, cli.getTiporif());
+                pstmt.setInt(2, cli.getRif());
+                pstmt.setInt(3, cli.getRif());
+                pstmt.setString(4, cli.getRazonsocial());
+                pstmt.setString(5, cli.getDirecciones().get(0).getTexto());
+                pstmt.setString(6, Dir2);
+                pstmt.setString(7, Dir3);
+                pstmt.setString(8, cli.getTelefonos().get(0).toString());
+                pstmt.setString(9, Tel2);
+                pstmt.setString(10, Tel3);
+                pstmt.setString(11, cli.getCorreo());
+                pstmt.execute();
+
+            pstmt.close();
+            Exito = true;
+            try {
+                conn.close();
+            } catch(SQLException e) {
+                System.out.println(e.getMessage());
+
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+
+
+        return Exito;
     }
 
 }

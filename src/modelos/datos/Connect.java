@@ -31,6 +31,7 @@ import java.sql.SQLException;
 
             Tabla.crearBatch(conn,Constantes.crearTablasFactura());
             Tabla.crearBatch(conn,Constantes.crearTablasProductos());
+            Tabla.crearBatch(conn,Constantes.crearTablasClientes());
 
             try {
                 conn.close();

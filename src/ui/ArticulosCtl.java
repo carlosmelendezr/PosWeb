@@ -9,7 +9,7 @@ import javafx.scene.control.ListView;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class Articulos implements Initializable {
+public class ArticulosCtl implements Initializable {
 
     @FXML
     ListView listaArticulos;

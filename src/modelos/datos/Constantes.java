@@ -154,9 +154,40 @@ public class Constantes {
 
     }
 
+    public static String SQL_CREAR_CLIENTES = "CREATE TABLE IF NOT EXISTS clientes ("
+            + "id integer PRIMARY KEY,"
+            + "tipo text, "
+            + "cedula integer, "
+            + "rif integer, "
+            + "razonsoc text, "
+            + "dir1 text, "
+            + "dir2 text, "
+            + "dir3 text, "
+            + "telcelular text, "
+            + "tellocal text,"
+            + "teloficina text,"
+            + "correo text)";
+
+    public static String SQL_INSERTAR_CLIENTE = "INSERT INTO clientes " +
+            "(tipo,cedula,rif,razonsoc,dir1,dir2,dir3,telcelular," +
+            "tellocal,teloficina,correo) " +
+            "VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+
+    public static String SQL_IND_CLIENTES_RIF = "CREATE UNIQUE INDEX  ipclirif ON clientes (rif)";
+    public static String SQL_IND_CLIENTES_CED = "CREATE UNIQUE INDEX  ipclicod ON clientes (cedula)";
+    public static String SQL_IND_CLIENTES_DES = "CREATE INDEX iclinom ON clientes (razonsoc)";
+
+    public static List<String> crearTablasClientes() {
+        List<String> queris = new ArrayList<>();
+        queris.add(SQL_CREAR_CLIENTES);
+        queris.add(SQL_IND_CLIENTES_RIF);
+        queris.add(SQL_IND_CLIENTES_CED);
+        queris.add(SQL_IND_CLIENTES_DES);
 
 
+        return queris;
 
+    }
 
 
 

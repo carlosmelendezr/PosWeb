@@ -10,7 +10,7 @@ import javafx.scene.input.MouseEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ResulBusq implements Initializable {
+public class ResulBusqCtl implements Initializable {
 
     @FXML
     ListView listaBusqueda;

@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class Buscador implements Initializable {
+public class BuscadorCtl implements Initializable {
 
     @FXML
     TextField TextoBuscar;

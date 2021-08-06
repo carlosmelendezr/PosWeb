@@ -10,6 +10,7 @@ public class Cliente {
     private String  tiporif;
     private List<Direccion> direcciones;
     private List<Telefono>  telefonos;
+    private String correo;
 
     Cliente(Integer id, String razonsocial, Integer rif,
             String tiporif,List<Direccion> direcciones,List<Telefono> telefonos ) {
@@ -67,5 +68,13 @@ public class Cliente {
 
     public void setTelefonos(List<Telefono> telefonos) {
         this.telefonos = telefonos;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
     }
 }

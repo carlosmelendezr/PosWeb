@@ -25,4 +25,10 @@ public class Telefono {
     public void setNumero(Integer numero) {
         this.numero = numero;
     }
+
+    @Override
+    public String toString() {
+        return "(" +codArea +") "+numero;
+
+    }
 }

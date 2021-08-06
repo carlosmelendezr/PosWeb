@@ -12,17 +12,17 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class mainControl implements Initializable {
+public class mainCtl implements Initializable {
 
     @FXML
     BorderPane mainPane;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+          crearPantalla();
     }
 
-    public void nuevoCliente() {
+    public void crearPantalla() {
         VBox vboxsup = new VBox();
         try {
 
