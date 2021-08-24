@@ -5,10 +5,11 @@ public class Telefono {
     private Integer numero;
 
 
-    public Telefono(Integer codArea, Integer numero) {
-        this.codArea = codArea;
-        this.numero = numero;
+    public Telefono(String codArea, String numero) {
+        this.codArea = Integer.parseInt(codArea);
+        this.numero = Integer.parseInt(numero);
     }
+
 
     public Integer getCodArea() {
         return codArea;

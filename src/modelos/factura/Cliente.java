@@ -12,14 +12,27 @@ public class Cliente {
     private List<Telefono>  telefonos;
     private String correo;
 
-    Cliente(Integer id, String razonsocial, Integer rif,
-            String tiporif,List<Direccion> direcciones,List<Telefono> telefonos ) {
+
+    public Cliente() {
+
+    }
+
+    public Cliente(Integer id, String razonsocial, Integer rif,
+            String tiporif, List<Direccion> direcciones, List<Telefono> telefonos ) {
         this.id = id;
         this.razonsocial = razonsocial;
         this.rif = rif;
         this.tiporif = tiporif;
         this.direcciones = direcciones;
         this.telefonos = telefonos;
+    }
+
+    public String lineaDireccion () {
+        StringBuilder dirs = new StringBuilder();
+        for (Direccion dir:direcciones) {
+            dirs.append(dir.getTexto()+" ");
+        }
+        return dirs.toString();
     }
 
     public Integer getId() {

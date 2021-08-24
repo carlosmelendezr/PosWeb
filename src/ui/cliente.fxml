@@ -5,13 +5,13 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="95.0" prefWidth="700.0" style="-fx-background-color: Grey;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="95.0" prefWidth="700.0" style="-fx-background-color: Grey;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.ClienteCtl">
    <children>
-      <Button layoutX="625.0" layoutY="2.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" text="Nuevo" />
-      <Label layoutX="4.0" layoutY="4.0" text="Cliente" />
-      <Label fx:id="razonsoc" layoutX="76.0" layoutY="52.0" prefHeight="17.0" prefWidth="569.0" text="CLIENTE DE CONTADO" />
-      <Label layoutX="7.0" layoutY="28.0" prefHeight="1.0" prefWidth="61.0" text="Cédula/RIF:" />
-      <TextField fx:id="cedula" layoutX="76.0" layoutY="24.0" prefHeight="25.0" prefWidth="127.0" />
-      <Label fx:id="direccion" layoutX="76.0" layoutY="71.0" prefHeight="17.0" prefWidth="605.0" text="DIRECCION" />
+      <Button layoutX="625.0" layoutY="2.0" mnemonicParsing="false" onMouseClicked="#ventanaCrear" prefHeight="25.0" prefWidth="75.0" text="Nuevo" />
+      <Label fx:id="razonsoc" layoutX="76.0" layoutY="58.0" prefHeight="17.0" prefWidth="569.0" text="CLIENTE DE CONTADO" />
+      <Label layoutY="16.0" prefHeight="1.0" prefWidth="61.0" text="Cédula/RIF:" />
+      <TextField fx:id="cedula" layoutX="76.0" layoutY="12.0" prefHeight="25.0" prefWidth="127.0" />
+      <Label fx:id="direccion" layoutX="76.0" layoutY="77.0" prefHeight="17.0" prefWidth="605.0" text="DIRECCION" />
+      <Label fx:id="rif" layoutX="76.0" layoutY="39.0" prefHeight="17.0" prefWidth="127.0" text="RIF" />
    </children>
 </AnchorPane>

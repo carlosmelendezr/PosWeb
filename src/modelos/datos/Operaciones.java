@@ -4,6 +4,7 @@ import modelos.factura.*;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static modelos.datos.Connect.connect;
@@ -244,6 +245,42 @@ public class Operaciones {
 
 
         return Exito;
+    }
+
+    public static Cliente buscarClienteCedula(String cedula) {
+        Cliente cli = new Cliente();
+        Connection conn = connect(Constantes.dbPrincipal);
+
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM clientes WHERE cedula="+cedula+" OR rif="+cedula);
+            while (rs.next()) {
+
+
+                List<Direccion> dirs = new ArrayList<>();
+                dirs.add( new Direccion(rs.getString("dir1")));
+                dirs.add( new Direccion(rs.getString("dir2")));
+                dirs.add( new Direccion(rs.getString("dir3")));
+
+                List<Telefono> tels =  new ArrayList<>();
+                Arrays.asList(new Telefono("212","00000"));
+
+                cli = new Cliente(rs.getInt("id"),
+                        rs.getString("razonsoc"),
+                        rs.getInt("rif"),
+                        rs.getString("tipo"),dirs,tels);
+
+
+                System.out.println(cli.getRazonsocial());
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return cli;
+
+
     }
 
 }

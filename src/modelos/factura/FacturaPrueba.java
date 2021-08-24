@@ -33,7 +33,7 @@ public class FacturaPrueba {
         List<Direccion> dir1 = new ArrayList<>();
         dir1.add( new Direccion("AV. FRANCISCO LAZO MARTI"));
         dir1.add( new Direccion("RES. MAYORAL PLAZA"));
-        List<Telefono> tel1 = Arrays.asList(new Telefono(212,6616263));
+        List<Telefono> tel1 = Arrays.asList(new Telefono("212","6616263"));
 
         Cliente c = new Cliente(1,"CARLOS MELENDEZ",12641955,"V",dir1,tel1);
         c.setCorreo("carlosmelendezr@gmail.com");

@@ -1,5 +1,7 @@
 package ui;
 
+import modelos.factura.Cliente;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +10,7 @@ public class Contexto {
 
     public static List<String> resultadoBusqueda;
     public static Integer seleccionBusqueda;
+    public static Cliente Cli;
 
 
 
