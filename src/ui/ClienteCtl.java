@@ -67,10 +67,12 @@ public class ClienteCtl implements Initializable {
     }
 
     private void asignaCliente() {
-        cedula.setText(Contexto.Cli.getRif().toString());
-        razonsoc.setText(Contexto.Cli.getRazonsocial());
-        direccion.setText(Contexto.Cli.lineaDireccion());
-        rif.setText(Contexto.Cli.getTiporif()+"-"+Contexto.Cli.getRif());
+        if (!(Contexto.Cli==null)) {
+            cedula.setText(Contexto.Cli.getRif().toString());
+            razonsoc.setText(Contexto.Cli.getRazonsocial());
+            direccion.setText(Contexto.Cli.lineaDireccion());
+            rif.setText(Contexto.Cli.getTiporif() + "-" + Contexto.Cli.getRif());
+        }
 
     }
 

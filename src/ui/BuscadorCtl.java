@@ -6,8 +6,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import modelos.datos.Operaciones;
+import modelos.factura.Producto;
 
 
 import java.io.IOException;
@@ -22,6 +25,12 @@ public class BuscadorCtl implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        TextoBuscar.setOnKeyPressed( event -> {
+            if( event.getCode() == KeyCode.ENTER ) {
+                buscar();
+            }
+        } );
+
     }
 
     public void buscar() {
@@ -29,14 +38,25 @@ public class BuscadorCtl implements Initializable {
        if ( TextoBuscar.getText() != null ) {
 
             if (!TextoBuscar.getText().isEmpty()) {
-
-                Contexto.Busqueda();
+                buscarProducto(TextoBuscar.getText());
                 if (Contexto.resultadoBusqueda.size() > 0) {
-                    ventanaBuscar();
-                    TextoBuscar.setText(Contexto.getCodigoSeleccionado());
+
+                    if (Contexto.ProductoBuscado.getId()==null) {
+                      ventanaBuscar();
+                    }
+                    if (!(Contexto.getCodigoSeleccionado()==null)) {
+                        TextoBuscar.setText(Contexto.getCodigoSeleccionado());
+                    }
                 }
             }
        }
+    }
+
+    public void buscarProducto(String codigoref) {
+
+        System.out.println(codigoref);
+        Contexto.ProductoBuscado = Operaciones.buscarProductoCodigo(codigoref);
+
     }
 
     public void ventanaBuscar() {

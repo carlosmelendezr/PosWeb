@@ -187,6 +187,58 @@ public class Operaciones {
 
     }
 
+    public static Producto buscarProductoCodigo(String codigo) {
+        Producto pro = new Producto();
+        Connection conn = connect(Constantes.dbPrincipal);
+
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * " +
+                    "FROM productos WHERE codigo='"+codigo.trim()+"' OR ref='"+codigo.trim()+"'  ");
+            while (rs.next()) {
+
+
+
+                pro.setId(rs.getInt("id"));
+                pro.setIdTipoProducto(rs.getInt("idtipoprod"));
+                pro.setDescripcion(rs.getString("descrip"));
+                pro.setImagenurl(rs.getString("imagen"));
+                pro.setIdImpuesto(rs.getInt("idtipoimp"));
+                pro.setIdCategoria(rs.getInt("idcategoria"));
+                pro.setIdMarca(rs.getInt("idmarca"));
+                pro.setUnMedida(rs.getString("unmedida"));
+
+                Moneda precio = new Moneda();
+                precio.setValor(rs.getDouble("precio"));
+                pro.setPrecio(precio);
+
+                Moneda costo = new Moneda();
+                costo.setValor(rs.getDouble("costo"));
+                pro.setCosto(costo);
+
+                pro.setStock(rs.getDouble("stock"));
+                pro.setReferencia(rs.getString("ref"));
+                pro.setRefprov(rs.getString("refprov"));
+
+                ArrayList barras = new ArrayList();
+                barras.add(rs.getString("codigo"));
+
+                pro.setCodbarra(barras);
+                pro.setIdProveedor(rs.getInt("idprov"));
+
+
+                System.out.println(pro.getDescripcion());
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return pro;
+
+
+    }
+
     public static boolean InsertarCliente(Cliente cli) {
         boolean Exito=false;
         String Dir2="";

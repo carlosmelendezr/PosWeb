@@ -34,43 +34,33 @@ public class CrearClienteCtl implements Initializable {
 
     @FXML
     ComboBox codcelular;
-
     @FXML
     ComboBox codoficia;
-
-
     @FXML
     TextField cedula;
-
     @FXML
     TextField razonsoc;
-
     @FXML
     TextField dir1;
-
     @FXML
     TextField dir2;
-
     @FXML
     TextField dir3;
-
     @FXML
     TextField telcelular;
-
     @FXML
     TextField tellocal;
-
     @FXML
     TextField teloficina;
-
     @FXML
     TextField correo;
-
     @FXML
     Button guardar;
-
     @FXML
     Label tipodoc;
+    @FXML
+    Label mensajes;
+
 
 
     @Override
@@ -94,8 +84,23 @@ public class CrearClienteCtl implements Initializable {
         });
 
         razonsoc.setOnMouseEntered(event -> {
-            razonsoc.setStyle("-fx-background-color: grey");
+            razonsoc.setStyle("-fx-background-color: lightgreen");
         });
+        cedula.setOnMouseEntered(event -> {
+            cedula.setStyle("-fx-background-color: lightgreen");
+        });
+        dir1.setOnMouseEntered(event -> {
+            dir1.setStyle("-fx-background-color: lightgreen");
+        });
+        telcelular.setOnMouseEntered(event -> {
+            telcelular.setStyle("-fx-background-color: lightgreen");
+        });
+
+
+        cedula.textProperty().addListener(new soloNumero(cedula) );
+        telcelular.textProperty().addListener(new soloNumero(telcelular) );
+        tellocal.textProperty().addListener(new soloNumero(tellocal) );
+        teloficina.textProperty().addListener(new soloNumero(teloficina) );
 
     }
     private void limpiar() {
@@ -113,18 +118,22 @@ public class CrearClienteCtl implements Initializable {
     public void guardarCliente() {
         if (cedula.getText().isEmpty()) {
             cedula.setStyle("-fx-background-color: red");
+            mensajes.setText("La cédula o RIF no puede estar en blanco.");
             return;
         }
         if (razonsoc.getText().isEmpty()) {
             razonsoc.setStyle("-fx-background-color: red");
+            mensajes.setText("El nombre no puede estar en blanco.");
             return;
         }
         if (dir1.getText().isEmpty()) {
             dir1.setStyle("-fx-background-color: red");
+            mensajes.setText("El cliente debe tener al menos una dirección.");
             return;
         }
-        if (telcelular.getText().isEmpty()) {
+        if (telcelular.getText().isEmpty() || codcelular.getValue()==null) {
             telcelular.setStyle("-fx-background-color: red");
+            mensajes.setText("El cliente debe tener al menos un teléfono con código de área.");
             return;
         }
 
@@ -156,7 +165,10 @@ public class CrearClienteCtl implements Initializable {
         if (Operaciones.InsertarCliente(cli)) {
             guardar.setStyle("-fx-background-color: green");
             Contexto.Cli = cli;
+            mensajes.setText("Datos guardados con éxito.");
             limpiar();
+        } else {
+            mensajes.setText("Error al guardar la informacion.");
         }
 
     }

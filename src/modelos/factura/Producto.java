@@ -21,9 +21,13 @@ public class Producto {
     private Integer idProveedor;
     private List<String> codbarra;
 
-   Producto(Integer id, String descripcion,
-            String referencia,
-            Moneda precio, Moneda alicuota, List<String> codbarra ) {
+    public Producto() {
+
+    }
+
+    Producto(Integer id, String descripcion,
+             String referencia,
+             Moneda precio, Moneda alicuota, List<String> codbarra ) {
        this.id = id;
        this.descripcion = descripcion;
        this.referencia = referencia;

@@ -3,8 +3,8 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="700.0" style="-fx-background-color: Yellow;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.BuscadorCtl">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="700.0" style="-fx-background-color: Yellow;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.BuscadorCtl">
    <children>
-      <TextField fx:id="TextoBuscar" layoutX="5.0" layoutY="6.0" onAction="#buscar" onKeyPressed="#buscar" onKeyReleased="#buscar" onKeyTyped="#buscar" prefHeight="25.0" prefWidth="687.0" />
+      <TextField fx:id="TextoBuscar" layoutX="5.0" layoutY="6.0" onAction="#buscar" prefHeight="25.0" prefWidth="687.0" />
    </children>
 </AnchorPane>

@@ -1,6 +1,7 @@
 package ui;
 
 import modelos.factura.Cliente;
+import modelos.factura.Producto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,15 +12,15 @@ public class Contexto {
     public static List<String> resultadoBusqueda;
     public static Integer seleccionBusqueda;
     public static Cliente Cli;
+    public static Producto ProductoBuscado;
 
-
-
-    public static void Busqueda() {
+    public static void inicializar() {
         resultadoBusqueda = new ArrayList<>();
-        resultadoBusqueda.add("BUSQUEDA 1");
-        resultadoBusqueda.add("BUSQUEDA 2");
-
+        seleccionBusqueda = 0;
+        Cli = new Cliente();
     }
+
+
 
     public static String getCodigoSeleccionado() {
         return resultadoBusqueda.get(seleccionBusqueda);
