@@ -10,6 +10,7 @@ import javafx.scene.input.KeyCode;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import modelos.datos.Operaciones;
+import modelos.factura.LineaFactura;
 import modelos.factura.Producto;
 
 
@@ -56,6 +57,12 @@ public class BuscadorCtl implements Initializable {
 
         System.out.println(codigoref);
         Contexto.ProductoBuscado = Operaciones.buscarProductoCodigo(codigoref);
+        if (Contexto.ProductoBuscado!=null ) {
+            LineaFactura lin = new LineaFactura(Contexto.ProductoBuscado.getId(),
+                    Contexto.ProductoBuscado,)
+            Contexto.facturaListaproductos.add(Contexto.ProductoBuscado);
+            TextoBuscar.setText("");
+        }
 
     }
 

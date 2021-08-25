@@ -218,6 +218,7 @@ public class Operaciones {
 
                 pro.setStock(rs.getDouble("stock"));
                 pro.setReferencia(rs.getString("ref"));
+                pro.setCodigo(rs.getString("codigo"));
                 pro.setRefprov(rs.getString("refprov"));
 
                 ArrayList barras = new ArrayList();

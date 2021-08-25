@@ -7,6 +7,7 @@ public class Producto {
     private Integer id;
     private Integer idTipoProducto;
     private String  descripcion;
+    private String  codigo;
     private String  referencia;
     private String  refprov;
     private String  imagenurl;
@@ -35,6 +36,14 @@ public class Producto {
        this.alicuota = alicuota;
        this.codbarra = codbarra;
    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
 
     public Integer getId() {
         return id;
@@ -164,4 +173,6 @@ public class Producto {
     public void setAlicuota(Moneda alicuota) {
         this.alicuota = alicuota;
     }
+
+
 }

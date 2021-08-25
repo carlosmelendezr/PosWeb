@@ -6,8 +6,10 @@ public class LineaFactura {
     private Double   cantidad;
     private String   codbarra;
     private String   referencia;
+    private String   descripcion;
     private Moneda   precio;
     private Moneda   descuento;
+    private String   precioFormato;
 
 
 
@@ -80,5 +82,10 @@ public class LineaFactura {
 
     public void setDescuento(Moneda descuento) {
         this.descuento = descuento;
+    }
+
+    public String getPrecioFormato() {
+        precioFormato = MonedaUtil.formatoUsd.format( precio.getValor());
+        return precioFormato;
     }
 }
