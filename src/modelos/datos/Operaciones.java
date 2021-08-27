@@ -95,7 +95,7 @@ public class Operaciones {
                 pstmt.setInt(1, idfactura);
                 pstmt.setInt(2, lin.getProducto().getId());
                 pstmt.setString(3, lin.getProducto().getReferencia());
-                pstmt.setString(4, lin.getCodbarra());
+                pstmt.setString(4, lin.getCodigo());
                 pstmt.setDouble(5, lin.getCantidad());
                 pstmt.setDouble(6, lin.getPrecio().getValor().doubleValue());
                 pstmt.setDouble(7, lin.getProducto().getAlicuota().getValor().doubleValue());
@@ -193,11 +193,11 @@ public class Operaciones {
 
         try {
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * " +
-                    "FROM productos WHERE codigo='"+codigo.trim()+"' OR ref='"+codigo.trim()+"'  ");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM productos "
+                    +" LEFT JOIN tabla_tasa ON productos.idtipoimp=tabla_tasa.id "
+                    +" WHERE codigo='"+codigo.trim()+"' OR ref='"+codigo.trim()+"'");
+
             while (rs.next()) {
-
-
 
                 pro.setId(rs.getInt("id"));
                 pro.setIdTipoProducto(rs.getInt("idtipoprod"));
@@ -207,14 +207,9 @@ public class Operaciones {
                 pro.setIdCategoria(rs.getInt("idcategoria"));
                 pro.setIdMarca(rs.getInt("idmarca"));
                 pro.setUnMedida(rs.getString("unmedida"));
-
-                Moneda precio = new Moneda();
-                precio.setValor(rs.getDouble("precio"));
-                pro.setPrecio(precio);
-
-                Moneda costo = new Moneda();
-                costo.setValor(rs.getDouble("costo"));
-                pro.setCosto(costo);
+                pro.setAlicuota(new Moneda(rs.getDouble("alicuota")));
+                pro.setPrecio(new Moneda(rs.getDouble("precio")));
+                pro.setCosto(new Moneda(rs.getDouble("costo")));
 
                 pro.setStock(rs.getDouble("stock"));
                 pro.setReferencia(rs.getString("ref"));

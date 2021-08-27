@@ -106,7 +106,9 @@ public class FacturaTotal {
         System.out.println("- - - - - - - - - - - - - - - - - - - - - - - - - -  -");
     }
 
-
+    public String montoTotalFormato() {
+        return this.tipoMoneda.getValorFormato(this.montoTotal);
+    }
 
     public void setTotalPago(Moneda totalPago) {
         this.totalPago = totalPago;

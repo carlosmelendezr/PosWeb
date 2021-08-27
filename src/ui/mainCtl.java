@@ -36,6 +36,9 @@ public class mainCtl implements Initializable {
             FXMLLoader artLoader = new FXMLLoader(getClass().getResource("articulos.fxml"));
             mainPane.setCenter(artLoader.load());
 
+            FXMLLoader totalLoader = new FXMLLoader(getClass().getResource("totalesfact.fxml"));
+            mainPane.setBottom(totalLoader.load());
+
 
 
 

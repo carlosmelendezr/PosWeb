@@ -46,7 +46,7 @@ public class Factura  {
     }
 
 
-    Factura(TipoMoneda mon) {
+    public Factura(TipoMoneda mon) {
         if (!mon.getEsMonedaBase()) {
 
             this.Error = true;

@@ -42,13 +42,18 @@ public class ArticulosCtl implements Initializable {
         coldes.setCellValueFactory(
                 new PropertyValueFactory<Producto, String>("descripcion"));
 
+        TableColumn colcant = new TableColumn("Cantidad");
+        colcant.setMinWidth(100);
+        colcant.setCellValueFactory(
+                new PropertyValueFactory<Producto, String>("cantidad"));
+
         TableColumn colpre = new TableColumn("Precio");
         colpre.setMinWidth(100);
         colpre.setCellValueFactory(
                 new PropertyValueFactory<Producto, String>("precioFormato"));
 
 
-        listaArticulos.getColumns().addAll(colcod,colref,coldes,colpre);
+        listaArticulos.getColumns().addAll(colcod,colref,coldes,colcant,colpre);
         listaArticulos.setItems(Contexto.facturaListaproductos);
 
     }

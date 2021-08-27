@@ -51,10 +51,10 @@ public class FacturaPrueba {
         Factura f = new Factura(Dolar);
         if (f.getActiva()) {
             f.asignarCliente(c);
-            LineaFactura ln = new LineaFactura(1, p1, 2.0, "759355622235");
+            LineaFactura ln = new LineaFactura(1, p1, 2.0);
             f.agregarLinea(ln);
 
-            LineaFactura ln2 = new LineaFactura(2, p2, 4.0, "759355656223");
+            LineaFactura ln2 = new LineaFactura(2, p2, 4.0);
             f.agregarLinea(ln2);
 
 

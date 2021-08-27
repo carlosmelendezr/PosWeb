@@ -55,12 +55,12 @@ public class BuscadorCtl implements Initializable {
 
     public void buscarProducto(String codigoref) {
 
-        System.out.println(codigoref);
+        //System.out.println(codigoref);
         Contexto.ProductoBuscado = Operaciones.buscarProductoCodigo(codigoref);
         if (Contexto.ProductoBuscado!=null ) {
-            LineaFactura lin = new LineaFactura(Contexto.ProductoBuscado.getId(),
-                    Contexto.ProductoBuscado,)
-            Contexto.facturaListaproductos.add(Contexto.ProductoBuscado);
+            LineaFactura lin = new LineaFactura(0,
+                    Contexto.ProductoBuscado,1.0);
+            Contexto.agregarLineaFactura(lin);
             TextoBuscar.setText("");
         }
 

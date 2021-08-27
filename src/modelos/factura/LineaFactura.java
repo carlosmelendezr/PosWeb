@@ -4,7 +4,7 @@ public class LineaFactura {
     private Integer  id;
     private Producto producto;
     private Double   cantidad;
-    private String   codbarra;
+    private String   codigo;
     private String   referencia;
     private String   descripcion;
     private Moneda   precio;
@@ -13,14 +13,16 @@ public class LineaFactura {
 
 
 
-    public LineaFactura(Integer id, Producto producto, Double cantidad, String codbarra) {
+    public LineaFactura(Integer id, Producto producto, Double cantidad) {
         this.id = id;
         this.producto = producto;
         this.cantidad = cantidad;
-        this.codbarra = codbarra;
+        this.descripcion = producto.getDescripcion();
+        this.codigo = producto.getCodigo();
         this.referencia = producto.getReferencia();
         this.precio = producto.getPrecio();
         this.descuento = new Moneda(0);
+
 
     }
 
@@ -52,12 +54,12 @@ public class LineaFactura {
         this.cantidad = cantidad;
     }
 
-    public String getCodbarra() {
-        return codbarra;
+    public String getCodigo() {
+        return codigo;
     }
 
-    public void setCodbarra(String codbarra) {
-        this.codbarra = codbarra;
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
     public String getReferencia() {
@@ -82,6 +84,18 @@ public class LineaFactura {
 
     public void setDescuento(Moneda descuento) {
         this.descuento = descuento;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public void setPrecioFormato(String precioFormato) {
+        this.precioFormato = precioFormato;
     }
 
     public String getPrecioFormato() {

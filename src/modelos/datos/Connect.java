@@ -29,9 +29,10 @@ import java.sql.SQLException;
         public static void main(String[] args) {
             Connection conn = connect("posweb.db");
 
-            Tabla.crearBatch(conn,Constantes.crearTablasFactura());
+            /*Tabla.crearBatch(conn,Constantes.crearTablasFactura());
             Tabla.crearBatch(conn,Constantes.crearTablasProductos());
-            Tabla.crearBatch(conn,Constantes.crearTablasClientes());
+            Tabla.crearBatch(conn,Constantes.crearTablasClientes());*/
+            Tabla.crearBatch(conn,Constantes.crearTablasTasaImpuesto());
 
             try {
                 conn.close();
