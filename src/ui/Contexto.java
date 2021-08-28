@@ -1,5 +1,6 @@
 package ui;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import modelos.factura.*;
@@ -23,8 +24,7 @@ public class Contexto {
     public static TipoMoneda Dolar;
     public static TipoMoneda Bolivar;
     public static ArrayList<Moneda> tasasImpuesto;
-    public static ObservableValue<String> totalfactura;
-
+    public static SimpleStringProperty MensajeEstatus = new SimpleStringProperty();
     public static FacturaTotal totalUsd;
 
 
@@ -34,7 +34,8 @@ public class Contexto {
 
         resultadoBusqueda = new ArrayList<>();
         seleccionBusqueda = 0;
-        Cli = new Cliente();
+        MensajeEstatus.set("Preparado");
+        //Cli = new Cliente();
         facturaListaproductos = observableArrayList();
 
         tasaDolarHoy = new Moneda("4147300.52");
@@ -48,13 +49,18 @@ public class Contexto {
 
     }
 
+    public static void enviarEstus(String Mensaje) {
+        MensajeEstatus.set(Mensaje);
+    }
+
     public static void agregarLineaFactura(LineaFactura lin) {
 
         facturaActual.agregarLinea(lin);
         facturaListaproductos.add(lin);
         totalUsd = facturaActual.getTotales();
-        //totalfactura = totalUsd.montoTotalFormato();
-        totalfactura.
+        ProductoBuscado = null;
+        TotalFactCtl.totalGen.set(totalUsd.montoTotalFormato());
+        enviarEstus("Producto agregado correctamente.");
 
     }
 

@@ -1,27 +1,22 @@
 package ui;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class TotalesFactCtl implements Initializable {
+public class EstatusCtl implements Initializable {
 
     @FXML
-    Label Total;
+    Label mensajeEstatus;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-        Total.setText("0");
-        Total.textProperty().bind(Contexto.totalfactura);
+        mensajeEstatus.setText("Preparado");
+        mensajeEstatus.textProperty().bind(Contexto.MensajeEstatus);
 
     }
-
-
-
 }

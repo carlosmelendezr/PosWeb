@@ -188,7 +188,7 @@ public class Operaciones {
     }
 
     public static Producto buscarProductoCodigo(String codigo) {
-        Producto pro = new Producto();
+        Producto pro = null;
         Connection conn = connect(Constantes.dbPrincipal);
 
         try {
@@ -198,6 +198,7 @@ public class Operaciones {
                     +" WHERE codigo='"+codigo.trim()+"' OR ref='"+codigo.trim()+"'");
 
             while (rs.next()) {
+                pro = new Producto();
 
                 pro.setId(rs.getInt("id"));
                 pro.setIdTipoProducto(rs.getInt("idtipoprod"));
@@ -296,14 +297,14 @@ public class Operaciones {
     }
 
     public static Cliente buscarClienteCedula(String cedula) {
-        Cliente cli = new Cliente();
+        Cliente cli =null;
         Connection conn = connect(Constantes.dbPrincipal);
 
         try {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM clientes WHERE cedula="+cedula+" OR rif="+cedula);
             while (rs.next()) {
-
+                cli =  new Cliente();
 
                 List<Direccion> dirs = new ArrayList<>();
                 dirs.add( new Direccion(rs.getString("dir1")));

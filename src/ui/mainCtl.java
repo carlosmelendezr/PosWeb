@@ -24,6 +24,7 @@ public class mainCtl implements Initializable {
 
     public void crearPantalla() {
         VBox vboxsup = new VBox();
+        VBox vboxinf = new VBox();
         try {
 
             FXMLLoader cliLoader = new FXMLLoader(getClass().getResource("cliente.fxml"));
@@ -37,13 +38,17 @@ public class mainCtl implements Initializable {
             mainPane.setCenter(artLoader.load());
 
             FXMLLoader totalLoader = new FXMLLoader(getClass().getResource("totalesfact.fxml"));
-            mainPane.setBottom(totalLoader.load());
+            FXMLLoader estatLoader = new FXMLLoader(getClass().getResource("estatus.fxml"));
+            vboxinf.getChildren().add(totalLoader.load());
+            vboxinf.getChildren().add(estatLoader.load());
+            mainPane.setBottom(vboxinf);
 
 
 
 
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Error :"+e.getMessage());
+            e.printStackTrace();
         }
     }
 

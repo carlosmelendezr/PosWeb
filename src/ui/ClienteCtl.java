@@ -24,19 +24,12 @@ public class ClienteCtl implements Initializable {
 
     @FXML
     TextField cedula;
-
-
-
     @FXML
     Label rif;
-
     @FXML
     Label direccion;
-
     @FXML
     Label razonsoc;
-
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
