@@ -12,8 +12,10 @@ public class Pago {
     private Banco  banco;
     private Moneda vuelto;
     private Moneda total;
+    private String montoformato;
     private Calendar fechapago;
     private Calendar   fechareg;
+    private String destipoMoneda;
 
     public Pago(TipoMoneda tipoMoneda, Moneda monto, Moneda vuelto) {
         this.tipoMoneda = tipoMoneda;
@@ -26,6 +28,16 @@ public class Pago {
         total.restar(vuelto);
 
     }
+
+
+    public String getDestipoMoneda() {
+        return tipoMoneda.getDescripcion();
+    }
+
+    public String getMontoformato() {
+        return MonedaUtil.formatoBs.format(monto.getValor());
+    }
+
 
     public Integer getId() {
         return id;

@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 
+import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
@@ -43,13 +44,27 @@ public class mainCtl implements Initializable {
             vboxinf.getChildren().add(estatLoader.load());
             mainPane.setBottom(vboxinf);
 
-
-
+            cintaBotones();
 
         } catch (IOException e) {
             System.out.println("Error :"+e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    public void cintaBotones() {
+        Button buttonPagos = new Button("Pagos");
+        botonset(buttonPagos);
+        buttonPagos.setOnAction(event -> {
+            Acciones.ventanaPagos();
+        });
+
+        mainPane.setRight(buttonPagos);
+    }
+
+    public void botonset(Button bot) {
+        bot.setPrefWidth(100);
+        bot.setPrefHeight(100);
     }
 
 

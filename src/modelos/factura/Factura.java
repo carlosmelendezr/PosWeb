@@ -76,10 +76,27 @@ public class Factura  {
     }
 
 
-    public void agregarPago(Pago pago) {
-        System.out.println( "Agregando pago "+pago.getTipoMoneda().getCodmoneda()+" monto "+pago.getMonto().getValor());
-        this.pagos.add(pago);
-        actualizarPago();
+    public String agregarPago(Pago pago) {
+        String Mensaje = "";
+        if (pago!=null) {
+            Mensaje = "Agregando pago " + pago.getTipoMoneda().getCodmoneda() + " monto " + pago.getMontoformato();
+            this.pagos.add(pago);
+            actualizarPago();
+        } else {
+            Mensaje = "Pago no aceptado.";
+        }
+        return Mensaje;
+    }
+
+
+    public Moneda getTotalPagos(TipoMoneda tipo) {
+        Moneda total = new Moneda(0);
+        for(Pago pag:pagos) {
+            if (pag.getTipoMoneda().getCodmoneda().equals(tipo.getCodmoneda())) {
+                total.sumar(pag.getTotal());
+            }
+        }
+        return total;
     }
 
     public Integer getId() {
@@ -154,7 +171,7 @@ public class Factura  {
                         this.tipoMoneda.getCodmoneda()+" "+pago.getTotal().getValor());
                 //this.moneda.setValor(pago.getTotal());*/
 
-                Moneda resul = MonedaUtil.ConvertirValor(pago.getTipoMoneda(), this.tipoMoneda,pago.getTotal());
+                Moneda resul = MonedaUtil.ConvertirValor(pago.getTipoMoneda(), this.tipoMoneda,pago.getMonto());
                 System.out.println("               -> Resultado ="+this.tipoMoneda.getValorFormato(resul));
 
                 totalpago.sumar(resul)  ;

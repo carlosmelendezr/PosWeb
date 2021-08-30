@@ -43,7 +43,7 @@ public class BuscadorCtl implements Initializable {
                 if (Contexto.resultadoBusqueda.size() > 0) {
 
                     if (Contexto.ProductoBuscado.getId()==null) {
-                      ventanaBuscar();
+                      Acciones.ventanaBuscarProducto();
                     }
                     if (!(Contexto.getCodigoSeleccionado()==null)) {
                         TextoBuscar.setText(Contexto.getCodigoSeleccionado());
@@ -71,24 +71,5 @@ public class BuscadorCtl implements Initializable {
 
     }
 
-    public void ventanaBuscar() {
 
-        try {
-
-            Stage stage = new Stage();
-            Parent root = FXMLLoader.load(
-                    Controller.class.getResource("resulbusq.fxml"));
-            stage.setScene(new Scene(root));
-            stage.setTitle("Buscador de Productos");
-            stage.initModality(Modality.APPLICATION_MODAL);
-
-
-            stage.showAndWait();
-        } catch (IOException e) {
-            System.out.println("Error:"+e.getMessage());
-        }
-
-
-
-    }
 }

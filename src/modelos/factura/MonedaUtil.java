@@ -20,6 +20,8 @@ public class MonedaUtil {
         listaMonedaConversion = new ArrayList<>();
         listaMonedaConversion.add(dolarToBs);
         MathContext precision = new MathContext(2);
+        formatoUsd.setMinimumFractionDigits(2);
+        formatoBs.setMinimumFractionDigits(2);
     }
 
 
@@ -36,14 +38,12 @@ public class MonedaUtil {
 
         }
         if (Operacion.equals("*")) {
-             //resultante = valor * destino.getTasacambio();
             resultante.multiplicar(destino.getTasacambio());
          } else {
-             // resultante = valor / origen.getTasacambio();
-            System.out.println("Valor = "+valor.getValor());
-            System.out.println("Tasa = "+origen.getTasacambio().getValor());
             resultante.dividir(origen.getTasacambio());
-            //resultante = valor.divide(origen.getTasacambio(),precision);
+            /*System.out.println("Valor = "+valor.getValor());
+            System.out.println("Tasa = "+origen.getTasacambio().getValor());
+            System.out.println("Resul = "+resultante.getValor());*/
          }
          return resultante;
     }

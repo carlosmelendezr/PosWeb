@@ -19,6 +19,7 @@ public class Contexto {
     public static Cliente Cli;
     public static Producto ProductoBuscado;
     public static ObservableList<LineaFactura> facturaListaproductos;
+    public static ObservableList<Pago> facturaListapagos;
     public static Moneda tasaDolarHoy;
     public static Factura facturaActual;
     public static TipoMoneda Dolar;
@@ -35,15 +36,16 @@ public class Contexto {
         resultadoBusqueda = new ArrayList<>();
         seleccionBusqueda = 0;
         MensajeEstatus.set("Preparado");
-        //Cli = new Cliente();
+
         facturaListaproductos = observableArrayList();
+        facturaListapagos = observableArrayList();
 
         tasaDolarHoy = new Moneda("4147300.52");
         MonedaUtil.inicializar();
 
-        TipoMoneda Dolar = new TipoMoneda(1,"USD","DOLAR","$",new Moneda("1"),MonedaUtil.formatoUsd);
+        Dolar = new TipoMoneda(1,"USD","DOLAR","$",new Moneda("1"),MonedaUtil.formatoUsd);
         Dolar.setEsMonedaBase(true);
-        TipoMoneda Bolivar = new TipoMoneda(2,"VES","BOLIVAR","Bs.",tasaDolarHoy, MonedaUtil.formatoBs);
+        Bolivar = new TipoMoneda(2,"VES","BOLIVAR","Bs.",tasaDolarHoy, MonedaUtil.formatoBs);
 
         facturaActual = new Factura(Dolar);
 
@@ -62,6 +64,18 @@ public class Contexto {
         TotalFactCtl.totalGen.set(totalUsd.montoTotalFormato());
         enviarEstus("Producto agregado correctamente.");
 
+    }
+    public static void actualizaPagos() {
+        facturaListapagos.clear();
+        List<Pago> lista = facturaActual.getPagos();
+        for(Pago pag:lista) {
+            facturaListapagos.add(pag);
+        }
+    }
+
+    public static String totalPagoBs() {
+        Moneda total = facturaActual.getTotalPagos(Bolivar);
+        return MonedaUtil.formatoBs.format(total.getValor());
     }
 
 

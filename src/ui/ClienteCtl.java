@@ -70,25 +70,11 @@ public class ClienteCtl implements Initializable {
     }
 
     public void ventanaCrear() {
-
-        try {
-
-            Stage stage = new Stage();
-            Parent root = FXMLLoader.load(
-                    Controller.class.getResource("crearcliente.fxml"));
-            stage.setScene(new Scene(root));
-            stage.setTitle("Crear o Modificar Cliente");
-            stage.initModality(Modality.APPLICATION_MODAL);
-
-
-            stage.showAndWait();
+        if (Acciones.ventanaCrearCliente()) {
             asignaCliente();
-        } catch (IOException e) {
-            System.out.println("Error:"+e.getMessage());
         }
-
-
-
     }
+
+
 
 }
