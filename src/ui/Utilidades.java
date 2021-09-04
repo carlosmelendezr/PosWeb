@@ -20,12 +20,13 @@ public class Utilidades {
     }
 
     public static Moneda textoToMoneda(String texto) {
-
-        String currentText = texto.replaceAll("\\.", "").replace(",", "");
         Moneda mon = new Moneda(0.0);
+        if (texto.isEmpty()) {
+            return mon;
+        }
 
         try {
-            Double valor = Double.parseDouble(currentText);
+            Double valor = Double.parseDouble(texto);
             mon.setValor(valor);
         }catch (NumberFormatException e) {
             e.printStackTrace();

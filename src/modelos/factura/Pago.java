@@ -1,5 +1,7 @@
 package modelos.factura;
 
+import ui.Contexto;
+
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
@@ -8,11 +10,13 @@ public class Pago {
     private Integer id;
     private TipoMoneda tipoMoneda;
     private Moneda monto;
+    private Moneda montoMonedaBase;
     private String referencia;
     private Banco  banco;
     private Moneda vuelto;
     private Moneda total;
     private String montoformato;
+    private String montoformatobase;
     private Calendar fechapago;
     private Calendar   fechareg;
     private String destipoMoneda;
@@ -29,6 +33,14 @@ public class Pago {
 
     }
 
+    public Moneda getMontoMonedaBase() {
+        montoMonedaBase =  MonedaUtil.ConvertirValor(this.tipoMoneda, Contexto.Dolar,this.monto);
+        return montoMonedaBase;
+    }
+
+    public String getMontoformatobase() {
+        return MonedaUtil.formatoBs.format(getMontoMonedaBase().getValor());
+    }
 
     public String getDestipoMoneda() {
         return tipoMoneda.getDescripcion();

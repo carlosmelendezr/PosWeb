@@ -1,14 +1,12 @@
 package ui;
 
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import modelos.factura.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Observable;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
@@ -40,7 +38,8 @@ public class Contexto {
         facturaListaproductos = observableArrayList();
         facturaListapagos = observableArrayList();
 
-        tasaDolarHoy = new Moneda("4147300.52");
+        //tasaDolarHoy = new Moneda("4147300.52");
+        tasaDolarHoy = new Moneda("4.15");
         MonedaUtil.inicializar();
 
         Dolar = new TipoMoneda(1,"USD","DOLAR","$",new Moneda("1"),MonedaUtil.formatoUsd);
@@ -74,10 +73,25 @@ public class Contexto {
     }
 
     public static String totalPagoBs() {
-        Moneda total = facturaActual.getTotalPagos(Bolivar);
+        Moneda total = facturaActual.getTotalPagosPorTipo(Bolivar);
         return MonedaUtil.formatoBs.format(total.getValor());
     }
 
+    public static String totalPagoDolares() {
+        Moneda total = facturaActual.getTotalPagosPorTipo(Dolar);
+        return MonedaUtil.formatoBs.format(total.getValor());
+    }
+    public static String totalPago() {
+        Moneda total = facturaActual.getTotalPagos();
+        return MonedaUtil.formatoBs.format(total.getValor());
+    }
+    public static String totalSaldo() {
+       return MonedaUtil.formatoBs.format(facturaActual.getFacturaSaldo().getValor());
+    }
+    public static String totalSaldoBs() {
+        Moneda saldobs = MonedaUtil.ConvertirValor(Dolar,Bolivar,facturaActual.getFacturaSaldo());
+        return MonedaUtil.formatoBs.format(saldobs.getValor());
+    }
 
 
     public static String getCodigoSeleccionado() {

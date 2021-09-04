@@ -19,7 +19,6 @@ public class MonedaUtil {
     public static void inicializar() {
         listaMonedaConversion = new ArrayList<>();
         listaMonedaConversion.add(dolarToBs);
-        MathContext precision = new MathContext(2);
         formatoUsd.setMinimumFractionDigits(2);
         formatoBs.setMinimumFractionDigits(2);
     }

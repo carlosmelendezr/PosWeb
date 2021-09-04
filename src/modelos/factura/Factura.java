@@ -45,6 +45,11 @@ public class Factura  {
 
     }
 
+    public void limpiarPagos() {
+        this.pagos.clear();
+        actualizarPago();
+    }
+
 
     public Factura(TipoMoneda mon) {
         if (!mon.getEsMonedaBase()) {
@@ -89,7 +94,7 @@ public class Factura  {
     }
 
 
-    public Moneda getTotalPagos(TipoMoneda tipo) {
+    public Moneda getTotalPagosPorTipo(TipoMoneda tipo) {
         Moneda total = new Moneda(0);
         for(Pago pag:pagos) {
             if (pag.getTipoMoneda().getCodmoneda().equals(tipo.getCodmoneda())) {
@@ -97,6 +102,20 @@ public class Factura  {
             }
         }
         return total;
+    }
+
+    public Moneda getTotalPagos() {
+        Moneda total = new Moneda(0);
+        for(Pago pag:pagos) {
+
+                total.sumar(pag.getMontoMonedaBase());
+
+        }
+        return total;
+    }
+
+    public Moneda getFacturaSaldo() {
+        return this.totales.getTotalSaldo();
     }
 
     public Integer getId() {
@@ -168,11 +187,11 @@ public class Factura  {
                 totalpago.sumar(pago.getTotal());
             }else {
                 /*System.out.println("Convirtiendo de "+pago.getTipoMoneda().getCodmoneda()+" ->"+
-                        this.tipoMoneda.getCodmoneda()+" "+pago.getTotal().getValor());
-                //this.moneda.setValor(pago.getTotal());*/
+                        this.tipoMoneda.getCodmoneda()+" "+pago.getTotal().getValor());*/
+                //this.moneda.setValor(pago.getTotal());
 
                 Moneda resul = MonedaUtil.ConvertirValor(pago.getTipoMoneda(), this.tipoMoneda,pago.getMonto());
-                System.out.println("               -> Resultado ="+this.tipoMoneda.getValorFormato(resul));
+                //System.out.println("               -> Resultado ="+this.tipoMoneda.getValorFormato(resul));
 
                 totalpago.sumar(resul)  ;
             }

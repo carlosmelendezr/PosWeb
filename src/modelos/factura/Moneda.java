@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 
 public class Moneda {
-    public static int precisionDefault = 2;
+    public static int precisionDefault = 4;
     private MathContext precision ;
     private BigDecimal  valor;
 
