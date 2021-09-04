@@ -4,11 +4,11 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.ArticulosCtl">
+<AnchorPane prefHeight="401.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.ArticulosCtl">
    <children>
-      <ScrollPane prefHeight="401.0" prefWidth="700.0">
+      <ScrollPane prefHeight="401.0" prefWidth="800.0">
          <content>
-            <TableView fx:id="listaArticulos" prefHeight="393.0" prefWidth="695.0" />
+            <TableView fx:id="listaArticulos" prefHeight="393.0" prefWidth="798.0" />
          </content>
       </ScrollPane>
    </children>

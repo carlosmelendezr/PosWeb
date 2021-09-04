@@ -14,6 +14,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import modelos.datos.Operaciones;
 import modelos.factura.Cliente;
+import modelos.factura.MonedaUtil;
 
 import java.io.IOException;
 import java.net.URL;
@@ -30,6 +31,8 @@ public class ClienteCtl implements Initializable {
     Label direccion;
     @FXML
     Label razonsoc;
+    @FXML
+    Label tasadolar;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -39,7 +42,11 @@ public class ClienteCtl implements Initializable {
                 buscar();
             }
         } );
+        inicializa();
+    }
 
+    void inicializa() {
+        tasadolar.setText( MonedaUtil.formatoBs.format(Contexto.Bolivar.getTasacambio().getValor()));
     }
 
 

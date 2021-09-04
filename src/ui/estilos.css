@@ -4,11 +4,35 @@
     -fx-background-color: #ffffff;
 }
 
-.root Button {
+.botones-verde {
 
     -fx-background-color:
         linear-gradient(#f0ff35, #a9ff00),
         radial-gradient(center 50% -40%, radius 200%, #b8ee36 45%, #80c800 50%);
+    -fx-background-radius: 6, 5;
+    -fx-background-insets: 0, 1;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-text-fill: #395306;
+
+}
+
+.botones-rojo {
+
+    -fx-background-color:
+        linear-gradient(#ffd6cc, #ff471a);
+
+    -fx-background-radius: 6, 5;
+    -fx-background-insets: 0, 1;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-text-fill: #395306;
+
+}
+
+.cliente-ventana {
+
+    -fx-background-color:
+        linear-gradient(#0066cc, #33ccff);
+
     -fx-background-radius: 6, 5;
     -fx-background-insets: 0, 1;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
@@ -41,6 +65,15 @@
     -fx-border-color: blue;
     -fx-text-fill: black;
     -fx-pref-width:160;
+}
+
+.factura-tasa-dolar {
+    -fx-background-color: #00cc00  ;
+    -fx-border-color: red;
+    -fx-text-fill: white;
+    -fx-pref-width:150;
+    -fx-pref-height:25;
+    -fx-text-fill: black;
 }
 
 .pagos-saldos-factura {
