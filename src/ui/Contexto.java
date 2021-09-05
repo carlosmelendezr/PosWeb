@@ -2,6 +2,8 @@ package ui;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
+import modelos.datos.Constantes;
+import modelos.datos.Operaciones;
 import modelos.factura.*;
 
 import java.util.ArrayList;
@@ -14,7 +16,7 @@ public class Contexto {
 
     public static List<String> resultadoBusqueda;
     public static Integer seleccionBusqueda;
-    public static Cliente Cli;
+    //public static Cliente Cli;
     public static Producto ProductoBuscado;
     public static ObservableList<LineaFactura> facturaListaproductos;
     public static ObservableList<Pago> facturaListapagos;
@@ -38,15 +40,16 @@ public class Contexto {
         facturaListaproductos = observableArrayList();
         facturaListapagos = observableArrayList();
 
-        //tasaDolarHoy = new Moneda("4147300.52");
-        tasaDolarHoy = new Moneda("4.15");
+        tasaDolarHoy = new Moneda("4147300.52");
+        //tasaDolarHoy = new Moneda("4.15");
         MonedaUtil.inicializar();
 
         Dolar = new TipoMoneda(1,"USD","DOLAR","$",new Moneda("1"),MonedaUtil.formatoUsd);
         Dolar.setEsMonedaBase(true);
         Bolivar = new TipoMoneda(2,"VES","BOLIVAR","Bs.",tasaDolarHoy, MonedaUtil.formatoBs);
 
-        facturaActual = new Factura(Dolar);
+        //Cli = new Cliente();
+        facturaActual = Operaciones.CrearFactura(Dolar);
 
     }
 

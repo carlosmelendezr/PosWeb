@@ -35,7 +35,22 @@ public class Constantes {
     public static String SQL_IND_FACTURA_CLI = "CREATE INDEX IF NOT EXISTS ifaccli ON factura (idcliente)";
     public static String SQL_IND_FACTURA_FEC = "CREATE INDEX IF NOT EXISTS ifacfec ON factura (fecha)";
 
+    public static String SQL_CONSECUTIVOS = "CREATE TABLE IF NOT EXISTS tabla_consec (id integer PRIMARY KEY, " +
+            "nombre text,numero integer)";
 
+    public static String SQL_INSERTAR_CONSEC_INICIAL = "INSERT INTO tabla_consec (nombre,numero) " +
+            "VALUES ('FACTURA',0),('DEVOLUCION',0) ";
+
+    public static String SQL_INCREMENTA_FACTURA = "UPDATE tabla_consec SET numero=numero+1 WHERE nombre='FACTURA' ";
+
+    public static String SQL_ULTIMA_FACTURA = "SELECT numero FROM tabla_consec  WHERE nombre='FACTURA' LIMIT 1 ";
+
+    public static List<String> crearConsecutivos() {
+        List<String> queris = new ArrayList<>();
+        queris.add(SQL_CONSECUTIVOS);
+        queris.add(SQL_INSERTAR_CONSEC_INICIAL);
+        return queris;
+    }
 
     public static String SQL_INSERTAR_FACTURA = "INSERT INTO factura " +
             "(numero,idcliente,moneda,caja,total,impuesto,base,descuento," +
@@ -67,7 +82,7 @@ public class Constantes {
             + "	alicuota real ,"
             + "	descuento real "
             + ")";
-    public static String SQL_IND_LINFAC_IDFAC = "CREATE UNIQUE INDEX  IF NOT EXISTS ilinfacid  ON fac_articulos (idfactura)";
+    public static String SQL_IND_LINFAC_IDFAC = "CREATE INDEX IF NOT EXISTS ilinfacid  ON fac_articulos (idfactura)";
     public static String SQL_IND_LINFAC_IDPRO = "CREATE INDEX IF NOT EXISTS ilinfacpr  ON fac_articulos (idproducto)";
     public static String SQL_IND_LINFAC_BARRA = "CREATE INDEX IF NOT EXISTS ilinfacbar ON fac_articulos (codbarra)";
 
@@ -93,6 +108,9 @@ public class Constantes {
     public static String SQL_INSERTAR_LINEA_FACTURA = "INSERT INTO fac_articulos " +
             "(idfactura,idproducto,referencia,codbarra,cantidad,precio,alicuota,descuento) VALUES " +
             "(  ?      ,    ?     ,     ?    ,   ?     ,   ?    ,  ?   ,    ?  ,    ?    ) ";
+
+    public static String SQL_ACTUALIZAR_FACTURA = "UPDATE factura SET total=?,impuesto=?,base=?,descuento=?,idcliente=? " +
+            "WHERE id=?";
 
     public static String SQL_CREAR_PAGOS = "CREATE TABLE IF NOT EXISTS fac_pagos ("
             + "id integer PRIMARY KEY,"

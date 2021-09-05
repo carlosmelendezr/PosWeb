@@ -14,7 +14,7 @@ public class Cliente {
 
 
     public Cliente() {
-
+        this.id = 0;
     }
 
     public Cliente(Integer id, String razonsocial, Integer rif,

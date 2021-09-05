@@ -164,7 +164,7 @@ public class CrearClienteCtl implements Initializable {
 
         if (Operaciones.InsertarCliente(cli)) {
             guardar.setStyle("-fx-background-color: green");
-            Contexto.Cli = cli;
+            Contexto.facturaActual.setCliente(cli);
             mensajes.setText("Datos guardados con éxito.");
             limpiar();
         } else {

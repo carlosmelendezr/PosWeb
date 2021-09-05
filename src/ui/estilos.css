@@ -1,7 +1,7 @@
 .root {
     -fx-font-size: 14px;
     -fx-font-family: sans-serif;
-    -fx-background-color: #ffffff;
+    -fx-background-color: #f0ff35;
 }
 
 .botones-verde {
@@ -43,37 +43,50 @@
 .pagos-totales {
     -fx-padding: 10px;
     -fx-font-size: 18px;
-    -fx-background-color: teal;
+    -fx-background-color: #3399FF;
+
 }
 
 .pagos-totales-bolivares {
     -fx-background-color:  #ffff80 ;
     -fx-border-color: red;
     -fx-text-fill: blue;
-    -fx-pref-width:160;
+    -fx-pref-width:170;
+    -fx-pref-height:40;
 }
 
 .pagos-totales-divisa {
     -fx-background-color: #00cc00  ;
     -fx-border-color: blue;
-    -fx-text-fill: white;
-    -fx-pref-width:160;
+    -fx-text-fill: black;
+    -fx-pref-width:140;
+    -fx-pref-height:40;
 }
 
 .pagos-totales-factura {
-    -fx-background-color: #66d9ff  ;
+    -fx-background-color: #585858  ;
     -fx-border-color: blue;
     -fx-text-fill: black;
+    -fx-font-size: 18px;
     -fx-pref-width:160;
 }
 
 .factura-tasa-dolar {
-    -fx-background-color: #00cc00  ;
+    -fx-background-color: #87bdd8  ;
     -fx-border-color: red;
-    -fx-text-fill: white;
     -fx-pref-width:150;
     -fx-pref-height:25;
     -fx-text-fill: black;
+}
+
+.factura-numero {
+    -fx-background-color: #cfe0e8  ;
+    -fx-border-color: black;
+    -fx-text-fill: black;
+    -fx-pref-width:150;
+    -fx-pref-height:25;
+     -fx-font-size: 18px;
+     -fx-font-family: 'Impact';
 }
 
 .pagos-saldos-factura {

@@ -11,12 +11,55 @@ import static modelos.datos.Connect.connect;
 
 public class Operaciones {
 
-    public static Integer CrearFactura(Factura fac) {
-        Integer lastId = InsertarFactura(fac);
-        if (lastId > 0) {
-            InsertarLineaFactura(fac.getLineas(),lastId);
-            InsertarPagoFactura(fac.getPagos(),lastId);
+    public static void IncrementaConsecutivo(String SqlComm) {
+        try {
+            Connection conn = connect(Constantes.dbPrincipal);
+            PreparedStatement pstmt = conn.prepareStatement(SqlComm);
+            pstmt.execute();
+            pstmt.close();
+            try {
+                conn.close();
+            } catch(SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
         }
+    }
+
+    public static Factura CrearFactura(TipoMoneda mon) {
+        Factura fac = new Factura(mon);
+        fac.setCliente(new Cliente());
+
+        Operaciones.IncrementaConsecutivo(Constantes.SQL_INCREMENTA_FACTURA);
+        Integer numFactura = UltimoNumeroFactura();
+
+        fac.setNumeroFactura(numFactura);
+        Integer lastId = InsertarFactura(fac);
+
+        fac.setNumeroFactura(numFactura);
+        fac.setId(lastId );
+
+        return fac;
+    }
+
+    public static Integer UltimoNumeroFactura() {
+        Integer lastId = 0;
+
+        try {
+            Connection conn = connect(Constantes.dbPrincipal);
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(Constantes.SQL_ULTIMA_FACTURA);
+            while (rs.next()) {
+                lastId = rs.getInt(1);
+                System.out.println("FACTURA NUMERO = " + lastId);
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
         return lastId;
     }
 
@@ -33,8 +76,6 @@ public class Operaciones {
         }
 
     }
-
-
 
     public static Integer InsertarFactura(Factura fac) {
 
@@ -83,15 +124,13 @@ public class Operaciones {
 
     }
 
-    public static boolean InsertarLineaFactura(List<LineaFactura> lineas, int idfactura) {
+    public static boolean InsertarLineaFactura(LineaFactura lin, int idfactura) {
         boolean Exito=false;
 
         try {
-
             Connection conn = connect(Constantes.dbPrincipal);
             PreparedStatement pstmt = conn.prepareStatement(Constantes.SQL_INSERTAR_LINEA_FACTURA);
 
-            for(LineaFactura lin:lineas) {
                 pstmt.setInt(1, idfactura);
                 pstmt.setInt(2, lin.getProducto().getId());
                 pstmt.setString(3, lin.getProducto().getReferencia());
@@ -101,8 +140,10 @@ public class Operaciones {
                 pstmt.setDouble(7, lin.getProducto().getAlicuota().getValor().doubleValue());
                 pstmt.setDouble(8, lin.getDescuento().getValor().doubleValue());
                 pstmt.execute();
-            }
+
             pstmt.close();
+
+
             Exito = true;
             try {
                 conn.close();
@@ -114,11 +155,49 @@ public class Operaciones {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-
-
         return Exito;
 
     }
+
+    public static boolean ActualizaTotalFactura(Factura fac) {
+        boolean Exito=false;
+
+        FacturaTotal tot = fac.getTotales();
+
+        try {
+            Connection conn = connect(Constantes.dbPrincipal);
+            PreparedStatement pstmt = conn.prepareStatement(Constantes.SQL_ACTUALIZAR_FACTURA);
+
+
+            pstmt.setDouble(1, tot.getMontoTotal().getValor().doubleValue());
+            pstmt.setDouble(2, tot.getMontoImpuesto().getValor().doubleValue());
+            pstmt.setDouble(3, tot.getMontoBase().getValor().doubleValue());
+            pstmt.setDouble(4, tot.getMontoDescuento().getValor().doubleValue());
+            pstmt.setInt(5,fac.getCliente().getId());
+            pstmt.setInt(6,fac.getId());
+
+            System.out.println("Cliente :"+fac.getCliente().getId());
+
+            pstmt.execute();
+            pstmt.close();
+
+
+            Exito = true;
+            try {
+                conn.close();
+            } catch(SQLException e) {
+                System.out.println(e.getMessage());
+
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return Exito;
+
+    }
+
+
 
     public static boolean InsertarPagoFactura(List<Pago> pagos, int idfactura) {
         boolean Exito=false;
@@ -320,7 +399,7 @@ public class Operaciones {
                         rs.getString("tipo"),dirs,tels);
 
 
-                System.out.println(cli.getRazonsocial());
+                System.out.println(cli.getId() + "-" +cli.getRazonsocial());
             }
             rs.close();
 

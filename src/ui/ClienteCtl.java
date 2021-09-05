@@ -33,6 +33,8 @@ public class ClienteCtl implements Initializable {
     Label razonsoc;
     @FXML
     Label tasadolar;
+    @FXML
+    Label factura;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -47,6 +49,7 @@ public class ClienteCtl implements Initializable {
 
     void inicializa() {
         tasadolar.setText( MonedaUtil.formatoBs.format(Contexto.Bolivar.getTasacambio().getValor()));
+        factura.setText(Contexto.facturaActual.getNumeroFactura().toString());
     }
 
 
@@ -57,7 +60,7 @@ public class ClienteCtl implements Initializable {
             if (!cedula.getText().isEmpty()) {
                 Cliente cli = Operaciones.buscarClienteCedula(cedula.getText());
                 if (! (cli==null)) {
-                    Contexto.Cli = cli;
+                    Contexto.facturaActual.setCliente(cli); ;
                     asignaCliente();
                 }
             }
@@ -67,11 +70,14 @@ public class ClienteCtl implements Initializable {
     }
 
     private void asignaCliente() {
-        if (!(Contexto.Cli==null)) {
-            cedula.setText(Contexto.Cli.getRif().toString());
-            razonsoc.setText(Contexto.Cli.getRazonsocial());
-            direccion.setText(Contexto.Cli.lineaDireccion());
-            rif.setText(Contexto.Cli.getTiporif() + "-" + Contexto.Cli.getRif());
+        Cliente Cli = Contexto.facturaActual.getCliente();
+        if (!(Cli==null)) {
+
+            cedula.setText(Cli.getRif().toString());
+            razonsoc.setText(Cli.getRazonsocial());
+            direccion.setText(Cli.lineaDireccion());
+            rif.setText(Cli.getTiporif() + "-" + Cli.getRif());
+
         }
 
     }

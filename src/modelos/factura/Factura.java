@@ -1,5 +1,7 @@
 package modelos.factura;
 
+import modelos.datos.Operaciones;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -66,6 +68,10 @@ public class Factura  {
         Inicializa();
     }
 
+    public Boolean GuardarPagos() {
+        return Operaciones.InsertarPagoFactura(this.pagos,this.id);
+    }
+
 
     public void agregarLinea(LineaFactura linea) {
         if (linea == null) {
@@ -73,6 +79,8 @@ public class Factura  {
         }
         this.lineas.add(linea);
         totales.agregarMonto(linea);
+        Operaciones.InsertarLineaFactura(linea,this.id);
+        Operaciones.ActualizaTotalFactura(this);
     }
 
 

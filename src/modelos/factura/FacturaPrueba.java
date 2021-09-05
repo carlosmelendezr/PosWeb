@@ -75,7 +75,7 @@ public class FacturaPrueba {
 
             /*FacturaTotal totPetro = totBolivar.Covertir(Petro);
             totPetro.imprimirTotal();*/
-            Operaciones.CrearFactura(f);
+            //Operaciones.CrearFactura(f);
 
 
         } else {

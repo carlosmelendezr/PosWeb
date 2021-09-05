@@ -73,14 +73,15 @@
             </HBox>
          </children>
       </GridPane>
-      <VBox layoutX="807.0" layoutY="1.0" prefHeight="512.0" prefWidth="147.0" />
-      <GridPane alignment="CENTER_RIGHT" layoutY="477.0" prefHeight="104.0" prefWidth="955.0" styleClass="pagos-totales" stylesheets="@estilos.css">
+      <VBox layoutX="807.0" layoutY="1.0" prefHeight="474.0" prefWidth="147.0">
+         <children>
+            <Button fx:id="botonImprimir" mnemonicParsing="false" onAction="#guardarPagos" prefHeight="26.0" prefWidth="147.0" styleClass="botones-verde" text="Imprimir" visible="false" />
+         </children>
+      </VBox>
+      <GridPane alignment="CENTER_RIGHT" layoutY="477.0" prefHeight="104.0" prefWidth="453.0" styleClass="pagos-totales" stylesheets="@estilos.css">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
@@ -90,18 +91,30 @@
          <children>
             <Label prefHeight="41.0" prefWidth="189.0" styleClass="pagos-totales-factura" text="Total Factura" />
             <Label fx:id="totalFactura" prefHeight="41.0" prefWidth="187.0" styleClass="pagos-totales-factura" text="Total" GridPane.rowIndex="1" />
-            <Label layoutX="10.0" layoutY="24.0" prefHeight="41.0" prefWidth="186.0" styleClass="pagos-totales-bolivares" text="Pagos Bs." GridPane.columnIndex="1" />
-            <Label fx:id="totalPagosBolivares" prefHeight="41.0" prefWidth="179.0" styleClass="pagos-totales-bolivares" stylesheets="@estilos.css" text="Pagos Bs" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label prefHeight="71.0" prefWidth="156.0" styleClass="pagos-totales-divisa" text="Pagos Divisa" GridPane.columnIndex="2" />
-            <Label fx:id="totalPagosDolares" prefHeight="41.0" prefWidth="187.0" styleClass="pagos-totales-divisa" text="Divisa" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <Label prefHeight="41.0" prefWidth="186.0" styleClass="pagos-totales-divisa" text="Total Pagos" GridPane.columnIndex="3" />
-            <Label fx:id="totalPagos" prefHeight="43.0" prefWidth="161.0" styleClass="pagos-totales-divisa" text="Total Pagos" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-            <Label styleClass="pagos-saldos-factura" text="Saldo Divisa" GridPane.columnIndex="4" />
-            <Label fx:id="saldo" prefHeight="43.0" prefWidth="159.0" styleClass="pagos-saldos-factura" text="Saldo" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-            <Label styleClass="pagos-totales-bolivares" text="Saldo Bs." GridPane.columnIndex="5" />
-            <Label fx:id="saldobs" prefHeight="41.0" prefWidth="151.0" styleClass="pagos-totales-bolivares" stylesheets="@estilos.css" text="Saldo Bs." GridPane.columnIndex="5" GridPane.rowIndex="1" />
+            <Label prefHeight="71.0" prefWidth="156.0" styleClass="pagos-totales-divisa" text="Pagos Divisa" GridPane.columnIndex="1" />
+            <Label fx:id="totalPagosDolares" prefHeight="41.0" prefWidth="187.0" styleClass="pagos-totales-divisa" text="Divisa" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label prefHeight="45.0" prefWidth="133.0" styleClass="pagos-saldos-factura" text="Saldo Divisa" GridPane.columnIndex="2" />
+            <Label fx:id="saldo" prefHeight="43.0" prefWidth="159.0" styleClass="pagos-saldos-factura" text="Saldo" GridPane.columnIndex="2" GridPane.rowIndex="1" />
          </children>
       </GridPane>
+      <GridPane layoutX="583.0" layoutY="477.0" prefHeight="104.0" prefWidth="370.0" styleClass="pagos-totales">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label fx:id="totalPagosBolivares" prefHeight="41.0" prefWidth="179.0" styleClass="pagos-totales-bolivares" stylesheets="@estilos.css" text="Pagos Bs" GridPane.rowIndex="1" />
+            <Label prefHeight="41.0" prefWidth="186.0" styleClass="pagos-totales-bolivares" text="Pagos Bs." />
+            <Label styleClass="pagos-totales-bolivares" text="Saldo Bs." GridPane.columnIndex="1" />
+            <Label fx:id="saldobs" prefHeight="41.0" prefWidth="151.0" styleClass="pagos-totales-bolivares" stylesheets="@estilos.css" text="Saldo Bs." GridPane.columnIndex="1" GridPane.rowIndex="1" />
+         </children>
+      </GridPane>
+      <Label fx:id="totalPagos" alignment="CENTER_RIGHT" layoutX="87.0" layoutY="258.0" prefHeight="43.0" prefWidth="161.0" styleClass="pagos-totales-divisa" text="Total Pagos" />
+      <Label layoutX="7.0" layoutY="270.0" text="Total Pagos" />
 
     </children>
 

@@ -3,10 +3,7 @@ package ui;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import modelos.factura.Moneda;
@@ -46,6 +43,8 @@ public class PagosCtl implements Initializable {
     TextField zelle;
     @FXML
     TextField referencia;
+    @FXML
+    Button botonImprimir;
 
 
     @FXML
@@ -178,6 +177,10 @@ public class PagosCtl implements Initializable {
         saldo.setText(Contexto.totalSaldo());
         saldobs.setText(Contexto.totalSaldoBs());
 
+        if (Contexto.facturaActual.getImprimible()) {
+            botonImprimir.setVisible(true);
+        }
+
         MouseClicks = 0;
         efectivoBs.requestFocus();
 
@@ -276,6 +279,10 @@ public class PagosCtl implements Initializable {
             efectivoDolar.setText(txt.replace(",", "."));
             MouseClicks = 0;
         }
+    }
+
+    public void guardarPagos() {
+        Contexto.facturaActual.GuardarPagos();
     }
 
 }
