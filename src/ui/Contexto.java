@@ -14,9 +14,9 @@ import static javafx.collections.FXCollections.observableArrayList;
 
 public class Contexto {
 
-    public static List<String> resultadoBusqueda;
+    public static ObservableList<ProductoBuscar> resultadoBusqueda;
     public static Integer seleccionBusqueda;
-    //public static Cliente Cli;
+    public static String  codigoSeleccionado;
     public static Producto ProductoBuscado;
     public static ObservableList<LineaFactura> facturaListaproductos;
     public static ObservableList<Pago> facturaListapagos;
@@ -33,7 +33,7 @@ public class Contexto {
 
         tasasImpuesto = new ArrayList<Moneda>(Arrays.asList(new Moneda(0),new Moneda(16.0)));
 
-        resultadoBusqueda = new ArrayList<>();
+        resultadoBusqueda = observableArrayList();
         seleccionBusqueda = 0;
         MensajeEstatus.set("Preparado");
 
@@ -61,10 +61,18 @@ public class Contexto {
 
         facturaActual.agregarLinea(lin);
         facturaListaproductos.add(lin);
-        totalUsd = facturaActual.getTotales();
         ProductoBuscado = null;
-        TotalFactCtl.totalGen.set(totalUsd.montoTotalFormato());
+        actulizaTotales();
         enviarEstus("Producto agregado correctamente.");
+
+    }
+
+    public static void actulizaTotales() {
+
+        totalUsd = facturaActual.getTotales();
+        totalUsd.imprimirTotal();
+
+        TotalFactCtl.totalGen.set(totalUsd.montoTotalFormato());
 
     }
     public static void actualizaPagos() {
@@ -94,19 +102,6 @@ public class Contexto {
     public static String totalSaldoBs() {
         Moneda saldobs = MonedaUtil.ConvertirValor(Dolar,Bolivar,facturaActual.getFacturaSaldo());
         return MonedaUtil.formatoBs.format(saldobs.getValor());
-    }
-
-
-    public static String getCodigoSeleccionado() {
-        return resultadoBusqueda.get(seleccionBusqueda);
-    }
-
-    public static List<String> getResultadoBusqueda() {
-        return resultadoBusqueda;
-    }
-
-    public static void setResultadoBusqueda(List<String> resultadoBusqueda) {
-        Contexto.resultadoBusqueda = resultadoBusqueda;
     }
 
     public static Integer getSeleccionBusqueda() {

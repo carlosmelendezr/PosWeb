@@ -3,10 +3,12 @@ package ui;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TextInputDialog;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public class Acciones {
 
@@ -64,5 +66,25 @@ public class Acciones {
             e.printStackTrace();
         }
         return exito;
+    }
+
+    public static Integer dialogoCantidad() {
+        Integer Cantidad = 0;
+
+        TextInputDialog dialog = new TextInputDialog("");
+        dialog.setTitle("Agregar Cantidad de Artículos");
+        dialog.setHeaderText("Introduzca la cantidad a agragar");
+        dialog.setContentText("Cantidad :");
+
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()){
+            try {
+              Cantidad = Integer.parseInt(result.get());
+            }catch (Exception e) {
+                Cantidad = 0;
+            }
+            System.out.println("Cantidad : " + Cantidad);
+        }
+     return Cantidad;
     }
 }

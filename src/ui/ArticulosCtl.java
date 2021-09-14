@@ -9,6 +9,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
+import modelos.factura.LineaFactura;
 import modelos.factura.Producto;
 
 
@@ -19,13 +21,16 @@ import static javafx.collections.FXCollections.observableArrayList;
 
 public class ArticulosCtl implements Initializable {
 
+    private int MouseClicks;
+
     @FXML
     TableView listaArticulos;
 
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        MouseClicks = 0;
 
         TableColumn colcod = new TableColumn("Código");
         colcod.setMinWidth(100);
@@ -52,9 +57,32 @@ public class ArticulosCtl implements Initializable {
         colpre.setCellValueFactory(
                 new PropertyValueFactory<Producto, String>("precioFormato"));
 
+        TableColumn coltot = new TableColumn("Total");
+        coltot.setMinWidth(100);
+        coltot.setCellValueFactory(
+                new PropertyValueFactory<Producto, String>("totalFormato"));
 
-        listaArticulos.getColumns().addAll(colcod,colref,coldes,colcant,colpre);
+
+        listaArticulos.getColumns().addAll(colcod,colref,coldes,colcant,colpre,coltot);
         listaArticulos.setItems(Contexto.facturaListaproductos);
+
+    }
+
+    public void colocarCantidad(MouseEvent event) {
+        MouseClicks++;
+        if (MouseClicks>1) {
+            int id = listaArticulos.getSelectionModel().getSelectedIndex();
+            Integer Cantidad = Acciones.dialogoCantidad();
+
+            if (Cantidad > 0) {
+                LineaFactura lin = Contexto.facturaListaproductos.get(id);
+                lin.setCantidad(Cantidad.doubleValue());
+                Contexto.facturaListaproductos.set(id,lin);
+                Contexto.actulizaTotales();
+
+            };
+            MouseClicks = 0;
+        }
 
     }
 }

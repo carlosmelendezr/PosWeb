@@ -9,7 +9,9 @@ public class LineaFactura {
     private String   descripcion;
     private Moneda   precio;
     private Moneda   descuento;
+    private Moneda   total;
     private String   precioFormato;
+    private String   totalFormato;
 
 
 
@@ -22,6 +24,7 @@ public class LineaFactura {
         this.referencia = producto.getReferencia();
         this.precio = producto.getPrecio();
         this.descuento = new Moneda(0);
+        this.total = new Moneda("0");
 
 
     }
@@ -101,5 +104,26 @@ public class LineaFactura {
     public String getPrecioFormato() {
         precioFormato = MonedaUtil.formatoUsd.format( precio.getValor());
         return precioFormato;
+    }
+
+    public String getTotalFormato() {
+        getTotal();
+        totalFormato = MonedaUtil.formatoUsd.format( total.getValor());
+        return totalFormato;
+    }
+
+    public Moneda getTotal() {
+        System.out.println("Precio = "+this.precio.getValor() +" Cantidad = "+this.cantidad);
+        this.total.setValor(this.precio.getValor());
+        this.total.multiplicar(new Moneda(this.cantidad));
+        return total;
+    }
+
+    public void setTotal(Moneda total) {
+        this.total = total;
+    }
+
+    public void setTotalFormato(String totalFormato) {
+        this.totalFormato = totalFormato;
     }
 }

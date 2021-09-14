@@ -254,7 +254,6 @@ public class Operaciones {
                         rs.getString("codigo"), rs.getString("ref"));
 
                 lista.add(pro);
-                System.out.println(pro.getDescripcion());
             }
             rs.close();
 
@@ -263,6 +262,40 @@ public class Operaciones {
         }
         return lista;
 
+
+    }
+
+    public static Producto ResulToProducto(ResultSet rs) {
+
+        Producto pro = new Producto();
+        try {
+            pro.setId(rs.getInt("id"));
+            pro.setIdTipoProducto(rs.getInt("idtipoprod"));
+            pro.setDescripcion(rs.getString("descrip"));
+            pro.setImagenurl(rs.getString("imagen"));
+            pro.setIdImpuesto(rs.getInt("idtipoimp"));
+            pro.setIdCategoria(rs.getInt("idcategoria"));
+            pro.setIdMarca(rs.getInt("idmarca"));
+            pro.setUnMedida(rs.getString("unmedida"));
+            pro.setAlicuota(new Moneda(rs.getDouble("alicuota")));
+            pro.setPrecio(new Moneda(rs.getDouble("precio")));
+            pro.setCosto(new Moneda(rs.getDouble("costo")));
+
+            pro.setStock(rs.getDouble("stock"));
+            pro.setReferencia(rs.getString("ref"));
+            pro.setCodigo(rs.getString("codigo"));
+            pro.setRefprov(rs.getString("refprov"));
+
+            ArrayList barras = new ArrayList();
+            barras.add(rs.getString("codigo"));
+
+            pro.setCodbarra(barras);
+            pro.setIdProveedor(rs.getInt("idprov"));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        return pro;
 
     }
 
@@ -277,33 +310,8 @@ public class Operaciones {
                     +" WHERE codigo='"+codigo.trim()+"' OR ref='"+codigo.trim()+"'");
 
             while (rs.next()) {
-                pro = new Producto();
+                pro = ResulToProducto(rs);
 
-                pro.setId(rs.getInt("id"));
-                pro.setIdTipoProducto(rs.getInt("idtipoprod"));
-                pro.setDescripcion(rs.getString("descrip"));
-                pro.setImagenurl(rs.getString("imagen"));
-                pro.setIdImpuesto(rs.getInt("idtipoimp"));
-                pro.setIdCategoria(rs.getInt("idcategoria"));
-                pro.setIdMarca(rs.getInt("idmarca"));
-                pro.setUnMedida(rs.getString("unmedida"));
-                pro.setAlicuota(new Moneda(rs.getDouble("alicuota")));
-                pro.setPrecio(new Moneda(rs.getDouble("precio")));
-                pro.setCosto(new Moneda(rs.getDouble("costo")));
-
-                pro.setStock(rs.getDouble("stock"));
-                pro.setReferencia(rs.getString("ref"));
-                pro.setCodigo(rs.getString("codigo"));
-                pro.setRefprov(rs.getString("refprov"));
-
-                ArrayList barras = new ArrayList();
-                barras.add(rs.getString("codigo"));
-
-                pro.setCodbarra(barras);
-                pro.setIdProveedor(rs.getInt("idprov"));
-
-
-                System.out.println(pro.getDescripcion());
             }
             rs.close();
 

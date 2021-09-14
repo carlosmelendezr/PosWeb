@@ -12,10 +12,12 @@ import javafx.stage.Stage;
 import modelos.datos.Operaciones;
 import modelos.factura.LineaFactura;
 import modelos.factura.Producto;
+import modelos.factura.ProductoBuscar;
 
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class BuscadorCtl implements Initializable {
@@ -41,16 +43,32 @@ public class BuscadorCtl implements Initializable {
             if (!TextoBuscar.getText().isEmpty()) {
                 buscarProducto(TextoBuscar.getText());
                 if (Contexto.resultadoBusqueda.size() > 0) {
+                   Contexto.codigoSeleccionado = "";
+                   Acciones.ventanaBuscarProducto();
 
-                    if (Contexto.ProductoBuscado.getId()==null) {
-                      Acciones.ventanaBuscarProducto();
-                    }
-                    if (!(Contexto.getCodigoSeleccionado()==null)) {
-                        TextoBuscar.setText(Contexto.getCodigoSeleccionado());
+                    if (!Contexto.codigoSeleccionado.isEmpty()) {
+                        buscarProducto(Contexto.codigoSeleccionado);
                     }
                 }
             }
        }
+    }
+
+    public void buscarProductoDesc(String desc) {
+
+        List<ProductoBuscar> res = Operaciones.buscarProductoDescrip(desc);
+
+        if (res.size()>0 ) {
+            Contexto.resultadoBusqueda.clear();
+            for (ProductoBuscar pro:res) {
+                Contexto.resultadoBusqueda.add(pro) ;
+            }
+            TextoBuscar.setText("");
+        } else {
+            Contexto.enviarEstus("El producto "+TextoBuscar.getText()+" NO existe.");
+            TextoBuscar.setText("");
+        }
+
     }
 
     public void buscarProducto(String codigoref) {
@@ -65,7 +83,8 @@ public class BuscadorCtl implements Initializable {
             TextoBuscar.setText("");
 
         } else {
-            Contexto.enviarEstus("El código "+TextoBuscar.getText()+" NO existe.");
+            buscarProductoDesc(TextoBuscar.getText());
+            //Contexto.enviarEstus("El código "+TextoBuscar.getText()+" NO existe.");
             TextoBuscar.setText("");
         }
 
