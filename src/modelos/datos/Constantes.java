@@ -172,7 +172,7 @@ public class Constantes {
     public static String SQL_IND_PRODUCTOS_COD = "CREATE UNIQUE INDEX  iprodcod ON productos (codigo)";
     public static String SQL_IND_PRODUCTOS_DES = "CREATE INDEX iproddes ON productos (descrip)";
 
-    public static String SQL_PRODUC_BUSCAR = "CREATE VIRTUAL TABLE producbuscar USING FTS5(descrip,ref,codigo)";
+    public static String SQL_PRODUC_BUSCAR = "CREATE VIRTUAL TABLE producbuscar USING FTS5(id,descrip,ref,codigo)";
 
     public static List<String> crearTablasProductos() {
         List<String> queris = new ArrayList<>();

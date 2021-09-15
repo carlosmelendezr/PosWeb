@@ -76,6 +76,15 @@ public class Contexto {
 
     }
 
+    public static void elimiarLineaFactura(int Index) {
+
+        facturaActual.eliminarLinea(Index);
+        facturaListaproductos.clear();
+        facturaListaproductos.addAll(facturaActual.getLineas());
+        actulizaTotales();
+
+    }
+
     public static void actulizaTotales() {
         totalUsd = facturaActual.getTotales();
         TotalFactCtl.totalGen.set(totalUsd.montoTotalFormato());

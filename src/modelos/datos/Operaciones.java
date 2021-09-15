@@ -247,10 +247,10 @@ public class Operaciones {
 
         try {
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT descrip,codigo,ref  " +
+            ResultSet rs = stmt.executeQuery("SELECT id,descrip,codigo,ref  " +
                     "FROM producbuscar WHERE descrip MATCH '"+desc.trim()+"'  ");
             while (rs.next()) {
-                ProductoBuscar pro = new ProductoBuscar(rs.getString("descrip"),
+                ProductoBuscar pro = new ProductoBuscar(rs.getInt("id"),rs.getString("descrip"),
                         rs.getString("codigo"), rs.getString("ref"));
 
                 lista.add(pro);

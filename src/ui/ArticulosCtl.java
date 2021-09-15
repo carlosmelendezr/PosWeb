@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import modelos.factura.LineaFactura;
 import modelos.factura.Producto;
@@ -62,6 +63,12 @@ public class ArticulosCtl implements Initializable {
         coltot.setCellValueFactory(
                 new PropertyValueFactory<Producto, String>("totalFormato"));
 
+        listaArticulos.setOnKeyPressed( event -> {
+            if( event.getCode() == KeyCode.DELETE ) {
+                borrarLinea();
+            }
+        } );
+
 
         listaArticulos.getColumns().addAll(colcod,colref,coldes,colcant,colpre,coltot);
         listaArticulos.setItems(Contexto.facturaListaproductos);
@@ -72,17 +79,24 @@ public class ArticulosCtl implements Initializable {
         MouseClicks++;
         if (MouseClicks>1) {
             int id = listaArticulos.getSelectionModel().getSelectedIndex();
-            Integer Cantidad = Acciones.dialogoCantidad();
+            LineaFactura lin = Contexto.facturaListaproductos.get(id);
+            Integer Cantidad = Acciones.dialogoCantidad(lin.getDescripcion());
 
             if (Cantidad > 0) {
-                LineaFactura lin = Contexto.facturaListaproductos.get(id);
-                lin.setCantidad(Cantidad.doubleValue());
+                lin.setCantidad(lin.getCantidad().doubleValue()+Cantidad.doubleValue());
                 Contexto.modificarLineaFactura(id,lin);
-
-
             };
             MouseClicks = 0;
         }
 
+    }
+
+    public void borrarLinea() {
+        int id = listaArticulos.getSelectionModel().getSelectedIndex();
+        LineaFactura lin = Contexto.facturaListaproductos.get(id);
+        if (Acciones.dialogoConfirmar("Eliminar "+lin.getDescripcion(),
+                "Confirma ?")) {
+            Contexto.elimiarLineaFactura(id);
+        }
     }
 }

@@ -91,6 +91,13 @@ public class Factura  {
         }
     }
 
+    public void eliminarLinea(int Index) {
+        if (Index >= 0 && Index <=this.lineas.size()) {
+            this.lineas.remove(Index);
+            this.totales.actualizar(lineas);
+
+        }
+    }
 
 
 

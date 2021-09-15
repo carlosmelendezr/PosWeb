@@ -10,8 +10,8 @@ public class Servicios {
 
     public static void main(String arg[]) {
         Servicios svr = new Servicios();
+        svr.importarProductos("c:\\tmp\\catbuscar.csv","productos");
 
-        svr.importarProductos("c:\\tmp\\catbuscar.csv","producbuscar");
     }
 
 

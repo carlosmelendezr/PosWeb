@@ -3,6 +3,8 @@ package ui;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextInputDialog;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -68,12 +70,12 @@ public class Acciones {
         return exito;
     }
 
-    public static Integer dialogoCantidad() {
+    public static Integer dialogoCantidad(String texto) {
         Integer Cantidad = 0;
 
         TextInputDialog dialog = new TextInputDialog("");
-        dialog.setTitle("Agregar Cantidad de Artículos");
-        dialog.setHeaderText("Introduzca la cantidad a agragar");
+        dialog.setTitle("Sumar Cantidad de Artículos");
+        dialog.setHeaderText(texto);
         dialog.setContentText("Cantidad :");
 
         Optional<String> result = dialog.showAndWait();
@@ -86,5 +88,19 @@ public class Acciones {
             System.out.println("Cantidad : " + Cantidad);
         }
      return Cantidad;
+    }
+
+    public static boolean dialogoConfirmar(String titulo, String texto) {
+        boolean respuesta = false;
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmación");
+        alert.setHeaderText(titulo);
+        alert.setContentText(texto);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            respuesta = true;
+        }
+        return respuesta;
     }
 }
