@@ -67,14 +67,20 @@ public class Contexto {
 
     }
 
-    public static void actulizaTotales() {
+    public static void modificarLineaFactura(int Index,LineaFactura lin) {
 
-        totalUsd = facturaActual.getTotales();
-        totalUsd.imprimirTotal();
-
-        TotalFactCtl.totalGen.set(totalUsd.montoTotalFormato());
+        facturaActual.modificarLinea(Index,lin);
+        facturaListaproductos.clear();
+        facturaListaproductos.addAll(facturaActual.getLineas());
+        actulizaTotales();
 
     }
+
+    public static void actulizaTotales() {
+        totalUsd = facturaActual.getTotales();
+        TotalFactCtl.totalGen.set(totalUsd.montoTotalFormato());
+    }
+
     public static void actualizaPagos() {
         facturaListapagos.clear();
         List<Pago> lista = facturaActual.getPagos();

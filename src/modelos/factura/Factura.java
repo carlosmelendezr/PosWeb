@@ -78,10 +78,20 @@ public class Factura  {
             return;
         }
         this.lineas.add(linea);
-        totales.agregarMonto(linea);
+        this.totales.actualizar(lineas);
         Operaciones.InsertarLineaFactura(linea,this.id);
         Operaciones.ActualizaTotalFactura(this);
     }
+
+    public void modificarLinea(int Index, LineaFactura linea) {
+        if (Index >= 0 && Index <=this.lineas.size()) {
+            this.lineas.set(Index,linea);
+            this.totales.actualizar(lineas);
+
+        }
+    }
+
+
 
 
     public void asignarCliente(Cliente cliente) {

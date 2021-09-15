@@ -77,8 +77,8 @@ public class ArticulosCtl implements Initializable {
             if (Cantidad > 0) {
                 LineaFactura lin = Contexto.facturaListaproductos.get(id);
                 lin.setCantidad(Cantidad.doubleValue());
-                Contexto.facturaListaproductos.set(id,lin);
-                Contexto.actulizaTotales();
+                Contexto.modificarLineaFactura(id,lin);
+
 
             };
             MouseClicks = 0;

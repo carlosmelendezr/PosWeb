@@ -1,5 +1,7 @@
 package modelos.factura;
 
+import java.util.List;
+
 public class FacturaTotal {
 
     private Moneda montoBase;
@@ -62,22 +64,18 @@ public class FacturaTotal {
         return Total;
     }
 
+    public void actualizar(List<LineaFactura> lineas) {
+        inicializa();
+        for (LineaFactura lin:lineas) {
+            Moneda addmonto = new Moneda(lin.getProducto().getPrecio());
+            addmonto.multiplicar(new Moneda(lin.getCantidad()));
+            this.montoBase.sumar( addmonto );
 
-
-    public void agregarMonto(LineaFactura linea) {
-
-        Moneda addmonto = new Moneda(linea.getProducto().getPrecio());
-        addmonto.multiplicar(new Moneda(linea.getCantidad()));
-        this.montoBase.sumar( addmonto );
-
-        Moneda imp = new Moneda(addmonto);
-        imp.multiplicar(linea.getProducto().getAlicuota());
-        imp.dividir(new Moneda("100"));
-
-        this.montoImpuesto.sumar(imp);
-
+            Moneda imp = new Moneda(addmonto);
+            imp.multiplicar(lin.getProducto().getAlicuota());
+            imp.dividir(new Moneda("100"));
+        }
         totalizar();
-
 
     }
 
