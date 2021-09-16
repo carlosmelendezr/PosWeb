@@ -123,6 +123,30 @@ public class Operaciones {
         return lastId;
 
     }
+    public static List<LineaFactura> ObtenerLineasFactura( int idfactura) {
+        List<LineaFactura> lineas = new ArrayList<>() ;
+
+        Connection conn = connect(Constantes.dbPrincipal);
+
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * from fac_articulos WHERE idfactura="+idfactura);
+            while (rs.next()) {
+                int idpro = rs.getInt("idproducto");
+                Producto pro = buscarProductoId(idpro);
+                pro.setPrecio(new Moneda(rs.getDouble("precio")));
+                LineaFactura linea = new LineaFactura(rs.getInt("id"),pro,rs.getDouble("cantidad"));
+                lineas.add(linea);
+                System.out.println(linea.getDescripcion());
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return lineas;
+    }
 
     public static boolean InsertarLineaFactura(LineaFactura lin, int idfactura) {
         boolean Exito=false;
@@ -387,6 +411,27 @@ public class Operaciones {
         }
         return pro;
 
+
+    }
+
+    public static Producto buscarProductoId(int id) {
+        Producto pro = null;
+        Connection conn = connect(Constantes.dbPrincipal);
+
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM productos WHERE id="+id);
+
+            while (rs.next()) {
+                pro = ResulToProducto(rs);
+
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return pro;
 
     }
 

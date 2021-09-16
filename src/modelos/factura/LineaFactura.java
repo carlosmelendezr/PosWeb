@@ -1,6 +1,9 @@
 package modelos.factura;
 
 public class LineaFactura {
+    public static Integer ESTATUS_OK = 0;
+    public static Integer ESTATUS_ANULADO = 1;
+
     private Integer  id;
     private Producto producto;
     private Double   cantidad;
@@ -12,6 +15,7 @@ public class LineaFactura {
     private Moneda   total;
     private String   precioFormato;
     private String   totalFormato;
+    private Integer  estatus;
 
 
 
@@ -25,7 +29,7 @@ public class LineaFactura {
         this.precio = producto.getPrecio();
         this.descuento = new Moneda(0);
         this.total = new Moneda("0");
-
+        this.estatus = ESTATUS_OK;
 
     }
 

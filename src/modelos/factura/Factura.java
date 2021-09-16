@@ -72,15 +72,23 @@ public class Factura  {
         return Operaciones.InsertarPagoFactura(this.pagos,this.id);
     }
 
+    public void actualizarLineas() {
+        this.lineas = Operaciones.ObtenerLineasFactura(this.id);
+    }
+
 
     public void agregarLinea(LineaFactura linea) {
         if (linea == null) {
             return;
         }
-        this.lineas.add(linea);
-        this.totales.actualizar(lineas);
+        //this.lineas.add(linea);
+
         Operaciones.InsertarLineaFactura(linea,this.id);
         Operaciones.ActualizaTotalFactura(this);
+
+        actualizarLineas();
+        this.totales.actualizar(lineas);
+
     }
 
     public void modificarLinea(int Index, LineaFactura linea) {
@@ -92,9 +100,12 @@ public class Factura  {
     }
 
     public void eliminarLinea(int Index) {
-        if (Index >= 0 && Index <=this.lineas.size()) {
-            this.lineas.remove(Index);
-            this.totales.actualizar(lineas);
+        if (Index >= 0 && Index <= this.lineas.size()) {
+
+            LineaFactura linea = lineas.get(Index);
+            linea.setCantidad(linea.getCantidad()*-1);
+            agregarLinea((linea));
+
 
         }
     }
@@ -132,9 +143,7 @@ public class Factura  {
     public Moneda getTotalPagos() {
         Moneda total = new Moneda(0);
         for(Pago pag:pagos) {
-
-                total.sumar(pag.getMontoMonedaBase());
-
+            total.sumar(pag.getMontoMonedaBase());
         }
         return total;
     }
