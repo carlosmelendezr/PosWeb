@@ -159,6 +159,70 @@ public class Operaciones {
 
     }
 
+    public static boolean actualizarProducBuscar() {
+        boolean Exito=false;
+        List<ProductoBuscar> productos = new ArrayList<>();
+
+        Connection conn = connect(Constantes.dbPrincipal);
+
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT id,descrip,codigo,ref FROM productos  " );
+
+
+            while (rs.next()) {
+
+                ProductoBuscar pro = new ProductoBuscar(rs.getInt("id"),
+                        rs.getString("descrip"),
+                        rs.getString("codigo"),
+                        rs.getString("ref"));
+                productos.add(pro);
+
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        insertarProducBuscar(productos);
+
+        return Exito;
+    }
+
+    public static boolean insertarProducBuscar(List<ProductoBuscar> lista) {
+        boolean Exito=false;
+
+        try {
+            Connection conn = connect(Constantes.dbPrincipal);
+            PreparedStatement pstmt = conn.prepareStatement(Constantes.SQL_INSERTAR_PRODUC_BUSCAR);
+
+            for (ProductoBuscar pro : lista) {
+
+               pstmt.setInt(1, pro.getId());
+               pstmt.setString(2, pro.getDescripcion());
+               pstmt.setString(3, pro.getRef());
+               pstmt.setString(4, pro.getCodigo());
+
+               pstmt.execute();
+            }
+            pstmt.close();
+
+            Exito = true;
+            try {
+                conn.close();
+            } catch(SQLException e) {
+                System.out.println(e.getMessage());
+
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return Exito;
+
+    }
+
     public static boolean ActualizaTotalFactura(Factura fac) {
         boolean Exito=false;
 
@@ -247,11 +311,14 @@ public class Operaciones {
 
         try {
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT id,descrip,codigo,ref  " +
-                    "FROM producbuscar WHERE descrip MATCH '"+desc.trim()+"'  ");
+            ResultSet rs = stmt.executeQuery("SELECT producbuscar.id,producbuscar.descrip,producbuscar.codigo,producbuscar.ref,precio  " +
+                    "FROM producbuscar LEFT JOIN productos ON producbuscar.id = productos.id WHERE producbuscar.descrip MATCH '"+desc.trim()+"'  ");
             while (rs.next()) {
-                ProductoBuscar pro = new ProductoBuscar(rs.getInt("id"),rs.getString("descrip"),
-                        rs.getString("codigo"), rs.getString("ref"));
+                ProductoBuscar pro = new ProductoBuscar(rs.getInt("id"),
+                        rs.getString("descrip"),
+                        rs.getString("codigo"),
+                        rs.getString("ref"));
+                pro.setPrecio(new Moneda(rs.getDouble("precio")));
 
                 lista.add(pro);
             }

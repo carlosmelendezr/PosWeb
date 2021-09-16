@@ -168,6 +168,10 @@ public class Constantes {
             + "codigo text,"
             + "idprov integer)";
 
+    public static String SQL_INSERTAR_PRODUC_BUSCAR = "INSERT INTO producbuscar" +
+            "(id,descrip,ref,codigo) VALUES " +
+            "(  ?      ,    ?     ,     ?    ,   ?  ) ";
+
     public static String SQL_IND_PRODUCTOS_REF = "CREATE UNIQUE INDEX  iprodref ON productos (ref)";
     public static String SQL_IND_PRODUCTOS_COD = "CREATE UNIQUE INDEX  iprodcod ON productos (codigo)";
     public static String SQL_IND_PRODUCTOS_DES = "CREATE INDEX iproddes ON productos (descrip)";

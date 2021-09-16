@@ -33,7 +33,7 @@ public class ResulBusqCtl implements Initializable {
         TableColumn colref = new TableColumn("Referencia");
         colref.setMinWidth(100);
         colref.setCellValueFactory(
-                new PropertyValueFactory<Producto, String>("referencia"));
+                new PropertyValueFactory<Producto, String>("ref"));
 
         TableColumn coldes = new TableColumn("Descripción");
         coldes.setMinWidth(300);

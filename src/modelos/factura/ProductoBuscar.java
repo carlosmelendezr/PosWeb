@@ -5,6 +5,8 @@ public class ProductoBuscar {
     private String descripcion;
     private String codigo;
     private String ref;
+    private Moneda  precio;
+    private String   precioFormato;
 
     public ProductoBuscar(Integer id,String descripcion, String codigo, String ref) {
         this.id = id;
@@ -43,5 +45,18 @@ public class ProductoBuscar {
 
     public void setRef(String ref) {
         this.ref = ref;
+    }
+
+    public Moneda getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(Moneda precio) {
+        this.precio = precio;
+    }
+
+    public String getPrecioFormato() {
+        precioFormato = MonedaUtil.formatoUsd.format( precio.getValor());
+        return precioFormato;
     }
 }
