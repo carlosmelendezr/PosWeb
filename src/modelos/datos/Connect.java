@@ -35,6 +35,8 @@ import java.sql.SQLException;
             /*Tabla.crearBatch(conn,Constantes.crearTablasClientes());
             Tabla.crearBatch(conn,Constantes.crearTablasTasaImpuesto());
             Tabla.crearBatch(conn,Constantes.crearConsecutivos());*/
+            Tabla.crearBatch(conn,Constantes.crearTablasMovInv());
+
             try {
                 conn.close();
             } catch(SQLException e) {

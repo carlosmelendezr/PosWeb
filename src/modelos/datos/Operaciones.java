@@ -229,6 +229,7 @@ public class Operaciones {
                 pstmt.setDouble(6, lin.getPrecio().getValor().doubleValue());
                 pstmt.setDouble(7, lin.getProducto().getAlicuota().getValor().doubleValue());
                 pstmt.setDouble(8, lin.getDescuento().getValor().doubleValue());
+                pstmt.setInt(9, lin.getEstatus());
                 pstmt.execute();
 
             pstmt.close();
@@ -593,6 +594,59 @@ public class Operaciones {
         }
         return cli;
 
+
+    }
+
+
+
+    public static boolean insertarMovimientoInventario(MovInventario mov) {
+        boolean Exito=false;
+
+        try {
+            Connection conn = connect(Constantes.dbPrincipal);
+            PreparedStatement pstmt = conn.prepareStatement(Constantes.SQL_INSERTAR_MOVINV);
+
+            pstmt.setInt(1, mov.getIdtipomov());
+            pstmt.setInt(2, mov.getIdproducto());
+            pstmt.setDouble(3, mov.getCantidad());
+            pstmt.setString(4, Util.calendarToSql(mov.getFecha()));
+
+            pstmt.execute();
+
+            pstmt.close();
+
+            Exito = true;
+            try {
+                conn.close();
+            } catch(SQLException e) {
+                System.out.println(e.getMessage());
+
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        try {
+            Connection conn = connect(Constantes.dbPrincipal);
+            PreparedStatement pstmt = conn.prepareStatement(Constantes.SQL_ACTUALIZAR_STOCK);
+
+            pstmt.setDouble(1, mov.getCantidad());
+            pstmt.setInt(2, mov.getIdproducto());
+
+            pstmt.execute();
+            pstmt.close();
+            Exito = true;
+            try {
+                conn.close();
+            } catch(SQLException e) {
+                System.out.println(e.getMessage());
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return Exito;
 
     }
 

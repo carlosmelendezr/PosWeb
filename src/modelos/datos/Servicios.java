@@ -1,16 +1,20 @@
 package modelos.datos;
 
+import modelos.factura.MovInventario;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.Statement;
+import java.util.Calendar;
 import java.util.Scanner;
 
 public class Servicios {
 
     public static void main(String arg[]) {
         Servicios svr = new Servicios();
-        svr.importarProductos("c:\\tmp\\catbuscar.csv","productos");
+        //svr.importarProductos("c:\\tmp\\catbuscar.csv","productos");
+        svr.importarMovInv("c:\\temp\\movprueba.txt");
 
     }
 
@@ -81,5 +85,34 @@ public class Servicios {
 
 
 
+    }
+
+    public void importarMovInv(String FileName) {
+
+        try {
+
+
+            BufferedReader br = new BufferedReader(new FileReader(FileName));
+            String line;
+            int count = 0;
+            int max = 0;
+            while ((line = br.readLine()) != null) {
+
+                  System.out.println("Linea:"+line);
+                  String[] parts = line.split(",");
+
+                  MovInventario mov = new MovInventario();
+                  mov.setIdtipomov(Integer.parseInt(parts[0]));
+                  mov.setIdproducto(Integer.parseInt(parts[1]));
+                  mov.setCantidad(Double.parseDouble(parts[2]));
+                  mov.setFecha(Calendar.getInstance());
+                  Operaciones.insertarMovimientoInventario(mov);
+
+            }
+
+
+        } catch (Exception e) {
+            System.out.println("Error :"+e.getMessage());
+        }
     }
 }

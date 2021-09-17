@@ -99,9 +99,13 @@ public class Factura  {
     public void eliminarLinea(int Index) {
         if (Index >= 0 && Index <= this.lineas.size()) {
 
-            LineaFactura linea = lineas.get(Index);
-            linea.setCantidad(linea.getCantidad()*-1);
-            agregarLinea((linea));
+            LineaFactura lineaact = lineas.get(Index);
+            LineaFactura lineanue = lineas.get(Index);
+            lineaact.setEstatus(LineaFactura.ESTATUS_ANULADO);
+            lineas.set(Index,lineaact);
+
+            lineanue.setCantidad(lineaact.getCantidad()*-1);
+            agregarLinea((lineanue));
         }
     }
 

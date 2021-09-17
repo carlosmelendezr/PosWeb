@@ -111,8 +111,8 @@ public class Constantes {
     }
 
     public static String SQL_INSERTAR_LINEA_FACTURA = "INSERT INTO fac_articulos " +
-            "(idfactura,idproducto,referencia,codbarra,cantidad,precio,alicuota,descuento) VALUES " +
-            "(  ?      ,    ?     ,     ?    ,   ?     ,   ?    ,  ?   ,    ?  ,    ?    ) ";
+            "(idfactura,idproducto,referencia,codbarra,cantidad,precio,alicuota,descuento, estatus) VALUES " +
+            "(  ?      ,    ?     ,     ?    ,   ?     ,   ?    ,  ?   ,    ?  ,    ?,    ?    ) ";
 
     public static String SQL_ACTUALIZAR_FACTURA = "UPDATE factura SET total=?,impuesto=?,base=?,descuento=?,idcliente=? " +
             "WHERE id=?";
@@ -165,9 +165,9 @@ public class Constantes {
             + "idcategoria integer, "
             + "idmarca integer, "
             + "unmedida text, "
-            + "precio real,"
-            + "costo real,"
-            + "stock real,"
+            + "precio real DEFAULT 0,"
+            + "costo real DEFAULT 0,"
+            + "stock real DEFAULT 0,"
             + "ref text,"
             + "refprov text,"
             + "codigo text,"
@@ -229,6 +229,38 @@ public class Constantes {
         return queris;
 
     }
+
+    /* Control de Stock */
+    public static String SQL_CREAR_MOVINV =  "CREATE TABLE IF NOT EXISTS movinv ("
+            + "id integer PRIMARY KEY,"
+            + "idtipomov integer, "
+            + "idproducto integer, "
+            + "cantidad real, "
+            + "fecha date) ";
+
+    public static String SQL_CREAR_TIPO_MOVINV =  "CREATE TABLE IF NOT EXISTS tipomovinv ("
+            + "id integer PRIMARY KEY,"
+            + "operacion integer, "
+            + "descripcion text )";
+
+    public static String SQL_INSERTAR_TIPO_INICIAL = "INSERT INTO tipomovinv (id,operacion,descripcion) " +
+            "VALUES (1,1,'INGRESO DE MERCANCIA'),(2,-1,'SALIDA DE MERCANCIA'),(3,-1,'VENTA') ";
+
+    public static String SQL_INSERTAR_MOVINV = "INSERT INTO movinv (idtipomov,idproducto,cantidad,fecha) " +
+            "VALUES (?,?,?,?)";
+
+    public static String SQL_ACTUALIZAR_STOCK = "UPDATE productos SET stock=stock+(?) WHERE id=?";
+
+    public static List<String> crearTablasMovInv() {
+        List<String> queris = new ArrayList<>();
+        queris.add(SQL_CREAR_MOVINV);
+        queris.add(SQL_CREAR_TIPO_MOVINV);
+        queris.add(SQL_INSERTAR_TIPO_INICIAL);
+        return queris;
+    }
+
+
+
 
 
 
