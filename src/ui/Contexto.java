@@ -48,8 +48,15 @@ public class Contexto {
         Dolar.setEsMonedaBase(true);
         Bolivar = new TipoMoneda(2,"VES","BOLIVAR","Bs.",tasaDolarHoy, MonedaUtil.formatoBs);
 
-        //Cli = new Cliente();
-        facturaActual = Operaciones.CrearFactura(Dolar);
+        facturaActual = Operaciones.UltimaFacturaEspera();
+        if (facturaActual==null) {
+            facturaActual = Operaciones.CrearFactura(Dolar);
+        } else {
+
+            facturaActual.actualizarLineas();
+            facturaListaproductos.addAll(facturaActual.getLineas());
+
+        }
 
     }
 

@@ -22,6 +22,7 @@ public class TotalFactCtl implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         totalGen.set("0.0");
         totalGeneral.textProperty().bind(totalGen);
+        Contexto.actulizaTotales();
 
     }
 }

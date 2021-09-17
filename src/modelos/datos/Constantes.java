@@ -45,6 +45,9 @@ public class Constantes {
 
     public static String SQL_ULTIMA_FACTURA = "SELECT numero FROM tabla_consec  WHERE nombre='FACTURA' LIMIT 1 ";
 
+    public static String SQL_FACTURAS_ESPERA = "SELECT * FROM factura  WHERE espera=1 ";
+
+
     public static List<String> crearConsecutivos() {
         List<String> queris = new ArrayList<>();
         queris.add(SQL_CONSECUTIVOS);
@@ -80,8 +83,10 @@ public class Constantes {
             + "	cantidad real ,"
             + "	precio real ,"
             + "	alicuota real ,"
-            + "	descuento real "
+            + "	descuento real, "
+            + "	estatus integer "
             + ")";
+
     public static String SQL_IND_LINFAC_IDFAC = "CREATE INDEX IF NOT EXISTS ilinfacid  ON fac_articulos (idfactura)";
     public static String SQL_IND_LINFAC_IDPRO = "CREATE INDEX IF NOT EXISTS ilinfacpr  ON fac_articulos (idproducto)";
     public static String SQL_IND_LINFAC_BARRA = "CREATE INDEX IF NOT EXISTS ilinfacbar ON fac_articulos (codbarra)";

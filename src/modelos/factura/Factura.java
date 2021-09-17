@@ -66,6 +66,7 @@ public class Factura  {
         this.tipoMoneda = mon;
         this.Activa  = true;
         Inicializa();
+
     }
 
     public Boolean GuardarPagos() {
@@ -74,6 +75,7 @@ public class Factura  {
 
     public void actualizarLineas() {
         this.lineas = Operaciones.ObtenerLineasFactura(this.id);
+        this.totales.actualizar(lineas);
     }
 
 
@@ -81,21 +83,16 @@ public class Factura  {
         if (linea == null) {
             return;
         }
-        //this.lineas.add(linea);
-
         Operaciones.InsertarLineaFactura(linea,this.id);
         Operaciones.ActualizaTotalFactura(this);
-
         actualizarLineas();
-        this.totales.actualizar(lineas);
+
 
     }
 
     public void modificarLinea(int Index, LineaFactura linea) {
         if (Index >= 0 && Index <=this.lineas.size()) {
             this.lineas.set(Index,linea);
-            this.totales.actualizar(lineas);
-
         }
     }
 
@@ -105,8 +102,6 @@ public class Factura  {
             LineaFactura linea = lineas.get(Index);
             linea.setCantidad(linea.getCantidad()*-1);
             agregarLinea((linea));
-
-
         }
     }
 
@@ -122,6 +117,7 @@ public class Factura  {
         if (pago!=null) {
             Mensaje = "Agregando pago " + pago.getTipoMoneda().getCodmoneda() + " monto " + pago.getMontoformato();
             this.pagos.add(pago);
+            GuardarPagos();
             actualizarPago();
         } else {
             Mensaje = "Pago no aceptado.";
@@ -245,6 +241,7 @@ public class Factura  {
 
 
     public FacturaTotal getTotales() {
+        totales.totalizar();
         return totales;
     }
 

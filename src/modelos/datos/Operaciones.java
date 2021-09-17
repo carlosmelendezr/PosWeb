@@ -5,6 +5,7 @@ import modelos.factura.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 import static modelos.datos.Connect.connect;
@@ -25,6 +26,70 @@ public class Operaciones {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public static Factura ResultToFactura(ResultSet rs) {
+
+        TipoMoneda Dolar = new TipoMoneda(1,"USD","DOLAR","$",
+                new Moneda("1"),MonedaUtil.formatoUsd);
+        Dolar.setEsMonedaBase(true);
+
+        Factura fac = new Factura(Dolar);
+        try {
+
+            Cliente cli = Operaciones.buscarClienteCedula(rs.getString("idcliente"));
+
+            fac.setId(rs.getInt("id"));
+            fac.setNumeroFactura(rs.getInt("numero"));
+            fac.setCliente(cli);
+            fac.setNumeroCaja(rs.getInt("caja"));
+            fac.setImprimible(rs.getBoolean("imprime"));
+            fac.setActiva(rs.getBoolean("activa"));
+            fac.setPagada(rs.getBoolean("pagada"));
+            fac.setCancelada(rs.getBoolean("cancelada"));
+            fac.setError(rs.getBoolean("error"));
+            fac.setEspera(rs.getBoolean("espepra"));
+            Date fec = rs.getDate("fecha");
+
+
+            Calendar fecha = Calendar.getInstance();
+            fecha.setTime(fec);
+
+            fac.setFecha(fecha);
+
+
+        } catch (Exception e) {
+
+        }
+        return fac;
+    }
+
+    public static List<Factura> BuscarFactura() {
+        List<Factura> facturas = new ArrayList<>() ;
+
+        Connection conn = connect(Constantes.dbPrincipal);
+
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(Constantes.SQL_FACTURAS_ESPERA);
+            while (rs.next()) {
+                facturas.add(ResultToFactura(rs));
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return facturas;
+
+
+    }
+
+    public static Factura UltimaFacturaEspera() {
+        List<Factura> facturas = BuscarFactura();
+        if (facturas==null || facturas.size()==0) return null;
+        return facturas.get(facturas.size()-1);
     }
 
     public static Factura CrearFactura(TipoMoneda mon) {
@@ -130,14 +195,15 @@ public class Operaciones {
 
         try {
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * from fac_articulos WHERE idfactura="+idfactura);
+            ResultSet rs = stmt.executeQuery("SELECT * from fac_articulos WHERE idfactura="+idfactura+" ORDER BY codbarra");
             while (rs.next()) {
                 int idpro = rs.getInt("idproducto");
                 Producto pro = buscarProductoId(idpro);
                 pro.setPrecio(new Moneda(rs.getDouble("precio")));
                 LineaFactura linea = new LineaFactura(rs.getInt("id"),pro,rs.getDouble("cantidad"));
+                linea.setEstatus(rs.getInt("estatus"));
                 lineas.add(linea);
-                System.out.println(linea.getDescripcion());
+
             }
             rs.close();
 
@@ -261,10 +327,10 @@ public class Operaciones {
             pstmt.setDouble(2, tot.getMontoImpuesto().getValor().doubleValue());
             pstmt.setDouble(3, tot.getMontoBase().getValor().doubleValue());
             pstmt.setDouble(4, tot.getMontoDescuento().getValor().doubleValue());
-            pstmt.setInt(5,fac.getCliente().getId());
-            pstmt.setInt(6,fac.getId());
-
-            System.out.println("Cliente :"+fac.getCliente().getId());
+            if (fac.getCliente()!=null) {
+                pstmt.setInt(5, fac.getCliente().getId());
+                pstmt.setInt(6, fac.getId());
+            }
 
             pstmt.execute();
             pstmt.close();
@@ -501,7 +567,8 @@ public class Operaciones {
 
         try {
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM clientes WHERE cedula="+cedula+" OR rif="+cedula);
+            ResultSet rs = stmt.executeQuery("SELECT * FROM clientes " +
+                    "WHERE cedula="+cedula+" OR rif="+cedula+" OR id="+cedula);
             while (rs.next()) {
                 cli =  new Cliente();
 
@@ -518,8 +585,6 @@ public class Operaciones {
                         rs.getInt("rif"),
                         rs.getString("tipo"),dirs,tels);
 
-
-                System.out.println(cli.getId() + "-" +cli.getRazonsocial());
             }
             rs.close();
 

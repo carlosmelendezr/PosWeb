@@ -130,4 +130,12 @@ public class LineaFactura {
     public void setTotalFormato(String totalFormato) {
         this.totalFormato = totalFormato;
     }
+
+    public Integer getEstatus() {
+        return estatus;
+    }
+
+    public void setEstatus(Integer estatus) {
+        this.estatus = estatus;
+    }
 }
