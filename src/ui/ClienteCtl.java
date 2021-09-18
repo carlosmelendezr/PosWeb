@@ -47,9 +47,13 @@ public class ClienteCtl implements Initializable {
         inicializa();
     }
 
-    void inicializa() {
-        tasadolar.setText( MonedaUtil.formatoBs.format(Contexto.Bolivar.getTasacambio().getValor()));
-        factura.setText(Contexto.facturaActual.getNumeroFactura().toString());
+    public void inicializa() {
+        //tasadolar.setText( MonedaUtil.formatoBs.format(Contexto.Bolivar.getTasacambio().getValor()));
+
+        tasadolar.textProperty().bind(Contexto.tasaDolar);
+        factura.textProperty().bind(Contexto.numeroFactura);
+
+        //factura.setText(Contexto.facturaActual.getNumeroFactura().toString());
     }
 
 

@@ -53,13 +53,23 @@ public class mainCtl implements Initializable {
     }
 
     public void cintaBotones() {
+
+        VBox vboxder = new VBox();
+
         Button buttonPagos = new Button("Pagos");
         botonset(buttonPagos);
         buttonPagos.setOnAction(event -> {
             Acciones.ventanaPagos();
         });
 
-        mainPane.setRight(buttonPagos);
+        /*Button buttonFinalizar = new Button("Imprimir");
+        botonset(buttonFinalizar);
+        buttonFinalizar.setOnAction(event -> {
+            Contexto.finalizarFactura();
+        });*/
+        vboxder.getChildren().add(buttonPagos);
+        //vboxder.getChildren().add(buttonFinalizar);
+        mainPane.setRight(vboxder);
     }
 
     public void botonset(Button bot) {

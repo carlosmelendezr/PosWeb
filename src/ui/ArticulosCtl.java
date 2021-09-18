@@ -1,6 +1,8 @@
 package ui;
 
-import javafx.application.Application;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -20,6 +22,7 @@ import java.util.ResourceBundle;
 
 
 public class ArticulosCtl implements Initializable {
+
 
     private int MouseClicks;
 
@@ -70,7 +73,12 @@ public class ArticulosCtl implements Initializable {
 
 
         listaArticulos.getColumns().addAll(colcod,colref,coldes,colcant,colpre,coltot);
+
         listaArticulos.setItems(Contexto.facturaListaproductos);
+
+    }
+
+    public static void inicializa() {
 
     }
 

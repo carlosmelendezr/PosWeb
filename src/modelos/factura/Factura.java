@@ -36,7 +36,6 @@ public class Factura  {
         this.pagos = new ArrayList<>();
         this.lineas = new ArrayList<>();
         this.totales = new FacturaTotal();
-        this.totales = new FacturaTotal();
 
         Imprimible = false;
         Pagada = false;
@@ -49,6 +48,7 @@ public class Factura  {
 
     public void limpiarPagos() {
         this.pagos.clear();
+        Operaciones.LimpiarPagoFactura(this.id);
         actualizarPago();
     }
 
@@ -69,13 +69,19 @@ public class Factura  {
 
     }
 
-    public Boolean GuardarPagos() {
-        return Operaciones.InsertarPagoFactura(this.pagos,this.id);
+    public Boolean GuardarPago(Pago pag) {
+        return Operaciones.InsertarPagoFactura(pag,this.id);
     }
 
     public void actualizarLineas() {
         this.lineas = Operaciones.ObtenerLineasFactura(this.id);
         this.totales.actualizar(lineas);
+    }
+
+    public void obtenerPagos() {
+        this.pagos = Operaciones.ObtenerPagosFactura(this);
+        actualizarPago();
+
     }
 
 
@@ -84,8 +90,9 @@ public class Factura  {
             return;
         }
         Operaciones.InsertarLineaFactura(linea,this.id);
-        Operaciones.ActualizaTotalFactura(this);
+
         actualizarLineas();
+        Operaciones.ActualizaEstatusFactura(this);
 
 
     }
@@ -121,7 +128,7 @@ public class Factura  {
         if (pago!=null) {
             Mensaje = "Agregando pago " + pago.getTipoMoneda().getCodmoneda() + " monto " + pago.getMontoformato();
             this.pagos.add(pago);
-            GuardarPagos();
+            GuardarPago(pago);
             actualizarPago();
         } else {
             Mensaje = "Pago no aceptado.";
@@ -150,6 +157,83 @@ public class Factura  {
 
     public Moneda getFacturaSaldo() {
         return this.totales.getTotalSaldo();
+    }
+
+
+    private void actualizarPago() {
+        Moneda totalpago = new Moneda("0");
+
+        for (Pago pago : pagos)
+        {
+
+            if (pago.getTipoMoneda().getCodmoneda().equals(this.tipoMoneda.getCodmoneda())) {
+                /*System.out.println( "Registrando pago "+pago.getTipoMoneda().getCodmoneda()+" monto "+
+                        pago.getTotal().getValor());*/
+
+                totalpago.sumar(pago.getTotal());
+            }else {
+                /*System.out.println("Convirtiendo de "+pago.getTipoMoneda().getCodmoneda()+" ->"+
+                        this.tipoMoneda.getCodmoneda()+" "+pago.getTotal().getValor());*/
+                //this.moneda.setValor(pago.getTotal());
+
+                Moneda resul = MonedaUtil.ConvertirValor(pago.getTipoMoneda(), this.tipoMoneda,pago.getMonto());
+                //System.out.println("               -> Resultado ="+this.tipoMoneda.getValorFormato(resul));
+
+                totalpago.sumar(resul)  ;
+            }
+
+        }
+        //System.out.println("Total pagos "+ pagos.size());
+        this.totales.setTotalPago(totalpago);
+
+
+        if (this.totales.getTotalSaldo().menorOigual(new Moneda("0")) ) {
+            System.out.println("!!! La Factura es Imprimible !!!");
+            this.Imprimible = true;
+            this.Pagada = true;
+
+        }
+    }
+
+    public boolean Finalizar() {
+        boolean exito=false;
+        if (this.Imprimible) {
+
+        }
+
+        this.Activa = false;
+
+        Operaciones.ActualizaEstatusFactura(this);
+
+        for (LineaFactura lin:lineas) {
+
+            MovInventario mov = new MovInventario();
+            mov.setCantidad(lin.getCantidad()*-1);
+            mov.setIdproducto(lin.getProducto().getId());
+            mov.setIdtipomov(3);
+            mov.setFecha(this.fecha);
+            Operaciones.insertarMovimientoInventario(mov);
+        }
+        lineas.clear();
+        Inicializa();
+
+
+        exito = true;
+
+        return exito;
+    }
+
+    private boolean Imprimir() {
+        boolean exito=false;
+        return exito;
+    }
+
+    //<editor-fold desc="Getter and Setters">
+
+
+    public FacturaTotal getTotales() {
+        totales.totalizar();
+        return totales;
     }
 
     public Integer getId() {
@@ -208,46 +292,6 @@ public class Factura  {
         this.lineas = lineas;
     }
 
-    private void actualizarPago() {
-        Moneda totalpago = new Moneda("0");
-
-        for (Pago pago : pagos)
-        {
-
-            if (pago.getTipoMoneda().getCodmoneda().equals(this.tipoMoneda.getCodmoneda())) {
-                /*System.out.println( "Registrando pago "+pago.getTipoMoneda().getCodmoneda()+" monto "+
-                        pago.getTotal().getValor());*/
-
-                totalpago.sumar(pago.getTotal());
-            }else {
-                /*System.out.println("Convirtiendo de "+pago.getTipoMoneda().getCodmoneda()+" ->"+
-                        this.tipoMoneda.getCodmoneda()+" "+pago.getTotal().getValor());*/
-                //this.moneda.setValor(pago.getTotal());
-
-                Moneda resul = MonedaUtil.ConvertirValor(pago.getTipoMoneda(), this.tipoMoneda,pago.getMonto());
-                //System.out.println("               -> Resultado ="+this.tipoMoneda.getValorFormato(resul));
-
-                totalpago.sumar(resul)  ;
-            }
-
-        }
-        //System.out.println("Total pagos "+ pagos.size());
-        this.totales.setTotalPago(totalpago);
-
-
-        if (this.totales.getTotalSaldo().igualZero()) {
-            System.out.println("!!! La Factura es Imprimible !!!");
-            this.Imprimible = true;
-
-        }
-    }
-
-
-
-    public FacturaTotal getTotales() {
-        totales.totalizar();
-        return totales;
-    }
 
     public void setTotales(FacturaTotal totales) {
         this.totales = totales;
@@ -329,4 +373,6 @@ public class Factura  {
     public void setMensaje(String mensaje) {
         Mensaje = mensaje;
     }
+
+    //</editor-fold>
 }

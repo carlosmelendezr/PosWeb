@@ -27,6 +27,9 @@ public class Contexto {
     public static ArrayList<Moneda> tasasImpuesto;
     public static SimpleStringProperty MensajeEstatus = new SimpleStringProperty();
     public static FacturaTotal totalUsd;
+    public static SimpleStringProperty totalGen = new SimpleStringProperty();
+    public static SimpleStringProperty numeroFactura = new SimpleStringProperty();
+    public static SimpleStringProperty tasaDolar = new SimpleStringProperty();
 
 
     public static void inicializar() {
@@ -48,16 +51,18 @@ public class Contexto {
         Dolar.setEsMonedaBase(true);
         Bolivar = new TipoMoneda(2,"VES","BOLIVAR","Bs.",tasaDolarHoy, MonedaUtil.formatoBs);
 
-        facturaActual = Operaciones.UltimaFacturaEspera();
+        facturaActual = Operaciones.UltimaFacturaActiva();
         if (facturaActual==null) {
             facturaActual = Operaciones.CrearFactura(Dolar);
         } else {
-
             facturaActual.actualizarLineas();
-            facturaListaproductos.addAll(facturaActual.getLineas());
-
+            facturaActual.obtenerPagos();
         }
+        facturaListaproductos.addAll(facturaActual.getLineas());
+        numeroFactura.set(facturaActual.getNumeroFactura().toString());
+        tasaDolar.set(MonedaUtil.formatoBs.format(Contexto.Bolivar.getTasacambio().getValor()));
 
+        actulizaTotales();
     }
 
     public static void enviarEstus(String Mensaje) {
@@ -94,7 +99,8 @@ public class Contexto {
 
     public static void actulizaTotales() {
         totalUsd = facturaActual.getTotales();
-        TotalFactCtl.totalGen.set(totalUsd.montoTotalFormato());
+        totalGen.set(totalUsd.montoTotalFormato());
+
     }
 
     public static void actualizaPagos() {
@@ -103,6 +109,19 @@ public class Contexto {
         for(Pago pag:lista) {
             facturaListapagos.add(pag);
         }
+    }
+
+    public static void finalizarFactura() {
+        facturaActual.Finalizar();
+        facturaListaproductos.clear();
+        facturaListaproductos.addAll(facturaActual.getLineas());
+
+        facturaActual = Operaciones.CrearFactura(Dolar);
+        numeroFactura.set(facturaActual.getNumeroFactura().toString());
+
+        actulizaTotales();
+        enviarEstus("Factura guardada correctamente.");
+
     }
 
     public static String totalPagoBs() {

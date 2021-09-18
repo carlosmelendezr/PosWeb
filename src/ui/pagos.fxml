@@ -75,7 +75,7 @@
       </GridPane>
       <VBox layoutX="807.0" layoutY="1.0" prefHeight="474.0" prefWidth="147.0">
          <children>
-            <Button fx:id="botonImprimir" mnemonicParsing="false" onAction="#guardarPagos" prefHeight="26.0" prefWidth="147.0" styleClass="botones-verde" text="Imprimir" visible="false" />
+            <Button fx:id="botonImprimir" mnemonicParsing="false" onMouseClicked="#imprimirFactura" prefHeight="26.0" prefWidth="147.0" styleClass="botones-verde" text="Imprimir" visible="false" />
          </children>
       </VBox>
       <GridPane alignment="CENTER_RIGHT" layoutY="477.0" prefHeight="104.0" prefWidth="453.0" styleClass="pagos-totales" stylesheets="@estilos.css">

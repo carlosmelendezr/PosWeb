@@ -3,9 +3,11 @@ package ui;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseEvent;
 import modelos.factura.Moneda;
 import modelos.factura.Pago;
 import modelos.factura.TipoMoneda;
@@ -54,7 +56,7 @@ public class PagosCtl implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-       totalFactura.setText(TotalFactCtl.totalGen.getValue());
+       totalFactura.setText(Contexto.totalGen.getValue());
 
 
        efectivoBs.textProperty().addListener(new soloNumero(efectivoBs) );
@@ -281,8 +283,11 @@ public class PagosCtl implements Initializable {
         }
     }
 
-    public void guardarPagos() {
-        Contexto.facturaActual.GuardarPagos();
+    public void imprimirFactura(MouseEvent event) {
+
+        //Contexto.facturaActual.GuardarPagos();
+        Contexto.finalizarFactura();
+        ((Node)(event.getSource())).getScene().getWindow().hide();
     }
 
 }

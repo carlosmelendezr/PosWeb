@@ -64,7 +64,24 @@ public class Operaciones {
         return fac;
     }
 
-    public static List<Factura> BuscarFactura() {
+    public static Factura BuscarFacturaActiva() {
+        Factura factura = null;
+
+        Connection conn = connect(Constantes.dbPrincipal);
+
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(Constantes.SQL_FACTURAS_ACTIVA);
+            factura = ResultToFactura(rs);
+            rs.close();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return factura;
+    }
+
+    public static List<Factura> BuscarFacturaEspera() {
         List<Factura> facturas = new ArrayList<>() ;
 
         Connection conn = connect(Constantes.dbPrincipal);
@@ -86,10 +103,9 @@ public class Operaciones {
 
     }
 
-    public static Factura UltimaFacturaEspera() {
-        List<Factura> facturas = BuscarFactura();
-        if (facturas==null || facturas.size()==0) return null;
-        return facturas.get(facturas.size()-1);
+    public static Factura UltimaFacturaActiva() {
+        Factura factura = BuscarFacturaActiva();
+        return factura;
     }
 
     public static Factura CrearFactura(TipoMoneda mon) {
@@ -214,6 +230,32 @@ public class Operaciones {
         return lineas;
     }
 
+    public static List<Pago> ObtenerPagosFactura( Factura fac) {
+        List<Pago> lineas = new ArrayList<>() ;
+
+        Connection conn = connect(Constantes.dbPrincipal);
+
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(Constantes.SQL_BUSCAR_PAGOS+fac.getId());
+            while (rs.next()) {
+
+                Pago pag = new Pago(fac.getTipoMoneda(),
+                        new Moneda(rs.getDouble("monto")),
+                        new Moneda(rs.getDouble("vuelto")));
+                pag.setReferencia(rs.getString("referencia"));
+                lineas.add(pag);
+
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return lineas;
+    }
+
     public static boolean InsertarLineaFactura(LineaFactura lin, int idfactura) {
         boolean Exito=false;
 
@@ -314,7 +356,7 @@ public class Operaciones {
 
     }
 
-    public static boolean ActualizaTotalFactura(Factura fac) {
+    public static boolean ActualizaEstatusFactura(Factura fac) {
         boolean Exito=false;
 
         FacturaTotal tot = fac.getTotales();
@@ -323,15 +365,21 @@ public class Operaciones {
             Connection conn = connect(Constantes.dbPrincipal);
             PreparedStatement pstmt = conn.prepareStatement(Constantes.SQL_ACTUALIZAR_FACTURA);
 
-
             pstmt.setDouble(1, tot.getMontoTotal().getValor().doubleValue());
             pstmt.setDouble(2, tot.getMontoImpuesto().getValor().doubleValue());
             pstmt.setDouble(3, tot.getMontoBase().getValor().doubleValue());
             pstmt.setDouble(4, tot.getMontoDescuento().getValor().doubleValue());
             if (fac.getCliente()!=null) {
                 pstmt.setInt(5, fac.getCliente().getId());
-                pstmt.setInt(6, fac.getId());
+
             }
+            pstmt.setBoolean(6, fac.getImprimible() );
+            pstmt.setBoolean(7, fac.getActiva() );
+            pstmt.setBoolean(8, fac.getPagada() );
+            pstmt.setBoolean(9, fac.getCancelada() );
+            pstmt.setBoolean(10, fac.getError() );
+            pstmt.setBoolean(11, fac.getEspera() );
+            pstmt.setInt(12, fac.getId());
 
             pstmt.execute();
             pstmt.close();
@@ -353,31 +401,28 @@ public class Operaciones {
     }
 
 
-
-    public static boolean InsertarPagoFactura(List<Pago> pagos, int idfactura) {
+    public static boolean InsertarPagoFactura( Pago pag, int idfactura) {
         boolean Exito=false;
-
 
         try {
 
             Connection conn = connect(Constantes.dbPrincipal);
             PreparedStatement pstmt = conn.prepareStatement(Constantes.SQL_INSERTAR_PAGO);
 
-            for(Pago pag:pagos) {
-                pstmt.setInt(1, idfactura);
-                pstmt.setString(2, pag.getTipoMoneda().getCodmoneda());
-                pstmt.setDouble(3,pag.getMonto().getValor().doubleValue());
-                pstmt.setDouble(4,pag.getVuelto().getValor().doubleValue());
-                pstmt.setDouble(5,pag.getTotal().getValor().doubleValue());
-                pstmt.setString(6,pag.getReferencia());
-                pstmt.setInt(7, pag.getBanco().getId());
-                pstmt.setString(8, Util.calendarToSql(pag.getFechapago()));
-                pstmt.setString(9, Util.calendarToHora(pag.getFechapago()));
-                pstmt.setString(10, Util.calendarToSql(pag.getFechareg()));
-                pstmt.setString(11, Util.calendarToHora(pag.getFechareg()));
-                pstmt.setDouble(12, pag.getTipoMoneda().getTasacambio().getValor().doubleValue());
-                pstmt.execute();
-            }
+             pstmt.setInt(1, idfactura);
+             pstmt.setString(2, pag.getTipoMoneda().getCodmoneda());
+             pstmt.setDouble(3,pag.getMonto().getValor().doubleValue());
+             pstmt.setDouble(4,pag.getVuelto().getValor().doubleValue());
+             pstmt.setDouble(5,pag.getTotal().getValor().doubleValue());
+             pstmt.setString(6,pag.getReferencia());
+             pstmt.setInt(7, pag.getBanco().getId());
+             pstmt.setString(8, Util.calendarToSql(pag.getFechapago()));
+             pstmt.setString(9, Util.calendarToHora(pag.getFechapago()));
+             pstmt.setString(10, Util.calendarToSql(pag.getFechareg()));
+             pstmt.setString(11, Util.calendarToHora(pag.getFechareg()));
+             pstmt.setDouble(12, pag.getTipoMoneda().getTasacambio().getValor().doubleValue());
+             pstmt.execute();
+
             pstmt.close();
             Exito = true;
             try {
@@ -396,19 +441,59 @@ public class Operaciones {
 
     }
 
+    public static boolean LimpiarPagoFactura(  int idfactura) {
+        boolean Exito=false;
+
+        try {
+
+            Connection conn = connect(Constantes.dbPrincipal);
+            PreparedStatement pstmt = conn.prepareStatement(Constantes.SQL_BORRAR_PAGOS);
+
+            pstmt.setInt(1, idfactura);
+            pstmt.execute();
+
+            pstmt.close();
+            Exito = true;
+            try {
+                conn.close();
+            } catch(SQLException e) {
+                System.out.println(e.getMessage());
+
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+
+        return Exito;
+
+    }
+
+    //<editor-fold desc="Busqueda de Productos">
+
     public static List<ProductoBuscar> buscarProductoDescrip(String desc) {
         List<ProductoBuscar> lista = new ArrayList<>();
         Connection conn = connect(Constantes.dbPrincipal);
 
         try {
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT producbuscar.id,producbuscar.descrip,producbuscar.codigo,producbuscar.ref,precio  " +
-                    "FROM producbuscar LEFT JOIN productos ON producbuscar.id = productos.id WHERE producbuscar.descrip MATCH '"+desc.trim()+"'  ");
+            ResultSet rs = stmt.executeQuery("SELECT producbuscar.id," +
+                    "producbuscar.descrip," +
+                    "producbuscar.codigo," +
+                    "producbuscar.ref,precio,stock  " +
+                    "FROM producbuscar " +
+                    "LEFT JOIN productos ON producbuscar.id = productos.id " +
+                    "WHERE producbuscar.descrip MATCH '"+desc.trim()+"'  ");
+
             while (rs.next()) {
+
                 ProductoBuscar pro = new ProductoBuscar(rs.getInt("id"),
                         rs.getString("descrip"),
                         rs.getString("codigo"),
                         rs.getString("ref"));
+
+                pro.setStock(rs.getDouble("stock"));
                 pro.setPrecio(new Moneda(rs.getDouble("precio")));
 
                 lista.add(pro);
@@ -501,6 +586,10 @@ public class Operaciones {
         return pro;
 
     }
+
+    //</editor-fold>"
+
+    //<editor-fold desc="Modulos de Cliente>"
 
     public static boolean InsertarCliente(Cliente cli) {
         boolean Exito=false;
@@ -597,8 +686,10 @@ public class Operaciones {
 
     }
 
+    //</editor-fold >"
 
 
+    //<editor-fold desc="Movimientos de Inventario>"
     public static boolean insertarMovimientoInventario(MovInventario mov) {
         boolean Exito=false;
 
@@ -649,5 +740,7 @@ public class Operaciones {
         return Exito;
 
     }
+
+    //</editor-fold>"
 
 }

@@ -43,7 +43,7 @@ public class ResulBusqCtl implements Initializable {
         TableColumn colcant = new TableColumn("Existencia");
         colcant.setMinWidth(100);
         colcant.setCellValueFactory(
-                new PropertyValueFactory<Producto, String>("cantidad"));
+                new PropertyValueFactory<Producto, String>("stock"));
 
         TableColumn colpre = new TableColumn("Precio");
         colpre.setMinWidth(100);

@@ -12,7 +12,7 @@ import java.util.ResourceBundle;
 
 public class TotalFactCtl implements Initializable {
 
-    public static SimpleStringProperty totalGen = new SimpleStringProperty();
+
 
 
     @FXML
@@ -20,8 +20,8 @@ public class TotalFactCtl implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        totalGen.set("0.0");
-        totalGeneral.textProperty().bind(totalGen);
+        //totalGen.set("0.0");
+        totalGeneral.textProperty().bind(Contexto.totalGen);
         Contexto.actulizaTotales();
 
     }

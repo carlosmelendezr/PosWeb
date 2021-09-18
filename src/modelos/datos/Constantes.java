@@ -45,7 +45,9 @@ public class Constantes {
 
     public static String SQL_ULTIMA_FACTURA = "SELECT numero FROM tabla_consec  WHERE nombre='FACTURA' LIMIT 1 ";
 
+    public static String SQL_FACTURAS_ACTIVA = "SELECT * FROM factura  WHERE activa=1 LIMIT 1 ";
     public static String SQL_FACTURAS_ESPERA = "SELECT * FROM factura  WHERE espera=1 ";
+
 
 
     public static List<String> crearConsecutivos() {
@@ -114,8 +116,11 @@ public class Constantes {
             "(idfactura,idproducto,referencia,codbarra,cantidad,precio,alicuota,descuento, estatus) VALUES " +
             "(  ?      ,    ?     ,     ?    ,   ?     ,   ?    ,  ?   ,    ?  ,    ?,    ?    ) ";
 
-    public static String SQL_ACTUALIZAR_FACTURA = "UPDATE factura SET total=?,impuesto=?,base=?,descuento=?,idcliente=? " +
+    public static String SQL_ACTUALIZAR_FACTURA = "UPDATE factura SET total=?,impuesto=?,base=?,descuento=?,idcliente=?," +
+            "imprime=?,activa=?,pagada=?,cancelada=?,error=?,espera=? " +
             "WHERE id=?";
+
+    public static String SQL_BORRAR_PAGOS = "DELETE FROM fac_pagos WHERE idfactura=?";
 
     public static String SQL_CREAR_PAGOS = "CREATE TABLE IF NOT EXISTS fac_pagos ("
             + "id integer PRIMARY KEY,"
@@ -138,6 +143,8 @@ public class Constantes {
     public static String SQL_INSERTAR_PAGO = "INSERT INTO fac_pagos " +
             "(idfactura,moneda,monto,vuelto,total,referencia,idbanco,fecpago,horpago,fecreg,horreg,tasacambio) VALUES " +
             "(    ?,      ?   ,  ?,     ?,    ?,      ?,        ?,      ?,      ?,      ?,     ?  ,    ?  )";
+
+    public static String SQL_BUSCAR_PAGOS ="SELECT * FROM fac_pagos WHERE idfactura=";
 
 
     public static String FacturaDatosFiscales= "CREATE TABLE IF NOT EXISTS fac_fiscal ("
