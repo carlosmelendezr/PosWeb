@@ -4,7 +4,9 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import modelos.datos.Constantes;
 import modelos.datos.Operaciones;
+import modelos.datos.dboTasa;
 import modelos.factura.*;
+import servicios.impresion.ImpBixolonSRP812;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,6 +32,7 @@ public class Contexto {
     public static SimpleStringProperty totalGen = new SimpleStringProperty();
     public static SimpleStringProperty numeroFactura = new SimpleStringProperty();
     public static SimpleStringProperty tasaDolar = new SimpleStringProperty();
+    public static Tasa TasaDia;
 
 
     public static void inicializar() {
@@ -43,8 +46,9 @@ public class Contexto {
         facturaListaproductos = observableArrayList();
         facturaListapagos = observableArrayList();
 
-        tasaDolarHoy = new Moneda("4147300.52");
-        //tasaDolarHoy = new Moneda("4.15");
+        TasaDia = dboTasa.buscarUltimaTasa();
+
+        tasaDolarHoy = new Moneda(TasaDia.getValor());
         MonedaUtil.inicializar();
 
         Dolar = new TipoMoneda(1,"USD","DOLAR","$",new Moneda("1"),MonedaUtil.formatoUsd);
@@ -71,11 +75,14 @@ public class Contexto {
 
     public static void agregarLineaFactura(LineaFactura lin) {
 
-        facturaActual.agregarLinea(lin);
-        facturaListaproductos.add(lin);
-        ProductoBuscado = null;
-        actulizaTotales();
-        enviarEstus("Producto agregado correctamente.");
+        if (facturaActual.agregarLinea(lin)) {
+            facturaListaproductos.add(lin);
+            ProductoBuscado = null;
+            actulizaTotales();
+            enviarEstus("Producto agregado correctamente.");
+        } else {
+            enviarEstus("Error en base de datos al agregar producto.");
+        }
 
     }
 
@@ -122,6 +129,15 @@ public class Contexto {
         actulizaTotales();
         enviarEstus("Factura guardada correctamente.");
 
+    }
+
+    public static void emitirReporteZ() {
+        ImpBixolonSRP812 Bixolon = new ImpBixolonSRP812();
+
+        Bixolon.inicializar("COM99", Dolar);
+        Bixolon.cargarTablaComandos();
+        Bixolon.ReporteZ();
+        Bixolon.finalizar();
     }
 
     public static String totalPagoBs() {

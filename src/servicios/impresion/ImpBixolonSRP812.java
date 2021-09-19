@@ -124,6 +124,8 @@ public class ImpBixolonSRP812
     }
 
     public void agregarCliente(Cliente cli) {
+        if (cli==null) {return;}
+
         String Comando = new String();
         Comando = "iR*"+cli.getTiporif()+cli.getRif();
         listaComandos.add(Comando);

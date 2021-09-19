@@ -116,9 +116,23 @@ public class Constantes {
             "(idfactura,idproducto,referencia,codbarra,cantidad,precio,alicuota,descuento, estatus) VALUES " +
             "(  ?      ,    ?     ,     ?    ,   ?     ,   ?    ,  ?   ,    ?  ,    ?,    ?    ) ";
 
+    public static String SQL_OBTENER_LINEA_FACTURA = "SELECT * from fac_articulos WHERE idfactura=? ORDER BY codbarra ";
+
+    public static String SQL_OBTENER_LINEA_FACTURA_AGRUPADO = "SELECT " +
+            "id," +
+            "idfactura,idproducto," +
+            "referencia,codbarra," +
+            "SUM(cantidad) as cantidad," +
+            "precio," +
+            "alicuota,descuento,estatus " +
+            "FROM fac_articulos " +
+            "WHERE idfactura=?" +
+            "GROUP by idproducto,precio";
+
     public static String SQL_ACTUALIZAR_FACTURA = "UPDATE factura SET total=?,impuesto=?,base=?,descuento=?,idcliente=?," +
             "imprime=?,activa=?,pagada=?,cancelada=?,error=?,espera=? " +
             "WHERE id=?";
+
 
     public static String SQL_BORRAR_PAGOS = "DELETE FROM fac_pagos WHERE idfactura=?";
 

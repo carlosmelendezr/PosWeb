@@ -62,13 +62,13 @@ public class mainCtl implements Initializable {
             Acciones.ventanaPagos();
         });
 
-        /*Button buttonFinalizar = new Button("Imprimir");
-        botonset(buttonFinalizar);
-        buttonFinalizar.setOnAction(event -> {
-            Contexto.finalizarFactura();
-        });*/
+        Button buttonReporteZ = new Button("Reporte Z");
+        botonset(buttonReporteZ);
+        buttonReporteZ.setOnAction(event -> {
+            Contexto.emitirReporteZ();
+        });
         vboxder.getChildren().add(buttonPagos);
-        //vboxder.getChildren().add(buttonFinalizar);
+        vboxder.getChildren().add(buttonReporteZ);
         mainPane.setRight(vboxder);
     }
 

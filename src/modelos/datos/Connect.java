@@ -1,10 +1,14 @@
 package modelos.datos;
 
+import modelos.factura.Moneda;
+import modelos.factura.Tasa;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Calendar;
 
-    public class  Connect {
+public class  Connect {
 
         public static Connection connect(String nombreArchivo) {
             Connection conn = null;
@@ -38,13 +42,17 @@ import java.sql.SQLException;
             Tabla.crearBatch(conn,Constantes.crearTablasMovInv());
             Tabla.crearBatch(conn,dboUsuarios.crearTablasUsuarios());*/
 
-            Usuario usr = new Usuario();
+            /*Usuario usr = new Usuario();
             usr.setCedula(12641955);
             usr.setClave("800rosas");
             usr.setNombre("CARLOS MELENDEZ");
             usr.setIdrol(0);
             usr.setEstatus(dboUsuarios.USUARIO_ACTIVO);
-            dboUsuarios.InsertarUsuario(usr);
+            dboUsuarios.InsertarUsuario(usr);*/
+
+            /*Tabla.crearBatch(conn,dboTasa.crearTablasTasa());
+            Tasa tas = new Tasa(new Moneda(4.30), Calendar.getInstance());
+            dboTasa.InsertarTasa(tas);*/
 
             try {
                 conn.close();

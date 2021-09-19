@@ -204,14 +204,24 @@ public class Operaciones {
         return lastId;
 
     }
-    public static List<LineaFactura> ObtenerLineasFactura( int idfactura) {
+
+    public static List<LineaFactura> ObtenerLineasFactura( int idfactura ) {
+        return getLineasFactura(idfactura,Constantes.SQL_OBTENER_LINEA_FACTURA);
+    }
+    public static List<LineaFactura> ObtenerLineasFacturaAgrupado( int idfactura ) {
+        return getLineasFactura(idfactura,Constantes.SQL_OBTENER_LINEA_FACTURA_AGRUPADO);
+    }
+
+    public static List<LineaFactura> getLineasFactura( int idfactura,String sql) {
         List<LineaFactura> lineas = new ArrayList<>() ;
 
         Connection conn = connect(Constantes.dbPrincipal);
 
         try {
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * from fac_articulos WHERE idfactura="+idfactura+" ORDER BY codbarra");
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1,idfactura);
+
+            ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 int idpro = rs.getInt("idproducto");
                 Producto pro = buscarProductoId(idpro);

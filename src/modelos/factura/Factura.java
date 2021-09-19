@@ -2,6 +2,7 @@ package modelos.factura;
 
 import modelos.datos.Operaciones;
 import servicios.impresion.ImpBixolonSRP812;
+import ui.Contexto;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -86,15 +87,17 @@ public class Factura  {
     }
 
 
-    public void agregarLinea(LineaFactura linea) {
+    public boolean agregarLinea(LineaFactura linea) {
+        boolean exito;
         if (linea == null) {
-            return;
+            return false;
         }
-        Operaciones.InsertarLineaFactura(linea,this.id);
-
-        actualizarLineas();
-        Operaciones.ActualizaEstatusFactura(this);
-
+        exito = Operaciones.InsertarLineaFactura(linea,this.id);
+        if (exito) {
+            actualizarLineas();
+            Operaciones.ActualizaEstatusFactura(this);
+        }
+        return exito;
 
     }
 
@@ -196,18 +199,22 @@ public class Factura  {
         }
     }
 
+
+
     public boolean Finalizar() {
         boolean exito=false;
+        List<LineaFactura> lineasAgrupadas = Operaciones.ObtenerLineasFacturaAgrupado(this.id);
+        System.out.println(" Lineas a imprimir "+lineasAgrupadas.size());
         if (this.Imprimible) {
             ImpBixolonSRP812 Bixolon = new ImpBixolonSRP812();
 
-            Bixolon.inicializar("COM99", this.tipoMoneda);
+            Bixolon.inicializar("COM99", Contexto.Bolivar);
             Bixolon.cargarTablaComandos();
 
             if (this.getCliente()!=null) {
                 Bixolon.agregarCliente(this.getCliente());
             }
-            for (LineaFactura lin:lineas) {
+            for (LineaFactura lin:lineasAgrupadas) {
                 Bixolon.agregarItem(lin);
             }
 
