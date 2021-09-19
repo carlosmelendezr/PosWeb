@@ -153,6 +153,16 @@ public class ImpBixolonSRP812
         System.out.println("* * *  FIN DE IMPRESION * * * ");
     }
 
+    public void ReporteZ() {
+        String Comando = "I0Z";
+        listaComandos.add(Comando);
+    }
+
+    public void ReporteX() {
+        String Comando = "I0X";
+        listaComandos.add(Comando);
+    }
+
 
 
 

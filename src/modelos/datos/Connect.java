@@ -34,8 +34,17 @@ import java.sql.SQLException;
             //Operaciones.actualizarProducBuscar();
             /*Tabla.crearBatch(conn,Constantes.crearTablasClientes());
             Tabla.crearBatch(conn,Constantes.crearTablasTasaImpuesto());
-            Tabla.crearBatch(conn,Constantes.crearConsecutivos());*/
+            Tabla.crearBatch(conn,Constantes.crearConsecutivos());
             Tabla.crearBatch(conn,Constantes.crearTablasMovInv());
+            Tabla.crearBatch(conn,dboUsuarios.crearTablasUsuarios());*/
+
+            Usuario usr = new Usuario();
+            usr.setCedula(12641955);
+            usr.setClave("800rosas");
+            usr.setNombre("CARLOS MELENDEZ");
+            usr.setIdrol(0);
+            usr.setEstatus(dboUsuarios.USUARIO_ACTIVO);
+            dboUsuarios.InsertarUsuario(usr);
 
             try {
                 conn.close();

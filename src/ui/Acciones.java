@@ -14,6 +14,23 @@ import java.util.Optional;
 
 public class Acciones {
 
+    public static void ventanaPrincipal() {
+
+        try {
+            Stage stage = new Stage();
+            Parent root = FXMLLoader.load(
+                    Controller.class.getResource("pantallaPrincipal.fxml"));
+            stage.setScene(new Scene(root));
+            stage.setTitle("PosWeb");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+        } catch (IOException e) {
+            System.out.println("Error:"+e.getMessage());
+            e.printStackTrace();
+        }
+
+    }
+
     public static void ventanaFacturacion() {
 
         try {

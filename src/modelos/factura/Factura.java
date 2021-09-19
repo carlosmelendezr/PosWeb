@@ -1,6 +1,7 @@
 package modelos.factura;
 
 import modelos.datos.Operaciones;
+import servicios.impresion.ImpBixolonSRP812;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -198,6 +199,21 @@ public class Factura  {
     public boolean Finalizar() {
         boolean exito=false;
         if (this.Imprimible) {
+            ImpBixolonSRP812 Bixolon = new ImpBixolonSRP812();
+
+            Bixolon.inicializar("COM99", this.tipoMoneda);
+            Bixolon.cargarTablaComandos();
+
+            if (this.getCliente()!=null) {
+                Bixolon.agregarCliente(this.getCliente());
+            }
+            for (LineaFactura lin:lineas) {
+                Bixolon.agregarItem(lin);
+            }
+
+            Bixolon.Totalizar();
+            Bixolon.enviarImpresora();
+            Bixolon.finalizar();
 
         }
 

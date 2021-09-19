@@ -682,8 +682,6 @@ public class Operaciones {
             System.out.println(e.getMessage());
         }
         return cli;
-
-
     }
 
     //</editor-fold >"

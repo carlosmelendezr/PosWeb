@@ -2,18 +2,25 @@ package ui;
 
 
 
+import java.net.URL;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Window;
+import modelos.datos.Usuario;
+import modelos.datos.dboUsuarios;
 
-public class LoginCtl {
+public class LoginCtl implements Initializable {
 
     @FXML
     private TextField emailIdField;
@@ -25,36 +32,38 @@ public class LoginCtl {
     private Button submitButton;
 
     @FXML
-    public void login(ActionEvent event) throws SQLException {
+    public void login(ActionEvent event)  {
 
         Window owner = submitButton.getScene().getWindow();
 
-        System.out.println(emailIdField.getText());
-        System.out.println(passwordField.getText());
+
 
         if (emailIdField.getText().isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, owner, "Form Error!",
-                    "Please enter your email id");
+            showAlert(Alert.AlertType.ERROR, owner, "Error de acceso!",
+                    "Coloque su código de usuario");
             return;
         }
         if (passwordField.getText().isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, owner, "Form Error!",
-                    "Please enter a password");
+            showAlert(Alert.AlertType.ERROR, owner, "Error de acceso!",
+                    "Coloque su contraseña");
             return;
         }
 
-        String emailId = emailIdField.getText();
-        String password = passwordField.getText();
-
-        /*JdbcDao jdbcDao = new JdbcDao();
-        boolean flag = jdbcDao.validate(emailId, password);*/
-
         boolean flag = false;
 
+        Integer codigo = Integer.parseInt(emailIdField.getText());
+        String password = passwordField.getText();
+
+        Usuario usr = dboUsuarios.buscarUsuarioCedula(codigo,password);
+        if (usr!=null) flag = true;
+
+
         if (!flag) {
-            infoBox("Please enter correct Email and Password", null, "Failed");
+            infoBox("Usuario o contraseña incorrecta", null, "Inicio de sesión");
         } else {
-            infoBox("Login Successful!", null, "Failed");
+            //infoBox("Acceso autorizado!", null, "Autorizado");
+            ((Node)(event.getSource())).getScene().getWindow().hide();
+            Acciones.ventanaPrincipal();
         }
     }
 
@@ -73,5 +82,12 @@ public class LoginCtl {
         alert.setContentText(message);
         alert.initOwner(owner);
         alert.show();
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+        emailIdField.textProperty().addListener(new soloNumero(emailIdField) );
+
     }
 }
