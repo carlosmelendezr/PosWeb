@@ -15,17 +15,17 @@ import static modelos.datos.Connect.connect;
 
 public class dboTasa {
 
-    public static String SQL_CREAR_TABLA_TASA = "CREATE TABLE IF NOT EXISTS tasa ("
+    public static String SQL_CREAR_TABLA_TASA = "CREATE TABLE IF NOT EXISTS tasa_cambio ("
             + "id integer PRIMARY KEY,"
             + "valor real, "
             + "fecha date) ";
 
 
-    public static String SQL_INSERTAR_TASA = "INSERT INTO tasa " +
+    public static String SQL_INSERTAR_TASA = "INSERT INTO tasa_cambio " +
             "(valor,fecha) "+
             "VALUES (?,?)";
 
-    public static String SQL_ULTIMA_TASA = "SELECT * FROM tasa ORDER BY fecha DESC LIMIT 1 ";
+    public static String SQL_ULTIMA_TASA = "SELECT * FROM tasa_cambio ORDER BY fecha DESC LIMIT 1 ";
 
     public static List<String> crearTablasTasa() {
         List<String> queris = new ArrayList<>();

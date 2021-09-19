@@ -10,6 +10,7 @@ import servicios.impresion.ImpBixolonSRP812;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 import static javafx.collections.FXCollections.observableArrayList;
@@ -167,5 +168,25 @@ public class Contexto {
 
     public static void setSeleccionBusqueda(Integer seleccionBusqueda) {
         Contexto.seleccionBusqueda = seleccionBusqueda;
+    }
+
+    public static void agregarTasa() {
+        if (facturaActual.getPagos().size()>0) {
+            Acciones.dialogoAlerta("Agregar Tasa","La factura no debe tener pagos registrados");
+        }
+
+        Double valor = Acciones.dialogoTasa();
+        if (valor > 0) {
+
+            TasaDia.setValor(new Moneda(valor));
+            TasaDia.setFecha(Calendar.getInstance());
+
+            if (dboTasa.InsertarTasa(TasaDia)) {
+                Bolivar.setTasacambio(new Moneda(valor));
+                tasaDolar.set(MonedaUtil.formatoBs.format(Contexto.Bolivar.getTasacambio().getValor()));
+            }
+
+        }
+
     }
 }

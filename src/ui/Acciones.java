@@ -119,7 +119,6 @@ public class Acciones {
             }catch (Exception e) {
                 Cantidad = 0;
             }
-            System.out.println("Cantidad : " + Cantidad);
         }
      return Cantidad;
     }
@@ -136,5 +135,35 @@ public class Acciones {
             respuesta = true;
         }
         return respuesta;
+    }
+
+    public static void dialogoAlerta(String titulo, String texto) {
+
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Alerta");
+        alert.setHeaderText(titulo);
+        alert.setContentText(texto);
+
+        alert.showAndWait();
+
+    }
+
+    public static Double dialogoTasa() {
+        Double valor = 0.0;
+
+        TextInputDialog dialog = new TextInputDialog(Contexto.tasaDolar.getValue());
+        dialog.setTitle("Agregar Tasa Cambio Bs./$");
+        dialog.setHeaderText("Nueva tasa de cambio");
+        dialog.setContentText("Valor :");
+
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()){
+            try {
+                valor = Double.parseDouble(result.get());
+            }catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return valor;
     }
 }

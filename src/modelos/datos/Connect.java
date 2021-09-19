@@ -50,9 +50,9 @@ public class  Connect {
             usr.setEstatus(dboUsuarios.USUARIO_ACTIVO);
             dboUsuarios.InsertarUsuario(usr);*/
 
-            /*Tabla.crearBatch(conn,dboTasa.crearTablasTasa());
+            Tabla.crearBatch(conn,dboTasa.crearTablasTasa());
             Tasa tas = new Tasa(new Moneda(4.30), Calendar.getInstance());
-            dboTasa.InsertarTasa(tas);*/
+            dboTasa.InsertarTasa(tas);
 
             try {
                 conn.close();

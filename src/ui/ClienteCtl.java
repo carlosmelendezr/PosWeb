@@ -36,9 +36,11 @@ public class ClienteCtl implements Initializable {
     @FXML
     Label factura;
 
+    private Integer MouseClicks;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        MouseClicks = 0;
         cedula.setOnKeyPressed( event -> {
             if( event.getCode() == KeyCode.ENTER ) {
                 buscar();
@@ -89,6 +91,14 @@ public class ClienteCtl implements Initializable {
     public void ventanaCrear() {
         if (Acciones.ventanaCrearCliente()) {
             asignaCliente();
+        }
+    }
+
+    public void tasaClick() {
+        MouseClicks ++;
+        if (MouseClicks>2) {
+            Contexto.agregarTasa();
+            MouseClicks=0;
         }
     }
 

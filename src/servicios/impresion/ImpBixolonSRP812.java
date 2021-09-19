@@ -158,11 +158,13 @@ public class ImpBixolonSRP812
     public void ReporteZ() {
         String Comando = "I0Z";
         listaComandos.add(Comando);
+        finalizar();
     }
 
     public void ReporteX() {
         String Comando = "I0X";
         listaComandos.add(Comando);
+        finalizar();
     }
 
 
