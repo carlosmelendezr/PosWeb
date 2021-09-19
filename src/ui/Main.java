@@ -13,10 +13,16 @@ public class Main extends Application {
 
         Contexto.inicializar();
 
-        Parent root = FXMLLoader.load(getClass().getResource("main.fxml"));
+        /*Parent root = FXMLLoader.load(getClass().getResource("main.fxml"));
+        primaryStage.setTitle("PosWeb");
+        primaryStage.setScene(new Scene(root, 1024, 640));
+        primaryStage.show();*/
+
+        Parent root = FXMLLoader.load(getClass().getResource("pantallaPrincipal.fxml"));
         primaryStage.setTitle("PosWeb");
         primaryStage.setScene(new Scene(root, 1024, 640));
         primaryStage.show();
+
 
     }
 

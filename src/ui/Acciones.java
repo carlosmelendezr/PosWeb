@@ -14,6 +14,23 @@ import java.util.Optional;
 
 public class Acciones {
 
+    public static void ventanaFacturacion() {
+
+        try {
+            Stage stage = new Stage();
+            Parent root = FXMLLoader.load(
+                    Controller.class.getResource("main.fxml"));
+            stage.setScene(new Scene(root));
+            stage.setTitle("Facturación");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+        } catch (IOException e) {
+            System.out.println("Error:"+e.getMessage());
+            e.printStackTrace();
+        }
+
+    }
+
     public static void ventanaPagos() {
 
         try {
