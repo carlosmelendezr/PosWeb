@@ -18,9 +18,9 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root, 1024, 640));
         primaryStage.show();*/
 
-        Parent root = FXMLLoader.load(getClass().getResource("pantallaPrincipal.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
         primaryStage.setTitle("PosWeb");
-        primaryStage.setScene(new Scene(root, 1024, 640));
+        primaryStage.setScene(new Scene(root, 390, 347));
         primaryStage.show();
 
 
