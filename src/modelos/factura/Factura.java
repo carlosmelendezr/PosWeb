@@ -201,10 +201,10 @@ public class Factura  {
 
 
 
-    public boolean Finalizar() {
+    public boolean FinalizarImprimir() {
         boolean exito=false;
         List<LineaFactura> lineasAgrupadas = Operaciones.ObtenerLineasFacturaAgrupado(this.id);
-        System.out.println(" Lineas a imprimir "+lineasAgrupadas.size());
+
         if (this.Imprimible) {
             ImpBixolonSRP812 Bixolon = new ImpBixolonSRP812();
 
@@ -245,6 +245,32 @@ public class Factura  {
 
         return exito;
     }
+
+    public boolean Finalizar() {
+        boolean exito=false;
+
+        this.Activa = false;
+        this.Imprimible = false;
+
+        Operaciones.ActualizaEstatusFactura(this);
+
+        for (LineaFactura lin:lineas) {
+
+            MovInventario mov = new MovInventario();
+            mov.setCantidad(lin.getCantidad()*-1);
+            mov.setIdproducto(lin.getProducto().getId());
+            mov.setIdtipomov(3);
+            mov.setFecha(this.fecha);
+            Operaciones.insertarMovimientoInventario(mov);
+        }
+        lineas.clear();
+        Inicializa();
+
+        exito = true;
+
+        return exito;
+    }
+
 
     private boolean Imprimir() {
         boolean exito=false;

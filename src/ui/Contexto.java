@@ -31,6 +31,7 @@ public class Contexto {
     public static SimpleStringProperty MensajeEstatus = new SimpleStringProperty();
     public static FacturaTotal totalUsd;
     public static SimpleStringProperty totalGen = new SimpleStringProperty();
+    public static SimpleStringProperty totalArt = new SimpleStringProperty();
     public static SimpleStringProperty numeroFactura = new SimpleStringProperty();
     public static SimpleStringProperty tasaDolar = new SimpleStringProperty();
     public static Tasa TasaDia;
@@ -108,6 +109,8 @@ public class Contexto {
     public static void actulizaTotales() {
         totalUsd = facturaActual.getTotales();
         totalGen.set(totalUsd.montoTotalFormato());
+        String sArt = String.valueOf(facturaListaproductos.size());
+        totalArt.set(sArt);
 
     }
 
@@ -133,12 +136,15 @@ public class Contexto {
     }
 
     public static void emitirReporteZ() {
-        ImpBixolonSRP812 Bixolon = new ImpBixolonSRP812();
+        if (Acciones.dialogoConfirmar("Imprimir Reporte Z","Está seguro que desea imprimirlo?")) {
 
-        Bixolon.inicializar("COM99", Dolar);
-        Bixolon.cargarTablaComandos();
-        Bixolon.ReporteZ();
-        Bixolon.finalizar();
+            ImpBixolonSRP812 Bixolon = new ImpBixolonSRP812();
+
+            Bixolon.inicializar("COM99", Dolar);
+            Bixolon.cargarTablaComandos();
+            Bixolon.ReporteZ();
+            Bixolon.finalizar();
+        }
     }
 
     public static String totalPagoBs() {

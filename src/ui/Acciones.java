@@ -151,7 +151,10 @@ public class Acciones {
     public static Double dialogoTasa() {
         Double valor = 0.0;
 
-        TextInputDialog dialog = new TextInputDialog(Contexto.tasaDolar.getValue());
+        String actual =Contexto.tasaDolar.getValue();
+        actual.replace(",",".");
+
+        TextInputDialog dialog = new TextInputDialog(actual);
         dialog.setTitle("Agregar Tasa Cambio Bs./$");
         dialog.setHeaderText("Nueva tasa de cambio");
         dialog.setContentText("Valor :");

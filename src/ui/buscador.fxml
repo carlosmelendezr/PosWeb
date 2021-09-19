@@ -2,9 +2,13 @@
 
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="800.0" style="-fx-background-color: Yellow;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.BuscadorCtl">
    <children>
-      <TextField fx:id="TextoBuscar" layoutX="9.0" layoutY="3.0" prefHeight="30.0" prefWidth="689.0" promptText="Código, referencia, descripción" />
+      <TextField fx:id="TextoBuscar" layoutX="9.0" layoutY="3.0" prefHeight="30.0" prefWidth="689.0" promptText="Código, referencia, descripción">
+         <font>
+            <Font size="14.0" />
+         </font></TextField>
    </children>
 </AnchorPane>

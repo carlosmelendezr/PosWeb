@@ -25,7 +25,7 @@ public class dboTasa {
             "(valor,fecha) "+
             "VALUES (?,?)";
 
-    public static String SQL_ULTIMA_TASA = "SELECT * FROM tasa_cambio ORDER BY fecha DESC LIMIT 1 ";
+    public static String SQL_ULTIMA_TASA = "SELECT * FROM tasa_cambio ORDER BY id DESC LIMIT 1 ";
 
     public static List<String> crearTablasTasa() {
         List<String> queris = new ArrayList<>();
@@ -48,12 +48,12 @@ public class dboTasa {
 
             pstmt.close();
             Exito = true;
-            try {
+           /* try {
                 conn.close();
             } catch(SQLException e) {
                 System.out.println(e.getMessage());
 
-            }
+            }*/
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());

@@ -18,11 +18,13 @@ public class Operaciones {
             PreparedStatement pstmt = conn.prepareStatement(SqlComm);
             pstmt.execute();
             pstmt.close();
-            try {
+
+            /*try {
                 conn.close();
             } catch(SQLException e) {
                 System.out.println(e.getMessage());
-            }
+            }*/
+
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -151,7 +153,7 @@ public class Operaciones {
             conn = connect(Constantes.dbPrincipal);
             Statement comando = conn.createStatement() ;
             comando.execute(sql);
-            conn.close();
+            //conn.close();
         }catch (Exception e) {
            System.out.println(e.getMessage());
         }
@@ -188,12 +190,12 @@ public class Operaciones {
 
             lastId = Tabla.lastId(conn,"factura");
 
-            try {
+            /*try {
                   conn.close();
             } catch(SQLException e) {
                 System.out.println(e.getMessage());
 
-            }
+            }*/
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -288,12 +290,11 @@ public class Operaciones {
 
 
             Exito = true;
-            try {
+           /* try {
                 conn.close();
             } catch(SQLException e) {
                 System.out.println(e.getMessage());
-
-            }
+            }*/
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -352,12 +353,11 @@ public class Operaciones {
             pstmt.close();
 
             Exito = true;
-            try {
+            /*try {
                 conn.close();
             } catch(SQLException e) {
                 System.out.println(e.getMessage());
-
-            }
+            }*/
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -396,12 +396,12 @@ public class Operaciones {
 
 
             Exito = true;
-            try {
+            /*try {
                 conn.close();
             } catch(SQLException e) {
                 System.out.println(e.getMessage());
 
-            }
+            }*/
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -435,12 +435,12 @@ public class Operaciones {
 
             pstmt.close();
             Exito = true;
-            try {
+            /*try {
                 conn.close();
             } catch(SQLException e) {
                 System.out.println(e.getMessage());
 
-            }
+            }*/
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -464,12 +464,12 @@ public class Operaciones {
 
             pstmt.close();
             Exito = true;
-            try {
+            /*try {
                 conn.close();
             } catch(SQLException e) {
                 System.out.println(e.getMessage());
 
-            }
+            }*/
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -645,12 +645,12 @@ public class Operaciones {
 
             pstmt.close();
             Exito = true;
-            try {
+           /* try {
                 conn.close();
             } catch(SQLException e) {
                 System.out.println(e.getMessage());
 
-            }
+            }*/
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -715,12 +715,12 @@ public class Operaciones {
             pstmt.close();
 
             Exito = true;
-            try {
+            /*try {
                 conn.close();
             } catch(SQLException e) {
                 System.out.println(e.getMessage());
 
-            }
+            }*/
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -736,11 +736,11 @@ public class Operaciones {
             pstmt.execute();
             pstmt.close();
             Exito = true;
-            try {
+            /*try {
                 conn.close();
             } catch(SQLException e) {
                 System.out.println(e.getMessage());
-            }
+            }*/
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());

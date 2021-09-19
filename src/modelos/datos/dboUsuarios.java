@@ -1,9 +1,5 @@
 package modelos.datos;
 
-import modelos.factura.Cliente;
-import modelos.factura.Direccion;
-import modelos.factura.Telefono;
-import sun.security.provider.MD5;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -67,12 +63,12 @@ public class dboUsuarios {
 
             pstmt.close();
             Exito = true;
-            try {
+            /*try {
                 conn.close();
             } catch(SQLException e) {
                 System.out.println(e.getMessage());
 
-            }
+            }*/
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());

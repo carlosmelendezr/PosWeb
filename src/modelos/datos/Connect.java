@@ -10,22 +10,36 @@ import java.util.Calendar;
 
 public class  Connect {
 
+    private static Connection c = null;
+
+
         public static Connection connect(String nombreArchivo) {
-            Connection conn = null;
-            try {
-                // db parameters
-                String url = "jdbc:sqlite:"+Constantes.dirLocal+nombreArchivo;
-                // create a connection to the database
-                conn = DriverManager.getConnection(url);
-                conn.setAutoCommit(true);
+            boolean abrir = false;
 
-                System.out.println("La conexion to SQLite ha sido establecida. Archivo "+Constantes.dirLocal+nombreArchivo);
-
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
-
+            if(c != null) {
+                try {
+                    if (c.isClosed()) abrir=true;
+                } catch (Exception e){
+                    System.out.println(e.getMessage());
+                }
             }
-            return conn;
+
+            if(c == null || abrir) {
+                try {
+                    // db parameters
+                    String url = "jdbc:sqlite:" + Constantes.dirLocal + nombreArchivo;
+                    // create a connection to the database
+                    c = DriverManager.getConnection(url);
+                    c.setAutoCommit(true);
+
+                    System.out.println("La conexion to SQLite ha sido establecida. Archivo " + Constantes.dirLocal + nombreArchivo);
+
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+
+                }
+            }
+            return c;
         }
         /**
          * @param args the command line arguments
@@ -50,8 +64,8 @@ public class  Connect {
             usr.setEstatus(dboUsuarios.USUARIO_ACTIVO);
             dboUsuarios.InsertarUsuario(usr);*/
 
-            Tabla.crearBatch(conn,dboTasa.crearTablasTasa());
-            Tasa tas = new Tasa(new Moneda(4.30), Calendar.getInstance());
+            //Tabla.crearBatch(conn,dboTasa.crearTablasTasa());
+            Tasa tas = new Tasa(new Moneda(4.10), Calendar.getInstance());
             dboTasa.InsertarTasa(tas);
 
             try {

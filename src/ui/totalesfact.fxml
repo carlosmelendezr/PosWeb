@@ -4,11 +4,26 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="57.0" prefWidth="794.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.TotalFactCtl">
+<AnchorPane prefHeight="57.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.TotalFactCtl">
    <children>
-      <Label fx:id="totalGeneral" alignment="TOP_RIGHT" layoutX="612.0" layoutY="7.0" prefHeight="43.0" prefWidth="174.0" text="Label" textAlignment="RIGHT" textFill="#03033c">
+      <Label fx:id="totalGeneral" alignment="TOP_RIGHT" layoutX="617.0" layoutY="12.0" prefHeight="43.0" prefWidth="174.0" text="Label" textAlignment="RIGHT" textFill="#03033c">
          <font>
             <Font name="System Bold" size="29.0" />
+         </font>
+      </Label>
+      <Label fx:id="totalArticulos" alignment="TOP_CENTER" layoutY="13.0" prefHeight="43.0" prefWidth="174.0" text="Label" textAlignment="RIGHT" textFill="#03033c">
+         <font>
+            <Font name="System Bold" size="29.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" prefHeight="17.0" prefWidth="174.0" text="Artículos">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER_RIGHT" layoutX="666.0" layoutY="1.0" prefHeight="17.0" prefWidth="125.0" text="Total">
+         <font>
+            <Font name="System Bold" size="12.0" />
          </font>
       </Label>
    </children>

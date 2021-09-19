@@ -13,15 +13,17 @@ import java.util.ResourceBundle;
 public class TotalFactCtl implements Initializable {
 
 
-
-
     @FXML
     Label totalGeneral;
+
+    @FXML
+    Label totalArticulos;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //totalGen.set("0.0");
         totalGeneral.textProperty().bind(Contexto.totalGen);
+        totalArticulos.textProperty().bind(Contexto.totalArt);
         Contexto.actulizaTotales();
 
     }

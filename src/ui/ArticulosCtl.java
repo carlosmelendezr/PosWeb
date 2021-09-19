@@ -84,7 +84,7 @@ public class ArticulosCtl implements Initializable {
 
     public void colocarCantidad(MouseEvent event) {
         MouseClicks++;
-        if (MouseClicks>1) {
+        if (MouseClicks>2) {
             int id = listaArticulos.getSelectionModel().getSelectedIndex();
             LineaFactura lin = Contexto.facturaListaproductos.get(id);
             Integer Cantidad = Acciones.dialogoCantidad(lin.getDescripcion());
