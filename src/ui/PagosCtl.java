@@ -1,12 +1,15 @@
 package ui;
 
 
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.MouseEvent;
 import modelos.factura.Moneda;
 import modelos.factura.Pago;
@@ -159,6 +162,7 @@ public class PagosCtl implements Initializable {
         listaPagos.getColumns().addAll(coltipo,colmonto,colref,colmontodolar);
         listaPagos.setItems(Contexto.facturaListapagos);
 
+
         inicializa();
     }
 
@@ -185,6 +189,10 @@ public class PagosCtl implements Initializable {
 
         MouseClicks = 0;
         efectivoBs.requestFocus();
+
+        Scene sc = efectivoBs.getScene();
+
+        sc.getAccelerators().put(new KeyCodeCombination(KeyCode.F5), botonImprimir::fire);
 
     }
 
@@ -289,5 +297,7 @@ public class PagosCtl implements Initializable {
         Contexto.finalizarFactura();
         ((Node)(event.getSource())).getScene().getWindow().hide();
     }
+
+
 
 }

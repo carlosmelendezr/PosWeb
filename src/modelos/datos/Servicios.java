@@ -17,9 +17,9 @@ public class Servicios {
 
     public static void main(String arg[]) {
         Servicios svr = new Servicios();
-        //svr.importarProductos("c:\\tmp\\catbuscar.csv","importar_productos");
-        List<MovInventario> lista = svr.leerCsvMovInv("c:\\temp\\ingreso.csv");
-        svr.importarMovInv(lista);
+        svr.importarProductos("c:\\tmp\\pro1.csv","productos_importar");
+        //List<MovInventario> lista = svr.leerCsvMovInv("c:\\temp\\ingreso.csv");
+        //svr.importarMovInv(lista);
         //svr.importarMovInv("c:\\temp\\ingreso.csv");
 
     }
@@ -61,7 +61,7 @@ public class Servicios {
                         max ++;
                     }   else {
 
-                        sql.append(dato.replace("\"","'"));
+                        sql.append("'"+dato.replace("\"","'")+"'");
                         if (secuencia < max-1) sql.append(",");
                     }
 

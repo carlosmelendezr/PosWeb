@@ -18,13 +18,6 @@ public class Operaciones {
             PreparedStatement pstmt = conn.prepareStatement(SqlComm);
             pstmt.execute();
             pstmt.close();
-
-            /*try {
-                conn.close();
-            } catch(SQLException e) {
-                System.out.println(e.getMessage());
-            }*/
-
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -146,18 +139,40 @@ public class Operaciones {
         return lastId;
     }
 
-    public static void InsertarProducto(String sql) {
+    public static boolean InsertarProducto(Producto pro) {
+        boolean exito = false;
+
+        /*public static String SQL_INSERTAR_PRODUCTO = "INSERT INTO productos" +
+                "(idtipoprod,descrip,imagen,idtipoimp,idcategoria,idmarca,unmedida,precio,costo,stock,ref,refprov,codigo,idprov) VALUES " +
+                "(   ?      ,    ?  ,   ? ,      ?   ,     ?     ,   ?   ,   ?    ,  ?   ,  ?  ,  ?  , ?,   ?    ,  ?   ,   ?  ) ";*/
 
         Connection conn;
         try {
             conn = connect(Constantes.dbPrincipal);
-            Statement comando = conn.createStatement() ;
-            comando.execute(sql);
-            //conn.close();
+            PreparedStatement pstmt = conn.prepareStatement(Constantes.SQL_INSERTAR_PRODUCTO);
+
+            pstmt.setInt(1,pro.getIdTipoProducto());
+            pstmt.setString(2,pro.getDescripcion());
+            pstmt.setString(3,pro.getImagenurl());
+            pstmt.setInt(4,pro.getIdImpuesto());
+            pstmt.setInt(5,pro.getIdCategoria());
+            pstmt.setInt(6,pro.getIdMarca());
+            pstmt.setString(7,pro.getUnMedida());
+            pstmt.setDouble(8,pro.getPrecio().getValor().doubleValue());
+            pstmt.setDouble(9,pro.getCosto().getValor().doubleValue());
+            pstmt.setDouble(10,pro.getStock());
+            pstmt.setString(11,pro.getReferencia());
+            pstmt.setString(12,pro.getRefprov());
+            pstmt.setString(13,pro.getCodigo());
+            pstmt.setInt(14,pro.getIdProveedor());
+
+
+            pstmt.execute();
+            exito = true;
         }catch (Exception e) {
            System.out.println(e.getMessage());
         }
-
+      return exito;
     }
 
     public static Integer InsertarFactura(Factura fac) {
@@ -366,6 +381,8 @@ public class Operaciones {
 
     }
 
+
+
     public static boolean ActualizaEstatusFactura(Factura fac) {
         boolean Exito=false;
 
@@ -573,6 +590,41 @@ public class Operaciones {
             System.out.println(e.getMessage());
         }
         return pro;
+
+
+    }
+
+    public static void borrarProductosImportar() {
+        try {
+            Connection conn = connect(Constantes.dbPrincipal);
+            PreparedStatement pstmt = conn.prepareStatement("DELETE FROM productos_importar");
+            pstmt.execute();
+            pstmt.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static List<Producto> consultarImportarProducto() {
+        List<Producto> lista = new ArrayList<>();
+        Connection conn = connect(Constantes.dbPrincipal);
+
+        try {
+            Statement stmt = conn.createStatement();
+
+            ResultSet rs = stmt.executeQuery("SELECT * FROM productos_importar ");
+
+            while (rs.next()) {
+                Producto pro = ResulToProducto(rs);
+                lista.add(pro);
+
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return lista;
 
 
     }

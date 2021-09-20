@@ -196,6 +196,10 @@ public class Constantes {
             + "codigo text,"
             + "idprov integer)";
 
+    public static String SQL_INSERTAR_PRODUCTO = "INSERT INTO productos" +
+            "(idtipoprod,descrip,imagen,idtipoimp,idcategoria,idmarca,unmedida,precio,costo,stock,ref,refprov,codigo,idprov) VALUES " +
+            "(   ?      ,    ?  ,   ? ,      ?   ,     ?     ,   ?   ,   ?    ,  ?   ,  ?  ,  ?  , ?,   ?    ,  ?   ,   ?  ) ";
+
     public static String SQL_INSERTAR_PRODUC_BUSCAR = "INSERT INTO producbuscar" +
             "(id,descrip,ref,codigo) VALUES " +
             "(  ?      ,    ?     ,     ?    ,   ?  ) ";

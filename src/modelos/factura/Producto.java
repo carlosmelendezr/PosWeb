@@ -22,9 +22,23 @@ public class Producto {
     private Integer idProveedor;
     private List<String> codbarra;
 
+    private String precioFormato;
+    private String costoFormato;
+
     public Producto() {
 
     }
+
+    public String getPrecioFormato() {
+        precioFormato = MonedaUtil.formatoUsd.format( precio.getValor());
+        return precioFormato;
+    }
+
+    public String getCostoFormato() {
+        costoFormato = MonedaUtil.formatoUsd.format( costo.getValor());
+        return costoFormato;
+    }
+
 
     Producto(Integer id, String descripcion,
              String referencia,

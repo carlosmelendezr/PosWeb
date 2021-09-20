@@ -1,5 +1,6 @@
 package ui;
 
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
@@ -8,17 +9,23 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
+import modelos.datos.Operaciones;
 import modelos.datos.Servicios;
 import modelos.factura.LineaFactura;
 import modelos.factura.Producto;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
+
+import static javafx.collections.FXCollections.observableArrayList;
 
 public class ImportarProductosCtl implements Initializable {
 
 
     private int MouseClicks;
+    public  ObservableList<Producto> productos;
+    public  List<Producto> lista;
 
     @FXML
     TableView listaArticulos;
@@ -47,67 +54,61 @@ public class ImportarProductosCtl implements Initializable {
         coldes.setCellValueFactory(
                 new PropertyValueFactory<Producto, String>("descripcion"));
 
-        TableColumn colcant = new TableColumn("Cantidad");
+        TableColumn colcant = new TableColumn("Costo");
         colcant.setMinWidth(100);
         colcant.setCellValueFactory(
-                new PropertyValueFactory<Producto, String>("cantidad"));
+                new PropertyValueFactory<Producto, String>("costoFormato"));
 
         TableColumn colpre = new TableColumn("Precio");
         colpre.setMinWidth(100);
         colpre.setCellValueFactory(
                 new PropertyValueFactory<Producto, String>("precioFormato"));
 
-        TableColumn coltot = new TableColumn("Total");
-        coltot.setMinWidth(100);
-        coltot.setCellValueFactory(
-                new PropertyValueFactory<Producto, String>("totalFormato"));
-
-        listaArticulos.setOnKeyPressed( event -> {
-            if( event.getCode() == KeyCode.DELETE ) {
-                borrarLinea();
-            }
-        } );
+        TableColumn coltipoimp = new TableColumn("Tipo Impuesto");
+        coltipoimp.setMinWidth(100);
+        coltipoimp.setCellValueFactory(
+                new PropertyValueFactory<Producto, String>("idImpuesto"));
 
 
-        listaArticulos.getColumns().addAll(colcod,colref,coldes,colcant,colpre,coltot);
+        listaArticulos.getColumns().addAll(colcod,colref,coldes,colcant,colpre,coltipoimp);
 
-        listaArticulos.setItems(Contexto.facturaListaproductos);
+        listaArticulos.setItems(productos);
+        Operaciones.borrarProductosImportar();
 
     }
 
-    public static void inicializa() {
 
-    }
 
-    public void colocarCantidad(MouseEvent event) {
-        MouseClicks++;
-        if (MouseClicks>2) {
-            int id = listaArticulos.getSelectionModel().getSelectedIndex();
-            LineaFactura lin = Contexto.facturaListaproductos.get(id);
-            Integer Cantidad = Acciones.dialogoCantidad(lin.getDescripcion());
-
-            if (Cantidad > 0) {
-                lin.setCantidad(lin.getCantidad().doubleValue()+Cantidad.doubleValue());
-                Contexto.modificarLineaFactura(id,lin);
-            };
-            MouseClicks = 0;
-        }
-
-    }
-
-    public void borrarLinea() {
-        int id = listaArticulos.getSelectionModel().getSelectedIndex();
-        LineaFactura lin = Contexto.facturaListaproductos.get(id);
-        if (Acciones.dialogoConfirmar("Eliminar "+lin.getDescripcion(),
-                "Confirma ?")) {
-            Contexto.elimiarLineaFactura(id);
-        }
-    }
 
     public void procesar() {
         Servicios svr = new Servicios();
-        svr.importarProductos(archivo.getText().trim(),"importar_productos");
+        svr.importarProductos(archivo.getText().trim(),"productos_importar");
+        productos = observableArrayList();
+        lista=Operaciones.consultarImportarProducto();
+        System.out.println("Articulos :"+lista.size());
+        productos.addAll(lista);
+        listaArticulos.setItems(productos);
 
     }
+
+    public void guardar() {
+
+        boolean exito = false;
+        int count =0;
+        if (Acciones.dialogoConfirmar("Creación Masiva Artículos","Esta seguro de la operación")) {
+            for (Producto pro:lista) {
+                exito = Operaciones.InsertarProducto(pro);
+                count ++;
+            }
+        }
+        if (exito) {
+            Acciones.dialogoAlerta("Resultado del Proceso", "Proceso existoso,"+count+" articulos creados.");
+            Operaciones.borrarProductosImportar();
+        } else {
+            Acciones.dialogoAlerta("Resultado del Proceso", "Error en el proceso,"+count+" articulos creados.");
+        }
+    }
+
+
 }
 
