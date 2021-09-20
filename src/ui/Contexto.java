@@ -4,6 +4,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import modelos.datos.Constantes;
 import modelos.datos.Operaciones;
+import modelos.datos.Usuario;
 import modelos.datos.dboTasa;
 import modelos.factura.*;
 import servicios.impresion.ImpBixolonSRP812;
@@ -35,6 +36,7 @@ public class Contexto {
     public static SimpleStringProperty numeroFactura = new SimpleStringProperty();
     public static SimpleStringProperty tasaDolar = new SimpleStringProperty();
     public static Tasa TasaDia;
+    public static Usuario usuarioActivo;
 
 
     public static void inicializar() {
@@ -58,10 +60,11 @@ public class Contexto {
         Bolivar = new TipoMoneda(2,"VES","BOLIVAR","Bs.",tasaDolarHoy, MonedaUtil.formatoBs);
 
         facturaActual = Operaciones.UltimaFacturaActiva();
-        if (facturaActual==null) {
+
+        if (facturaActual==null || facturaActual.getNumeroFactura()==0 ) {
             facturaActual = Operaciones.CrearFactura(Dolar);
         } else {
-            facturaActual.actualizarLineas();
+            facturaActual.obtenerLineas();
             facturaActual.obtenerPagos();
         }
         facturaListaproductos.addAll(facturaActual.getLineas());
@@ -123,7 +126,8 @@ public class Contexto {
     }
 
     public static void finalizarFactura() {
-        facturaActual.Finalizar();
+        //facturaActual.Finalizar();
+        facturaActual.FinalizarImprimir();
         facturaListaproductos.clear();
         facturaListaproductos.addAll(facturaActual.getLineas());
 

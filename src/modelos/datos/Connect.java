@@ -50,23 +50,23 @@ public class  Connect {
             //Tabla.crearBatch(conn,Constantes.crearTablasFactura());
             //Tabla.crearBatch(conn,Constantes.crearTablasProductos());
             //Operaciones.actualizarProducBuscar();
-            /*Tabla.crearBatch(conn,Constantes.crearTablasClientes());
+            /*Tabla.crearBatch(conn,Constantes.crearTablasClientes());*/
             Tabla.crearBatch(conn,Constantes.crearTablasTasaImpuesto());
-            Tabla.crearBatch(conn,Constantes.crearConsecutivos());
+            /*Tabla.crearBatch(conn,Constantes.crearConsecutivos());
             Tabla.crearBatch(conn,Constantes.crearTablasMovInv());
-            Tabla.crearBatch(conn,dboUsuarios.crearTablasUsuarios());*/
+            Tabla.crearBatch(conn,dboUsuarios.crearTablasUsuarios());
 
-            /*Usuario usr = new Usuario();
+            Usuario usr = new Usuario();
             usr.setCedula(12641955);
             usr.setClave("800rosas");
             usr.setNombre("CARLOS MELENDEZ");
             usr.setIdrol(0);
             usr.setEstatus(dboUsuarios.USUARIO_ACTIVO);
-            dboUsuarios.InsertarUsuario(usr);*/
+            dboUsuarios.InsertarUsuario(usr);
 
-            //Tabla.crearBatch(conn,dboTasa.crearTablasTasa());
+            Tabla.crearBatch(conn,dboTasa.crearTablasTasa());
             Tasa tas = new Tasa(new Moneda(4.10), Calendar.getInstance());
-            dboTasa.InsertarTasa(tas);
+            dboTasa.InsertarTasa(tas);*/
 
             try {
                 conn.close();

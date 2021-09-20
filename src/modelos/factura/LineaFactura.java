@@ -10,6 +10,7 @@ public class LineaFactura {
     private String   codigo;
     private String   referencia;
     private String   descripcion;
+    private Moneda   preciobase;
     private Moneda   precio;
     private Moneda   descuento;
     private Moneda   total;
@@ -26,12 +27,23 @@ public class LineaFactura {
         this.descripcion = producto.getDescripcion();
         this.codigo = producto.getCodigo();
         this.referencia = producto.getReferencia();
-        this.precio = producto.getPrecio();
+
+        this.precio = new Moneda("0");
+        this.preciobase = new Moneda("0");
+
+        this.precio.setValor(producto.getPrecio().getValor());
+        this.preciobase.setValor(producto.getPrecio().getValor());
+
         this.descuento = new Moneda(0);
         this.total = new Moneda("0");
         this.estatus = ESTATUS_OK;
 
+        if (producto.getAlicuota()!=null) {
+            this.precio.sumarIVA(producto.getAlicuota());
+        }
+
     }
+
 
     public void aplicarDescuento(Moneda desc) {
         this.descuento = desc;
@@ -117,7 +129,6 @@ public class LineaFactura {
     }
 
     public Moneda getTotal() {
-        System.out.println("Precio = "+this.precio.getValor() +" Cantidad = "+this.cantidad);
         this.total.setValor(this.precio.getValor());
         this.total.multiplicar(new Moneda(this.cantidad));
         return total;
@@ -137,5 +148,13 @@ public class LineaFactura {
 
     public void setEstatus(Integer estatus) {
         this.estatus = estatus;
+    }
+
+    public Moneda getPreciobase() {
+        return preciobase;
+    }
+
+    public void setPreciobase(Moneda preciobase) {
+        this.preciobase = preciobase;
     }
 }

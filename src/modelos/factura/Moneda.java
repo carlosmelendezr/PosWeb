@@ -69,8 +69,15 @@ public class Moneda {
     public Moneda Convertir(Moneda tasacambio) {
         Moneda nueva = new Moneda(this);
         nueva.multiplicar(tasacambio);
-        System.out.println("Original="+this.getValor()+", Nueva ="+nueva.getValor());
+
         return nueva;
+    }
+
+    public void sumarIVA( Moneda alicuota ) {
+        BigDecimal base = this.valor;
+        base = base.multiply(alicuota.getValor());
+        base = base.divide(new BigDecimal(100));
+        this.valor = valor.add(base);
     }
 
 

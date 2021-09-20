@@ -55,7 +55,7 @@ public class PantallaPrincipalCtl implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Node[] nodes = new Node[10];
+        /*Node[] nodes = new Node[10];
         for (int i = 0; i < nodes.length; i++) {
             try {
 
@@ -74,7 +74,7 @@ public class PantallaPrincipalCtl implements Initializable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
+        }*/
 
     }
 
@@ -83,6 +83,8 @@ public class PantallaPrincipalCtl implements Initializable {
         if (actionEvent.getSource() == btnCustomers) {
             pnlCustomer.setStyle("-fx-background-color : #1620A1");
             pnlCustomer.toFront();
+
+            Acciones.ventanaCrearUsuario();
         }
         if (actionEvent.getSource() == btnMenus) {
             pnlMenus.setStyle("-fx-background-color : #53639F");
@@ -96,6 +98,7 @@ public class PantallaPrincipalCtl implements Initializable {
         {
             pnlOrders.setStyle("-fx-background-color : #464F67");
             pnlOrders.toFront();
+
 
             Acciones.ventanaFacturacion();
         }

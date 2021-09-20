@@ -46,7 +46,7 @@ public class Servicios {
                 sql = new StringBuilder();
                 Scanner scan = new Scanner(line);
 
-                scan.useDelimiter(",");
+                scan.useDelimiter(";");
                 int secuencia = 0;
                 while (scan.hasNext()) {
                     String dato = scan.next();

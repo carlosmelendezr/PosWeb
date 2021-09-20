@@ -67,13 +67,14 @@ public class FacturaTotal {
     public void actualizar(List<LineaFactura> lineas) {
         inicializa();
         for (LineaFactura lin:lineas) {
-            Moneda addmonto = new Moneda(lin.getProducto().getPrecio());
+            Moneda addmonto = new Moneda(lin.getPreciobase());
             addmonto.multiplicar(new Moneda(lin.getCantidad()));
             this.montoBase.sumar( addmonto );
 
             Moneda imp = new Moneda(addmonto);
             imp.multiplicar(lin.getProducto().getAlicuota());
             imp.dividir(new Moneda("100"));
+            this.montoImpuesto.sumar(imp);
         }
         totalizar();
 
@@ -83,7 +84,7 @@ public class FacturaTotal {
     public void totalizar() {
 
         this.montoTotal.setValor( this.montoBase.getValor());
-        montoTotal.sumar(this.montoImpuesto);
+        this.montoTotal.sumar(this.montoImpuesto);
         this.totalSaldo.setValor(montoTotal.getValor());
         this.totalSaldo.restar(this.totalPago);
 

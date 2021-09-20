@@ -75,7 +75,11 @@ public class Factura  {
         return Operaciones.InsertarPagoFactura(pag,this.id);
     }
 
-    public void actualizarLineas() {
+    /*public void actualizarLineas() {
+        this.totales.actualizar(lineas);
+    }*/
+
+    public void obtenerLineas() {
         this.lineas = Operaciones.ObtenerLineasFactura(this.id);
         this.totales.actualizar(lineas);
     }
@@ -94,7 +98,9 @@ public class Factura  {
         }
         exito = Operaciones.InsertarLineaFactura(linea,this.id);
         if (exito) {
-            actualizarLineas();
+            lineas.add(linea);
+            this.totales.actualizar(lineas);
+            //actualizarLineas();
             Operaciones.ActualizaEstatusFactura(this);
         }
         return exito;

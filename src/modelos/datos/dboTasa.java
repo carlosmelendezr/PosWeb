@@ -48,12 +48,6 @@ public class dboTasa {
 
             pstmt.close();
             Exito = true;
-           /* try {
-                conn.close();
-            } catch(SQLException e) {
-                System.out.println(e.getMessage());
-
-            }*/
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());

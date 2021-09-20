@@ -280,7 +280,7 @@ public class Operaciones {
                 pstmt.setString(3, lin.getProducto().getReferencia());
                 pstmt.setString(4, lin.getCodigo());
                 pstmt.setDouble(5, lin.getCantidad());
-                pstmt.setDouble(6, lin.getPrecio().getValor().doubleValue());
+                pstmt.setDouble(6, lin.getPreciobase().getValor().doubleValue());
                 pstmt.setDouble(7, lin.getProducto().getAlicuota().getValor().doubleValue());
                 pstmt.setDouble(8, lin.getDescuento().getValor().doubleValue());
                 pstmt.setInt(9, lin.getEstatus());
@@ -545,7 +545,7 @@ public class Operaciones {
             pro.setCodbarra(barras);
             pro.setIdProveedor(rs.getInt("idprov"));
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println("Error en ResulToProducto :"+e.getMessage());
         }
 
         return pro;
@@ -558,8 +558,9 @@ public class Operaciones {
 
         try {
             Statement stmt = conn.createStatement();
+
             ResultSet rs = stmt.executeQuery("SELECT * FROM productos "
-                    +" LEFT JOIN tabla_tasa ON productos.idtipoimp=tabla_tasa.id "
+                    +" LEFT JOIN tabla_tasaimp ON productos.idtipoimp=tabla_tasaimp.id "
                     +" WHERE codigo='"+codigo.trim()+"' OR ref='"+codigo.trim()+"'");
 
             while (rs.next()) {
@@ -582,7 +583,8 @@ public class Operaciones {
 
         try {
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM productos WHERE id="+id);
+            ResultSet rs = stmt.executeQuery("SELECT * FROM productos "
+                    +" LEFT JOIN tabla_tasaimp ON productos.idtipoimp=tabla_tasaimp.id WHERE productos.id="+id);
 
             while (rs.next()) {
                 pro = ResulToProducto(rs);

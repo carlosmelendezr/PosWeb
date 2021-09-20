@@ -62,12 +62,12 @@ public class Constantes {
             "imprime,activa,pagada,cancelada,error,espera,fecha,hora, tasacambio) " +
             "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-    public static String SQL_CREAR_TASAIMP = "CREATE TABLE IF NOT EXISTS tabla_tasa (id integer PRIMARY KEY, " +
+    public static String SQL_CREAR_TASAIMP = "CREATE TABLE IF NOT EXISTS tabla_tasaimp (id integer PRIMARY KEY, " +
             "alicuota real)";
 
-    public static String SQL_INSERTAR_TASA = "INSERT INTO tabla_tasa (alicuota) VALUES (?) ";
+    public static String SQL_INSERTAR_TASA = "INSERT INTO tabla_tasaimp (alicuota) VALUES (?) ";
 
-    public static String SQL_INSERTAR_TASA_INICIAL = "INSERT INTO tabla_tasa (alicuota) VALUES (0),(16) ";
+    public static String SQL_INSERTAR_TASA_INICIAL = "INSERT INTO tabla_tasaimp (alicuota) VALUES (0),(16) ";
 
     public static List<String> crearTablasTasaImpuesto() {
         List<String> queris = new ArrayList<>();

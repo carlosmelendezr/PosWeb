@@ -12,9 +12,14 @@ import tfhka.ve.*;
 
 public class ImpBixolonSRP812
         implements ImpresoraFiscal {
+
+    public static Integer maximo_Digitos_Precio  = 10;
+    public static Integer maximo_Digitos_Cantidad_Enteros = 5;
+    public static Integer maximo_Digitos_Cantidad_Decimales = 3;
     String marca="Bixolon";
     String modelo="SRP-812";
     String puerto;
+    Boolean puertoAbierto;
     TipoMoneda moneda;
 
     private tfhka.ve.ReportData Reporte;
@@ -60,7 +65,7 @@ public class ImpBixolonSRP812
         this.listaComandos = new ArrayList<>();
 
         Impresora = new tfhka.ve.Tfhka();
-
+        puertoAbierto = false;
         abrirPuerto();
 
     }
@@ -71,6 +76,7 @@ public class ImpBixolonSRP812
             Respuesta = Impresora.OpenFpctrl(this.puerto);
             if (Respuesta) {
                 System.out.println("Puerto " + this.puerto + " abierto.");
+                puertoAbierto = true;
 
             } else {
                 System.out.println("Error de Puerto " + this.puerto);
@@ -85,11 +91,16 @@ public class ImpBixolonSRP812
 
     public boolean enviarComando(String comm) {
         boolean exito =false;
+        if (Impresora == null || comm==null) {
+            return false ;
+        }
+
         try {
             Impresora.SendCmd(comm);
             exito = true;
         } catch (PrinterException Excepcion) {
-            System.out.println("Error :"+Excepcion.toString());
+            System.out.println("Error de Impresion:");
+            //System.out.println("Error :"+Excepcion.toString());
 
         }
         return exito;
@@ -106,8 +117,10 @@ public class ImpBixolonSRP812
     public void agregarItem(LineaFactura lin) {
         LineaItemBixolon item = new LineaItemBixolon(tasas);
 
-        Moneda precioLocal =  new Moneda(lin.getPrecio());
+        Moneda precioLocal =  new Moneda(lin.getPreciobase());
+        System.out.println("Precio Local $:"+precioLocal.getValor().toString());
         precioLocal.multiplicar(moneda.getTasacambio());
+        System.out.println("Precio Local Bs:"+precioLocal.getValor().toString());
 
         item.setCodigo(lin.getReferencia());
         item.setCantidad(lin.getCantidad());
@@ -126,6 +139,8 @@ public class ImpBixolonSRP812
     public void agregarCliente(Cliente cli) {
         if (cli==null) {return;}
 
+        if (cli.getRif()==null) {return;}
+
         String Comando = new String();
         Comando = "iR*"+cli.getTiporif()+cli.getRif();
         listaComandos.add(Comando);
@@ -134,10 +149,12 @@ public class ImpBixolonSRP812
         listaComandos.add(Comando);
 
         Integer lin=0;
-        for(Direccion dir:cli.getDirecciones()) {
-            Comando = "i"+Util.llenarIzq(lin.toString(),2,"0")+dir.getTexto();
-            listaComandos.add(Comando);
-            lin++;
+        if (cli.getDirecciones()!=null) {
+            for (Direccion dir : cli.getDirecciones()) {
+                Comando = "i" + Util.llenarIzq(lin.toString(), 2, "0") + dir.getTexto();
+                listaComandos.add(Comando);
+                lin++;
+            }
         }
     }
 
