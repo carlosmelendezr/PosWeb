@@ -177,6 +177,8 @@ public class Constantes {
             + "	serial text ,"
             + ");";
 
+
+
     public static String SQL_CREAR_PRODUCTOS = "CREATE TABLE IF NOT EXISTS productos ("
             + "id integer PRIMARY KEY,"
             + "idtipoprod integer, "
@@ -206,7 +208,13 @@ public class Constantes {
 
     public static List<String> crearTablasProductos() {
         List<String> queris = new ArrayList<>();
+
+        String SQL_CREAR_IMPORTAR_PRODUCTOS = SQL_CREAR_PRODUCTOS;
         queris.add(SQL_CREAR_PRODUCTOS);
+
+        SQL_CREAR_IMPORTAR_PRODUCTOS.replace("productos","importar_productos");
+        queris.add(SQL_CREAR_IMPORTAR_PRODUCTOS);
+
         queris.add(SQL_IND_PRODUCTOS_REF);
         queris.add(SQL_IND_PRODUCTOS_COD);
         queris.add(SQL_IND_PRODUCTOS_DES);

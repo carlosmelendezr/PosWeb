@@ -17,7 +17,7 @@ public class Servicios {
 
     public static void main(String arg[]) {
         Servicios svr = new Servicios();
-        //svr.importarProductos("c:\\tmp\\catbuscar.csv","productos");
+        //svr.importarProductos("c:\\tmp\\catbuscar.csv","importar_productos");
         List<MovInventario> lista = svr.leerCsvMovInv("c:\\temp\\ingreso.csv");
         svr.importarMovInv(lista);
         //svr.importarMovInv("c:\\temp\\ingreso.csv");
