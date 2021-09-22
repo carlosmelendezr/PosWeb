@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Constantes {
     public static String dirLocal    = "C:/posweb/db/";
+    public static String dirOut    = "C:/posweb/db/out";
     public static String dbPrincipal = "posweb.db";
 
     /* Creacion de tablas */
@@ -27,9 +28,8 @@ public class Constantes {
             + "	fecha date, "
             + " hora text, "
             + "	docweb text, "
-            + "	fecsync date, "
-            + "	tasacambio real "
-            + ");";
+            + "	fecsync date) ";
+
 
     public static String SQL_IND_FACTURA_NUM = "CREATE UNIQUE INDEX IF NOT EXISTS ifacnum ON factura (numero)";
     public static String SQL_IND_FACTURA_CLI = "CREATE INDEX IF NOT EXISTS ifaccli ON factura (idcliente)";

@@ -142,10 +142,6 @@ public class Operaciones {
     public static boolean InsertarProducto(Producto pro) {
         boolean exito = false;
 
-        /*public static String SQL_INSERTAR_PRODUCTO = "INSERT INTO productos" +
-                "(idtipoprod,descrip,imagen,idtipoimp,idcategoria,idmarca,unmedida,precio,costo,stock,ref,refprov,codigo,idprov) VALUES " +
-                "(   ?      ,    ?  ,   ? ,      ?   ,     ?     ,   ?   ,   ?    ,  ?   ,  ?  ,  ?  , ?,   ?    ,  ?   ,   ?  ) ";*/
-
         Connection conn;
         try {
             conn = connect(Constantes.dbPrincipal);

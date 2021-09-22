@@ -1,7 +1,12 @@
 package servicios.impresion;
 
+import modelos.datos.Constantes;
 import modelos.factura.*;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 import tfhka.*;
@@ -16,12 +21,12 @@ public class ImpBixolonSRP812
     public static Integer maximo_Digitos_Precio  = 10;
     public static Integer maximo_Digitos_Cantidad_Enteros = 5;
     public static Integer maximo_Digitos_Cantidad_Decimales = 3;
-    String marca="Bixolon";
-    String modelo="SRP-812";
-    String puerto;
-    Boolean puertoAbierto;
-    TipoMoneda moneda;
 
+    private String marca="Bixolon";
+    private String modelo="SRP-812";
+    private String puerto;
+    private Boolean puertoAbierto;
+    private TipoMoneda moneda;
     private tfhka.ve.ReportData Reporte;
     private tfhka.ve.ReportData[] ReporteArray;
     private PrinterStatus StatusError;
@@ -36,10 +41,10 @@ public class ImpBixolonSRP812
     private S8PPrinterData EstatusS8P;
     private String Output = "";
     private SVPrinterData EstatusSV;
-    public boolean Respuesta;
-
+    private boolean Respuesta;
     private Tfhka Impresora;
-
+    private File archivo;
+    private FileOutputStream log;
 
     List<EstatusImpresora> listaEstatus;
     List<Comando> tablaComandos;
@@ -47,6 +52,14 @@ public class ImpBixolonSRP812
     List<TasaImpresora> tasas;
 
     public void inicializar( String puerto, TipoMoneda mon) {
+
+        archivo = new File(Constantes.dirOut+"factura.txt");
+        try {
+            log = new FileOutputStream(archivo);
+        } catch (Exception e) {
+            System.out.println("Error al crear el archivo "+Constantes.dirOut+"factura.txt");
+        }
+
         this.marca = marca;
         this.modelo = modelo;
         this.puerto = puerto;
@@ -70,20 +83,36 @@ public class ImpBixolonSRP812
 
     }
 
+    private void guardarLog(String linea) {
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(log));
+        try {
+            bw.write(linea);
+            bw.newLine();
+            bw.close();
+        } catch (Exception e) {
+            System.out.println("Error al escribir el archivo "+Constantes.dirOut+"factura.txt");
+        }
+
+    }
+
     public boolean abrirPuerto() {
+        guardarLog("Abriendo Puerto " + this.puerto);
         System.out.println("Abriendo Puerto " + this.puerto);
         try {
             Respuesta = Impresora.OpenFpctrl(this.puerto);
             if (Respuesta) {
                 System.out.println("Puerto " + this.puerto + " abierto.");
+                guardarLog("Puerto " + this.puerto + " abierto.");
                 puertoAbierto = true;
 
             } else {
                 System.out.println("Error de Puerto " + this.puerto);
+                guardarLog("Puerto " + this.puerto + " abierto.");
 
             }
         } catch (Exception e) {
             System.out.println("Error al abrir puerto "+e.getMessage());
+            guardarLog("Error al abrir puerto "+e.getMessage());
             cerrarPuerto();
         }
         return Respuesta;
@@ -97,10 +126,11 @@ public class ImpBixolonSRP812
 
         try {
             Impresora.SendCmd(comm);
+            guardarLog(comm);
             exito = true;
         } catch (PrinterException Excepcion) {
             System.out.println("Error de Impresion:");
-            //System.out.println("Error :"+Excepcion.toString());
+            guardarLog("Error al emviar el comando");
 
         }
         return exito;
