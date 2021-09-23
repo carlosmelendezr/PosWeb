@@ -1,0 +1,17 @@
+CREATE VIEW vista_medios_pago
+AS 
+SELECT 
+factura.id,
+factura.fecha,
+factura.numero,
+fac_pagos.moneda,
+fac_pagos.monto,
+fac_pagos.vuelto,
+fac_pagos.total,
+fac_pagos.referencia,
+fac_pagos.fecpago,
+fac_pagos.horpago,
+fac_pagos.tasacambio
+FROM fac_pagos 
+LEFT JOIN factura ON fac_pagos.idfactura = factura.id 
+WHERE pagada=1

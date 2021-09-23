@@ -192,7 +192,7 @@ public class PagosCtl implements Initializable {
 
         Scene sc = efectivoBs.getScene();
 
-        sc.getAccelerators().put(new KeyCodeCombination(KeyCode.F5), botonImprimir::fire);
+//        sc.getAccelerators().put(new KeyCodeCombination(KeyCode.F5), botonImprimir::fire);
 
     }
 

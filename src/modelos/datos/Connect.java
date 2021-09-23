@@ -68,6 +68,8 @@ public class  Connect {
             Tasa tas = new Tasa(new Moneda(4.10), Calendar.getInstance());
             dboTasa.InsertarTasa(tas);*/
 
+            //Tabla.crearBatch(conn,dboBanco.crearTablasBancos());
+
             try {
                 conn.close();
             } catch(SQLException e) {

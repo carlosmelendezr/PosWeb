@@ -44,6 +44,7 @@ public class Operaciones {
             fac.setCancelada(rs.getBoolean("cancelada"));
             fac.setError(rs.getBoolean("error"));
             fac.setEspera(rs.getBoolean("espepra"));
+            fac.setIdTasa(rs.getInt("idtasa"));
             Date fec = rs.getDate("fecha");
 
 
@@ -103,9 +104,11 @@ public class Operaciones {
         return factura;
     }
 
-    public static Factura CrearFactura(TipoMoneda mon) {
+    public static Factura CrearFactura(TipoMoneda mon, Integer idtasa) {
         Factura fac = new Factura(mon);
+        fac.setIdTasa(idtasa);
         fac.setCliente(new Cliente());
+
 
         Operaciones.IncrementaConsecutivo(Constantes.SQL_INCREMENTA_FACTURA);
         Integer numFactura = UltimoNumeroFactura();
@@ -195,18 +198,11 @@ public class Operaciones {
             pstmt.setBoolean(14, fac.getEspera() );
             pstmt.setString(15, Util.calendarToSql(fac.getFecha()));
             pstmt.setString(16, Util.calendarToHora(fac.getFecha()));
-            pstmt.setDouble(17,fac.getTipoMoneda().getTasacambio().getValor().doubleValue());
+            pstmt.setDouble(17,fac.getIdTasa());
             pstmt.execute();
             pstmt.close();
 
             lastId = Tabla.lastId(conn,"factura");
-
-            /*try {
-                  conn.close();
-            } catch(SQLException e) {
-                System.out.println(e.getMessage());
-
-            }*/
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());

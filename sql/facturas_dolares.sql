@@ -13,5 +13,6 @@ factura.total,
 factura.descuento,
 tasa_cambio.valor as tasacambio
 FROM factura 
-LEFT JOIN tasa_cambio on factura.fecha = tasa_cambio.fecha 
+LEFT JOIN tasa_cambio on factura.idtasa = tasa_cambio.id 
 LEFT JOIN clientes on factura.idcliente = clientes.id
+WHERE imprime=1 

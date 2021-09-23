@@ -20,6 +20,7 @@ public class Factura  {
     private FacturaTotal totales;
     private TipoMoneda tipoMoneda;
     private Calendar fecha;
+    private Integer idTasa;
 
     private Boolean Activa;
     private Boolean Imprimible;
@@ -427,6 +428,14 @@ public class Factura  {
 
     public void setMensaje(String mensaje) {
         Mensaje = mensaje;
+    }
+
+    public Integer getIdTasa() {
+        return idTasa;
+    }
+
+    public void setIdTasa(Integer idTasa) {
+        this.idTasa = idTasa;
     }
 
     //</editor-fold>

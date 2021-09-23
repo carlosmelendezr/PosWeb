@@ -3,11 +3,20 @@ package modelos.factura;
 import java.util.Calendar;
 
 public class Tasa {
+    private Integer id;
     private Moneda valor;
     private Calendar fecha;
 
     public Tasa() {
 
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Tasa(Moneda valor, Calendar fecha) {

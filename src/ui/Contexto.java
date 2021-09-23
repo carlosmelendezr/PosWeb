@@ -62,7 +62,8 @@ public class Contexto {
         facturaActual = Operaciones.UltimaFacturaActiva();
 
         if (facturaActual==null || facturaActual.getNumeroFactura()==0 ) {
-            facturaActual = Operaciones.CrearFactura(Dolar);
+            facturaActual = Operaciones.CrearFactura(Dolar,TasaDia.getId());
+            facturaActual.setIdTasa(TasaDia.getId());
         } else {
             facturaActual.obtenerLineas();
             facturaActual.obtenerPagos();
@@ -131,7 +132,7 @@ public class Contexto {
         facturaListaproductos.clear();
         facturaListaproductos.addAll(facturaActual.getLineas());
 
-        facturaActual = Operaciones.CrearFactura(Dolar);
+        facturaActual = Operaciones.CrearFactura(Dolar,TasaDia.getId());
         numeroFactura.set(facturaActual.getNumeroFactura().toString());
 
         actulizaTotales();
@@ -192,8 +193,10 @@ public class Contexto {
             TasaDia.setFecha(Calendar.getInstance());
 
             if (dboTasa.InsertarTasa(TasaDia)) {
+                TasaDia = dboTasa.buscarUltimaTasa();
                 Bolivar.setTasacambio(new Moneda(valor));
                 tasaDolar.set(MonedaUtil.formatoBs.format(Contexto.Bolivar.getTasacambio().getValor()));
+                facturaActual.setIdTasa(TasaDia.getId());
             }
 
         }

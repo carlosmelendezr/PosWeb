@@ -27,6 +27,7 @@ public class Constantes {
             + "	espera integer, "
             + "	fecha date, "
             + " hora text, "
+            + " idtasa integer, "
             + "	docweb text, "
             + "	fecsync date) ";
 
@@ -48,8 +49,6 @@ public class Constantes {
     public static String SQL_FACTURAS_ACTIVA = "SELECT * FROM factura  WHERE activa=1 LIMIT 1 ";
     public static String SQL_FACTURAS_ESPERA = "SELECT * FROM factura  WHERE espera=1 ";
 
-
-
     public static List<String> crearConsecutivos() {
         List<String> queris = new ArrayList<>();
         queris.add(SQL_CONSECUTIVOS);
@@ -59,7 +58,7 @@ public class Constantes {
 
     public static String SQL_INSERTAR_FACTURA = "INSERT INTO factura " +
             "(numero,idcliente,moneda,caja,total,impuesto,base,descuento," +
-            "imprime,activa,pagada,cancelada,error,espera,fecha,hora, tasacambio) " +
+            "imprime,activa,pagada,cancelada,error,espera,fecha,hora, idtasa) " +
             "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     public static String SQL_CREAR_TASAIMP = "CREATE TABLE IF NOT EXISTS tabla_tasaimp (id integer PRIMARY KEY, " +

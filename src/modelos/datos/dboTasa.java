@@ -70,7 +70,7 @@ public class dboTasa {
 
             while (rs.next()) {
                 tas =  new Tasa();
-
+                tas.setId(rs.getInt("id"));
                 tas.setValor(new Moneda(rs.getDouble("valor")));
                 Calendar fecha = Calendar.getInstance();
                 fecha.setTime(rs.getDate("fecha"));
