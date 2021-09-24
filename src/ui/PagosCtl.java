@@ -248,11 +248,13 @@ public class PagosCtl implements Initializable {
         if (!tarjetaInt.getText().isEmpty()) {
             valor = tarjetaInt.getText();
             mon = Contexto.Dolar;
+            Acciones.dialogoBanco();
         }
 
         if (!tarjetaBs.getText().isEmpty()) {
             valor = tarjetaBs.getText();
             mon = Contexto.Bolivar;
+            Acciones.dialogoBanco();
         }
 
         if (!zelle.getText().isEmpty()) {

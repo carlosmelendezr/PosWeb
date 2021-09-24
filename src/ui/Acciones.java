@@ -5,11 +5,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.TextInputDialog;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 public class Acciones {
@@ -204,5 +207,29 @@ public class Acciones {
             }
         }
         return valor;
+    }
+
+    public static void dialogoBanco() {
+
+        String [] arrayData = {"First", "Second", "Third", "Fourth"};
+        List<String> dialogData;
+        ChoiceDialog dialog;
+
+
+        dialogData = Arrays.asList(arrayData);
+
+        dialog = new ChoiceDialog(dialogData.get(0), dialogData);
+        dialog.setTitle("Selección del Pago");
+        dialog.setHeaderText("Tipo de Pago");
+
+        Optional<String> result = dialog.showAndWait();
+        String selected = "cancelled.";
+
+        if (result.isPresent()) {
+
+            selected = result.get();
+        }
+
+
     }
 }
