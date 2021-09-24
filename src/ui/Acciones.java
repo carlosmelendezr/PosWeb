@@ -232,4 +232,24 @@ public class Acciones {
 
 
     }
+
+    public static boolean tipoPago() {
+        boolean exito = false;
+        try {
+
+            Stage stage = new Stage();
+            Parent root = FXMLLoader.load(
+                    Controller.class.getResource("tipopago.fxml"));
+            stage.setScene(new Scene(root));
+            stage.setTitle("Seleccion de Tipo de Pago");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+            exito = true;
+
+        } catch (IOException e) {
+            System.out.println("Error:" + e.getMessage());
+            e.printStackTrace();
+        }
+        return exito;
+    }
 }

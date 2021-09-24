@@ -37,6 +37,7 @@ public class Contexto {
     public static SimpleStringProperty tasaDolar = new SimpleStringProperty();
     public static Tasa TasaDia;
     public static Usuario usuarioActivo;
+    public static Banco bancoSeleccionado;
 
 
     public static void inicializar() {

@@ -248,13 +248,13 @@ public class PagosCtl implements Initializable {
         if (!tarjetaInt.getText().isEmpty()) {
             valor = tarjetaInt.getText();
             mon = Contexto.Dolar;
-            Acciones.dialogoBanco();
+            Acciones.tipoPago();
         }
 
         if (!tarjetaBs.getText().isEmpty()) {
             valor = tarjetaBs.getText();
             mon = Contexto.Bolivar;
-            Acciones.dialogoBanco();
+            Acciones.tipoPago();
         }
 
         if (!zelle.getText().isEmpty()) {
@@ -269,6 +269,7 @@ public class PagosCtl implements Initializable {
 
             Pago pagoTarDolar = new Pago(mon, tarjetaValor, vueltoBs);
             pagoTarDolar.setReferencia(referencia.getText());
+            pagoTarDolar.setBanco(Contexto.bancoSeleccionado);
 
             Contexto.enviarEstus(Contexto.facturaActual.agregarPago(pagoTarDolar));
             inicializa();
