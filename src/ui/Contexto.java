@@ -2,11 +2,10 @@ package ui;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
-import modelos.datos.Constantes;
-import modelos.datos.Operaciones;
-import modelos.datos.Usuario;
-import modelos.datos.dboTasa;
+import modelos.datos.*;
 import modelos.factura.*;
+import servicios.impresion.BixolonServicios;
+import servicios.impresion.DatosImpresora;
 import servicios.impresion.ImpBixolonSRP812;
 
 import java.util.ArrayList;
@@ -38,6 +37,7 @@ public class Contexto {
     public static Tasa TasaDia;
     public static Usuario usuarioActivo;
     public static Banco bancoSeleccionado;
+    public static DatosImpresora impresora;
 
 
     public static void inicializar() {
@@ -46,12 +46,12 @@ public class Contexto {
 
         resultadoBusqueda = observableArrayList();
         seleccionBusqueda = 0;
-        MensajeEstatus.set("Preparado");
 
         facturaListaproductos = observableArrayList();
         facturaListapagos = observableArrayList();
 
         TasaDia = dboTasa.buscarUltimaTasa();
+        impresora = dboDatosImpresora.cargarImpresora();
 
         tasaDolarHoy = new Moneda(TasaDia.getValor());
         MonedaUtil.inicializar();
@@ -72,8 +72,17 @@ public class Contexto {
         facturaListaproductos.addAll(facturaActual.getLineas());
         numeroFactura.set(facturaActual.getNumeroFactura().toString());
         tasaDolar.set(MonedaUtil.formatoBs.format(Contexto.Bolivar.getTasacambio().getValor()));
+        facturaActual.setImpresora(impresora);
 
         actulizaTotales();
+
+        if (validarImpresora()) {
+            MensajeEstatus.set("Preparado - Impresora Configurada :" + impresora.getSerial() + " Puerto :" + impresora.getPuerto()+" Estatus : Conectada");
+
+        } else {
+            Acciones.dialogoAlerta("Error de conexión con la Impresora","La impresora no tiene conexión.");
+        }
+
     }
 
     public static void enviarEstus(String Mensaje) {
@@ -135,6 +144,7 @@ public class Contexto {
 
         facturaActual = Operaciones.CrearFactura(Dolar,TasaDia.getId());
         numeroFactura.set(facturaActual.getNumeroFactura().toString());
+        facturaActual.setImpresora(impresora);
 
         actulizaTotales();
         enviarEstus("Factura guardada correctamente.");
@@ -146,10 +156,30 @@ public class Contexto {
 
             ImpBixolonSRP812 Bixolon = new ImpBixolonSRP812();
 
-            Bixolon.inicializar("COM99", Dolar);
+            Bixolon.inicializar(impresora, Dolar, facturaActual.getNumeroFactura());
             Bixolon.cargarTablaComandos();
             Bixolon.ReporteZ();
             Bixolon.finalizar();
+        }
+    }
+
+    public static void anularFactura() {
+
+        if (facturaListaproductos.size()==0) {
+            Acciones.dialogoAlerta("Anulación de Factura","La factura no tiene articulos para anular");
+            return;
+        }
+        if (Acciones.dialogoConfirmar("Anulación de Factura","Está seguro que desea anularla?")) {
+
+           facturaActual.Cancelar();
+           facturaListaproductos.clear();
+           facturaListaproductos.addAll(facturaActual.getLineas());
+           facturaActual = Operaciones.CrearFactura(Dolar,TasaDia.getId());
+           numeroFactura.set(facturaActual.getNumeroFactura().toString());
+           facturaActual.setImpresora(impresora);
+           actulizaTotales();
+
+
         }
     }
 
@@ -185,6 +215,7 @@ public class Contexto {
     public static void agregarTasa() {
         if (facturaActual.getPagos().size()>0) {
             Acciones.dialogoAlerta("Agregar Tasa","La factura no debe tener pagos registrados");
+            return;
         }
 
         Double valor = Acciones.dialogoTasa();
@@ -202,5 +233,18 @@ public class Contexto {
 
         }
 
+    }
+
+    public static boolean validarImpresora() {
+        boolean valida = false;
+        BixolonServicios svr = new BixolonServicios();
+        if (svr.abrirPuerto(impresora.getPuerto())) {
+            if (svr.CheckPrinter()) {
+                svr.cerrarPuerto();
+                valida = true;
+                System.out.println("Impresora OK");
+            }
+        }
+        return valida;
     }
 }

@@ -8,7 +8,7 @@ import java.util.List;
 public interface ImpresoraFiscal {
 
 
-    public void inicializar( String puerto, TipoMoneda mon);
+    public void inicializar( DatosImpresora datImp, TipoMoneda mon, Integer numFactura);
 
     public void agregarItem(LineaFactura lin) ;
 

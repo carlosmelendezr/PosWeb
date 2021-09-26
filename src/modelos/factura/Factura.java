@@ -1,6 +1,7 @@
 package modelos.factura;
 
 import modelos.datos.Operaciones;
+import servicios.impresion.DatosImpresora;
 import servicios.impresion.ImpBixolonSRP812;
 import ui.Contexto;
 
@@ -21,6 +22,7 @@ public class Factura  {
     private TipoMoneda tipoMoneda;
     private Calendar fecha;
     private Integer idTasa;
+    private DatosImpresora impresora;
 
     private Boolean Activa;
     private Boolean Imprimible;
@@ -100,8 +102,7 @@ public class Factura  {
         exito = Operaciones.InsertarLineaFactura(linea,this.id);
         if (exito) {
             lineas.add(linea);
-            this.totales.actualizar(lineas);
-            //actualizarLineas();
+            obtenerLineas();
             Operaciones.ActualizaEstatusFactura(this);
         }
         return exito;
@@ -111,6 +112,9 @@ public class Factura  {
     public void modificarLinea(int Index, LineaFactura linea) {
         if (Index >= 0 && Index <=this.lineas.size()) {
             this.lineas.set(Index,linea);
+            Operaciones.ActualizarLineaFactura(linea);
+            obtenerLineas();
+
         }
     }
 
@@ -118,12 +122,14 @@ public class Factura  {
         if (Index >= 0 && Index <= this.lineas.size()) {
 
             LineaFactura lineaact = lineas.get(Index);
-            LineaFactura lineanue = lineas.get(Index);
             lineaact.setEstatus(LineaFactura.ESTATUS_ANULADO);
-            lineas.set(Index,lineaact);
+            Operaciones.ActualizarLineaFactura(lineaact);
 
+            LineaFactura lineanue = lineas.get(Index);
             lineanue.setCantidad(lineaact.getCantidad()*-1);
-            agregarLinea((lineanue));
+            Operaciones.InsertarLineaFactura(lineanue,this.id);
+            obtenerLineas();
+
         }
     }
 
@@ -210,12 +216,16 @@ public class Factura  {
 
     public boolean FinalizarImprimir() {
         boolean exito=false;
+
         List<LineaFactura> lineasAgrupadas = Operaciones.ObtenerLineasFacturaAgrupado(this.id);
 
         if (this.Imprimible) {
+            this.numeroFactura = Operaciones.NuevaFacturaFiscal();
+            Operaciones.ActualizaEstatusFactura(this);
+
             ImpBixolonSRP812 Bixolon = new ImpBixolonSRP812();
 
-            Bixolon.inicializar("COM99", Contexto.Bolivar);
+            Bixolon.inicializar(this.impresora, Contexto.Bolivar,this.numeroFactura);
             Bixolon.cargarTablaComandos();
 
             if (this.getCliente()!=null) {
@@ -258,6 +268,7 @@ public class Factura  {
 
         this.Activa = false;
         this.Imprimible = false;
+        this.Espera = true;
 
         Operaciones.ActualizaEstatusFactura(this);
 
@@ -276,6 +287,20 @@ public class Factura  {
         exito = true;
 
         return exito;
+    }
+
+    public void Cancelar() {
+        boolean exito=false;
+
+        this.Activa = false;
+        this.Imprimible = false;
+        this.Espera = false;
+        this.Cancelada = true;
+
+        Operaciones.ActualizaEstatusFactura(this);
+
+        lineas.clear();
+        Inicializa();
     }
 
 
@@ -438,5 +463,12 @@ public class Factura  {
         this.idTasa = idTasa;
     }
 
+    public DatosImpresora getImpresora() {
+        return impresora;
+    }
+
+    public void setImpresora(DatosImpresora impresora) {
+        this.impresora = impresora;
+    }
     //</editor-fold>
 }

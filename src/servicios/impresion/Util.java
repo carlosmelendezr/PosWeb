@@ -12,12 +12,9 @@ public class Util {
         return sMonto;
     }
 
-    public static String llenarCeros(Double valor,int longitud) {
-        String sMonto = String.format("%,.2f",valor);
-        sMonto = sMonto.replace(".", "");
-        sMonto = sMonto.replace(",", "");
-        sMonto = llenarIzq(sMonto,longitud,"0");
-        return sMonto;
+    public static String llenarCeros(Integer valor,int longitud) {
+        return llenarIzq(valor.toString(),longitud,"0");
+
     }
 
     public static String llenarCeros(Double valor,int enteros,int decimales) {
@@ -48,6 +45,6 @@ public class Util {
 
         sb.append(original);
         return sb.toString();
-        //return sb.substring(inputString.length()) + inputString;
+
     }
 }

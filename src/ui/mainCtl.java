@@ -67,8 +67,16 @@ public class mainCtl implements Initializable {
         buttonReporteZ.setOnAction(event -> {
             Contexto.emitirReporteZ();
         });
+
+        Button buttonAnular = new Button("Anular");
+        botonset(buttonAnular);
+        buttonAnular.setOnAction(event -> {
+            Contexto.anularFactura();
+        });
+
         vboxder.getChildren().add(buttonPagos);
         vboxder.getChildren().add(buttonReporteZ);
+        vboxder.getChildren().add(buttonAnular);
         mainPane.setRight(vboxder);
     }
 

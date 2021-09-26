@@ -52,16 +52,19 @@ public class ArticulosCtl implements Initializable {
 
         TableColumn colcant = new TableColumn("Cantidad");
         colcant.setMinWidth(100);
+        colcant.setStyle("-fx-alignment: CENTER_RIGHT");
         colcant.setCellValueFactory(
                 new PropertyValueFactory<Producto, String>("cantidad"));
 
         TableColumn colpre = new TableColumn("Precio");
         colpre.setMinWidth(100);
+        colpre.setStyle("-fx-alignment: CENTER_RIGHT");
         colpre.setCellValueFactory(
                 new PropertyValueFactory<Producto, String>("precioFormato"));
 
         TableColumn coltot = new TableColumn("Total");
         coltot.setMinWidth(100);
+        coltot.setStyle("-fx-alignment: CENTER_RIGHT");
         coltot.setCellValueFactory(
                 new PropertyValueFactory<Producto, String>("totalFormato"));
 
@@ -87,6 +90,8 @@ public class ArticulosCtl implements Initializable {
         if (MouseClicks>2) {
             int id = listaArticulos.getSelectionModel().getSelectedIndex();
             LineaFactura lin = Contexto.facturaListaproductos.get(id);
+            if (lin.getEstatus()==LineaFactura.ESTATUS_ANULADO) return;
+
             Integer Cantidad = Acciones.dialogoCantidad(lin.getDescripcion());
 
             if (Cantidad > 0) {
@@ -100,10 +105,15 @@ public class ArticulosCtl implements Initializable {
 
     public void borrarLinea() {
         int id = listaArticulos.getSelectionModel().getSelectedIndex();
+
         LineaFactura lin = Contexto.facturaListaproductos.get(id);
-        if (Acciones.dialogoConfirmar("Eliminar "+lin.getDescripcion(),
-                "Confirma ?")) {
-            Contexto.elimiarLineaFactura(id);
+        if (lin.getEstatus()==LineaFactura.ESTATUS_ANULADO) return;
+
+        if (lin.getCantidad()> 0) {
+            if (Acciones.dialogoConfirmar("Eliminar " + lin.getDescripcion(),
+                    "Confirma ?")) {
+                Contexto.elimiarLineaFactura(id);
+            }
         }
     }
 }

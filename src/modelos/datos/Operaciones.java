@@ -108,18 +108,21 @@ public class Operaciones {
         Factura fac = new Factura(mon);
         fac.setIdTasa(idtasa);
         fac.setCliente(new Cliente());
+        //Operaciones.IncrementaConsecutivo(Constantes.SQL_INCREMENTA_FACTURA);
+        //Integer numFactura = UltimoNumeroFactura();
+        Integer lastId = InsertarFactura(fac);
+        fac.setNumeroFactura(lastId);
+        fac.setId(lastId );
 
+        return fac;
+    }
+
+    public static Integer NuevaFacturaFiscal() {
 
         Operaciones.IncrementaConsecutivo(Constantes.SQL_INCREMENTA_FACTURA);
         Integer numFactura = UltimoNumeroFactura();
 
-        fac.setNumeroFactura(numFactura);
-        Integer lastId = InsertarFactura(fac);
-
-        fac.setNumeroFactura(numFactura);
-        fac.setId(lastId );
-
-        return fac;
+        return numFactura;
     }
 
     public static Integer UltimoNumeroFactura() {
@@ -310,6 +313,33 @@ public class Operaciones {
 
     }
 
+    public static boolean ActualizarLineaFactura(LineaFactura lin) {
+        boolean Exito=false;
+
+        try {
+            Connection conn = connect(Constantes.dbPrincipal);
+            PreparedStatement pstmt = conn.prepareStatement(Constantes.SQL_ACTUALIZAR_LINEA_FACTURA);
+
+            pstmt.setDouble(    1, lin.getCantidad());
+            pstmt.setDouble(2, lin.getPreciobase().getValor().doubleValue());
+            pstmt.setDouble(3, lin.getDescuento().getValor().doubleValue());
+            pstmt.setInt(4, lin.getEstatus());
+            pstmt.setInt(5, lin.getId());
+            pstmt.execute();
+
+            pstmt.close();
+
+
+            Exito = true;
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return Exito;
+
+    }
+
+
     public static boolean actualizarProducBuscar() {
         boolean Exito=false;
         List<ProductoBuscar> productos = new ArrayList<>();
@@ -360,11 +390,7 @@ public class Operaciones {
             pstmt.close();
 
             Exito = true;
-            /*try {
-                conn.close();
-            } catch(SQLException e) {
-                System.out.println(e.getMessage());
-            }*/
+
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -372,7 +398,6 @@ public class Operaciones {
         return Exito;
 
     }
-
 
 
     public static boolean ActualizaEstatusFactura(Factura fac) {
@@ -398,19 +423,15 @@ public class Operaciones {
             pstmt.setBoolean(9, fac.getCancelada() );
             pstmt.setBoolean(10, fac.getError() );
             pstmt.setBoolean(11, fac.getEspera() );
-            pstmt.setInt(12, fac.getId());
+            pstmt.setInt(12,fac.getNumeroFactura());
+            pstmt.setInt(13, fac.getId());
 
             pstmt.execute();
             pstmt.close();
 
 
             Exito = true;
-            /*try {
-                conn.close();
-            } catch(SQLException e) {
-                System.out.println(e.getMessage());
 
-            }*/
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());

@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Constantes {
     public static String dirLocal    = "C:/posweb/db/";
-    public static String dirOut    = "C:/posweb/db/out";
+    public static String dirOut    = "C:/posweb/out/";
     public static String dbPrincipal = "posweb.db";
 
     /* Creacion de tablas */
@@ -32,7 +32,7 @@ public class Constantes {
             + "	fecsync date) ";
 
 
-    public static String SQL_IND_FACTURA_NUM = "CREATE UNIQUE INDEX IF NOT EXISTS ifacnum ON factura (numero)";
+    public static String SQL_IND_FACTURA_NUM = "CREATE INDEX IF NOT EXISTS ifacnum ON factura (numero)";
     public static String SQL_IND_FACTURA_CLI = "CREATE INDEX IF NOT EXISTS ifaccli ON factura (idcliente)";
     public static String SQL_IND_FACTURA_FEC = "CREATE INDEX IF NOT EXISTS ifacfec ON factura (fecha)";
 
@@ -115,6 +115,10 @@ public class Constantes {
             "(idfactura,idproducto,referencia,codbarra,cantidad,precio,alicuota,descuento, estatus) VALUES " +
             "(  ?      ,    ?     ,     ?    ,   ?     ,   ?    ,  ?   ,    ?  ,    ?,    ?    ) ";
 
+    public static String SQL_ACTUALIZAR_LINEA_FACTURA = "UPDATE fac_articulos SET " +
+            "cantidad=?,precio=?,descuento=?, estatus=? WHERE id=? " ;
+
+
     public static String SQL_OBTENER_LINEA_FACTURA = "SELECT * from fac_articulos WHERE idfactura=? ORDER BY codbarra ";
 
     public static String SQL_OBTENER_LINEA_FACTURA_AGRUPADO = "SELECT " +
@@ -129,7 +133,7 @@ public class Constantes {
             "GROUP by idproducto,precio";
 
     public static String SQL_ACTUALIZAR_FACTURA = "UPDATE factura SET total=?,impuesto=?,base=?,descuento=?,idcliente=?," +
-            "imprime=?,activa=?,pagada=?,cancelada=?,error=?,espera=? " +
+            "imprime=?,activa=?,pagada=?,cancelada=?,error=?,espera=?,numero=? " +
             "WHERE id=?";
 
 

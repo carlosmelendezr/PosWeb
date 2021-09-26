@@ -37,12 +37,13 @@ public class LineaItemBixolon
 
             }
         }
-        String sPrecio = Util.llenarCeros(this.precio,ImpBixolonSRP812.maximo_Digitos_Precio);
+        String sPrecio = Util.llenarCeros(this.precio,this.MaxLongPrecio);
         comm.append(sPrecio);
         String sCantidad = Util.llenarCeros(this.cantidad,
                 ImpBixolonSRP812.maximo_Digitos_Cantidad_Enteros,
                 ImpBixolonSRP812.maximo_Digitos_Cantidad_Decimales);
         comm.append(sCantidad);
+        comm.append("|"+this.codigo.trim()+"|");
         comm.append(this.descripcion);
 
         System.out.println("Agregar Item :"+comm);

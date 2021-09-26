@@ -47,7 +47,7 @@ public class  Connect {
         public static void main(String[] args) {
             Connection conn = connect("posweb.db");
 
-            //Tabla.crearBatch(conn,Constantes.crearTablasFactura());
+           //Tabla.crearBatch(conn,Constantes.crearTablasFactura());
             //Tabla.crearBatch(conn,Constantes.crearTablasProductos());
             //Operaciones.actualizarProducBuscar();
             /*Tabla.crearBatch(conn,Constantes.crearTablasClientes());*/
@@ -69,6 +69,9 @@ public class  Connect {
             dboTasa.InsertarTasa(tas);*/
 
             //Tabla.crearBatch(conn,dboBanco.crearTablasBancos());
+
+            //Tabla.crearBatch(conn,dboDatosImpresora.crearTablaImpresora());
+
 
             try {
                 conn.close();

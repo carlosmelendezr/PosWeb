@@ -42,11 +42,13 @@ public class ResulBusqCtl implements Initializable {
 
         TableColumn colcant = new TableColumn("Existencia");
         colcant.setMinWidth(100);
+        colcant.setStyle("-fx-alignment: CENTER_RIGHT");
         colcant.setCellValueFactory(
                 new PropertyValueFactory<Producto, String>("stock"));
 
         TableColumn colpre = new TableColumn("Precio");
         colpre.setMinWidth(100);
+        colpre.setStyle("-fx-alignment: CENTER_RIGHT");
         colpre.setCellValueFactory(
                 new PropertyValueFactory<Producto, String>("precioFormato"));
 

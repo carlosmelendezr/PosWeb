@@ -18,7 +18,7 @@ import tfhka.ve.*;
 public class ImpBixolonSRP812
         implements ImpresoraFiscal {
 
-    public static Integer maximo_Digitos_Precio  = 10;
+    //public static Integer maximo_Digitos_Precio  = 10;
     public static Integer maximo_Digitos_Cantidad_Enteros = 5;
     public static Integer maximo_Digitos_Cantidad_Decimales = 3;
 
@@ -45,26 +45,21 @@ public class ImpBixolonSRP812
     private Tfhka Impresora;
     private File archivo;
     private FileOutputStream log;
+    private Integer numeroFactura;
+    private DatosImpresora datImp;
+    public static Integer MaximoDigitosPrecio;
 
     List<EstatusImpresora> listaEstatus;
     List<Comando> tablaComandos;
     List<String> listaComandos;
     List<TasaImpresora> tasas;
 
-    public void inicializar( String puerto, TipoMoneda mon) {
-
-        archivo = new File(Constantes.dirOut+"factura.txt");
-        try {
-            log = new FileOutputStream(archivo);
-        } catch (Exception e) {
-            System.out.println("Error al crear el archivo "+Constantes.dirOut+"factura.txt");
-        }
-
-        this.marca = marca;
-        this.modelo = modelo;
-        this.puerto = puerto;
+    public void inicializar( DatosImpresora datImp, TipoMoneda mon, Integer numeroFac) {
+        this.datImp = datImp;
+        this.puerto = datImp.getPuerto();
         this.moneda = mon;
         this.tasas = new ArrayList<TasaImpresora>();
+        this.numeroFactura = numeroFac;
 
         TasaImpresora Excento = new TasaImpresora(new Moneda(0)," ");
         TasaImpresora Tasa1   = new TasaImpresora(new Moneda(16),"!");
@@ -80,39 +75,49 @@ public class ImpBixolonSRP812
         Impresora = new tfhka.ve.Tfhka();
         puertoAbierto = false;
         abrirPuerto();
+        datosInternos();
 
     }
 
-    private void guardarLog(String linea) {
+    private void guardarLog() {
+        archivo = new File(Constantes.dirOut+"factura_"+this.numeroFactura+".txt");
+
+        try {
+            log = new FileOutputStream(archivo);
+        } catch (Exception e) {
+            System.out.println("Error al crear el archivo "+Constantes.dirOut+"factura.txt");
+        }
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(log));
         try {
-            bw.write(linea);
-            bw.newLine();
+
+            for(String comm:listaComandos) {
+                bw.write(comm);
+                bw.newLine();
+            }
             bw.close();
+            log.close();
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println("Error al escribir el archivo "+Constantes.dirOut+"factura.txt");
         }
 
     }
 
     public boolean abrirPuerto() {
-        guardarLog("Abriendo Puerto " + this.puerto);
+
         System.out.println("Abriendo Puerto " + this.puerto);
         try {
             Respuesta = Impresora.OpenFpctrl(this.puerto);
             if (Respuesta) {
                 System.out.println("Puerto " + this.puerto + " abierto.");
-                guardarLog("Puerto " + this.puerto + " abierto.");
                 puertoAbierto = true;
 
             } else {
                 System.out.println("Error de Puerto " + this.puerto);
-                guardarLog("Puerto " + this.puerto + " abierto.");
-
+                puertoAbierto = false;
             }
         } catch (Exception e) {
             System.out.println("Error al abrir puerto "+e.getMessage());
-            guardarLog("Error al abrir puerto "+e.getMessage());
             cerrarPuerto();
         }
         return Respuesta;
@@ -121,18 +126,18 @@ public class ImpBixolonSRP812
     public boolean enviarComando(String comm) {
         boolean exito =false;
         if (Impresora == null || comm==null) {
+            System.out.println("Puerto cerrado, no se envia comando.");
             return false ;
         }
 
         try {
+            System.out.println("Comando "+comm);
             Impresora.SendCmd(comm);
-            guardarLog(comm);
             exito = true;
         } catch (PrinterException Excepcion) {
             System.out.println("Error de Impresion:");
-            guardarLog("Error al emviar el comando");
-
         }
+        guardarLog();
         return exito;
     }
 
@@ -146,11 +151,10 @@ public class ImpBixolonSRP812
 
     public void agregarItem(LineaFactura lin) {
         LineaItemBixolon item = new LineaItemBixolon(tasas);
+        item.setMaxLongPrecio(datImp.getMaximoDigitosPrecio());
 
         Moneda precioLocal =  new Moneda(lin.getPreciobase());
-        System.out.println("Precio Local $:"+precioLocal.getValor().toString());
         precioLocal.multiplicar(moneda.getTasacambio());
-        System.out.println("Precio Local Bs:"+precioLocal.getValor().toString());
 
         item.setCodigo(lin.getReferencia());
         item.setCantidad(lin.getCantidad());
@@ -163,6 +167,12 @@ public class ImpBixolonSRP812
 
 
     public void cargarTablaComandos() {
+
+    }
+
+    public void datosInternos() {
+        String Comando = "@DOC #:"+Util.llenarCeros(this.numeroFactura,10);
+        listaComandos.add(Comando);
 
     }
 
@@ -203,14 +213,12 @@ public class ImpBixolonSRP812
     }
 
     public void ReporteZ() {
-        String Comando = "I0Z";
-        listaComandos.add(Comando);
+        enviarComando("I0Z");
         finalizar();
     }
 
     public void ReporteX() {
-        String Comando = "I0X";
-        listaComandos.add(Comando);
+        enviarComando("I0X");
         finalizar();
     }
 

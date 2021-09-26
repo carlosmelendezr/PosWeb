@@ -9,7 +9,7 @@
    <children>
       <ScrollPane fitToHeight="true" fitToWidth="true" layoutX="-1.0" prefHeight="486.0" prefWidth="918.0" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0">
          <content>
-            <TableView fx:id="listaArticulos" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#MouseClick" prefHeight="569.0" prefWidth="910.0">
+            <TableView fx:id="listaArticulos" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#MouseClick" prefHeight="569.0" prefWidth="910.0" stylesheets="@estilos.css">
                <padding>
                   <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                </padding></TableView>

@@ -4,6 +4,10 @@
     -fx-background-color: #f0ff35;
 }
 
+#colnumero .table-column {
+  -fx-alignment: CENTER-RIGHT;
+}
+
 .botones-verde {
 
     -fx-background-color:
