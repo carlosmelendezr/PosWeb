@@ -137,7 +137,11 @@ public class Contexto {
     }
 
     public static void finalizarFactura() {
-        //facturaActual.Finalizar();
+
+        if (!validarImpresora()) {
+            Acciones.dialogoAlerta("Error de conexión con la Impresora","La impresora no tiene conexión.");
+            return;
+        }
         facturaActual.FinalizarImprimir();
         facturaListaproductos.clear();
         facturaListaproductos.addAll(facturaActual.getLineas());

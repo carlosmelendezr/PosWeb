@@ -37,6 +37,8 @@ public class Acciones {
     public static void ventanaFacturacion() {
 
         try {
+            Contexto.inicializar();
+
             Stage stage = new Stage();
             Parent root = FXMLLoader.load(
                     Controller.class.getResource("main.fxml"));
