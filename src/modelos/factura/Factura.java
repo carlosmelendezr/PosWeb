@@ -204,7 +204,8 @@ public class Factura  {
         this.totales.setTotalPago(totalpago);
 
 
-        if (this.totales.getTotalSaldo().menorOigual(new Moneda("0")) ) {
+        if (this.totales.getTotalSaldo().menorOigual(new Moneda("0")) &&
+                this.totales.getMontoTotal().mayorOigual(new Moneda("0"))) {
             System.out.println("!!! La Factura es Imprimible !!!");
             this.Imprimible = true;
             this.Pagada = true;

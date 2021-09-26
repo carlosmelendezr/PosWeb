@@ -3,6 +3,8 @@ package modelos.datos;
 import modelos.factura.*;
 
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -24,6 +26,7 @@ public class Operaciones {
     }
 
     public static Factura ResultToFactura(ResultSet rs) {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
         TipoMoneda Dolar = new TipoMoneda(1,"USD","DOLAR","$",
                 new Moneda("1"),MonedaUtil.formatoUsd);
@@ -43,18 +46,20 @@ public class Operaciones {
             fac.setPagada(rs.getBoolean("pagada"));
             fac.setCancelada(rs.getBoolean("cancelada"));
             fac.setError(rs.getBoolean("error"));
-            fac.setEspera(rs.getBoolean("espepra"));
+            fac.setEspera(rs.getBoolean("espera"));
             fac.setIdTasa(rs.getInt("idtasa"));
-            Date fec = rs.getDate("fecha");
+            String fec = rs.getString("fecha");
 
+            java.util.Date fecfac = df.parse(fec);
 
             Calendar fecha = Calendar.getInstance();
-            fecha.setTime(fec);
-
+            fecha.setTime(fecfac);
             fac.setFecha(fecha);
 
 
         } catch (Exception e) {
+            System.out.println("Error al recuperar la factura");
+            e.printStackTrace();
 
         }
         return fac;
@@ -62,7 +67,6 @@ public class Operaciones {
 
     public static Factura BuscarFacturaActiva() {
         Factura factura = null;
-
         Connection conn = connect(Constantes.dbPrincipal);
 
         try {

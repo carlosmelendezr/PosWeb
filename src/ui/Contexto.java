@@ -62,10 +62,13 @@ public class Contexto {
 
         facturaActual = Operaciones.UltimaFacturaActiva();
 
-        if (facturaActual==null || facturaActual.getNumeroFactura()==0 ) {
+        if (facturaActual==null) {
             facturaActual = Operaciones.CrearFactura(Dolar,TasaDia.getId());
             facturaActual.setIdTasa(TasaDia.getId());
         } else {
+            if (facturaActual.getNumeroFactura()==0) {
+                facturaActual.setNumeroFactura(facturaActual.getId());
+            }
             facturaActual.obtenerLineas();
             facturaActual.obtenerPagos();
         }

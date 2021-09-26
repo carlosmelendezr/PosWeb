@@ -46,7 +46,7 @@ public class Constantes {
 
     public static String SQL_ULTIMA_FACTURA = "SELECT numero FROM tabla_consec  WHERE nombre='FACTURA' LIMIT 1 ";
 
-    public static String SQL_FACTURAS_ACTIVA = "SELECT * FROM factura  WHERE activa=1 LIMIT 1 ";
+    public static String SQL_FACTURAS_ACTIVA = "SELECT * FROM factura  WHERE activa=1 ORDER by id desc LIMIT 1 ";
     public static String SQL_FACTURAS_ESPERA = "SELECT * FROM factura  WHERE espera=1 ";
 
     public static List<String> crearConsecutivos() {
