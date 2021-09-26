@@ -28,6 +28,8 @@ public class Constantes {
             + "	fecha date, "
             + " hora text, "
             + " idtasa integer, "
+            + " serialfiscal string, "
+            + " facturafiscal string, "
             + "	docweb text, "
             + "	fecsync date) ";
 

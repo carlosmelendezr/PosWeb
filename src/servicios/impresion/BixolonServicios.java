@@ -12,10 +12,33 @@ import tfhka.ve.*;
 public class BixolonServicios {
     final private Tfhka Impresora;
     private List<String> PortList;
+    private S1PrinterData EstatusS1;
 
     public BixolonServicios() {
         Impresora = new tfhka.ve.Tfhka();
         PortList = new ArrayList<>();
+    }
+
+    public String obtenerSerial () {
+        String serial = "";
+        try {
+            EstatusS1 = Impresora.getS1PrinterData();
+            serial = EstatusS1.getRegisteredMachineNumber();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return serial;
+    }
+
+    public int ultimoNumero () {
+        int num = 0;
+        try {
+            EstatusS1 = Impresora.getS1PrinterData();
+            num = EstatusS1.getLastInvoiceNumber();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return num;
     }
 
     public boolean abrirPuerto(String puerto) {

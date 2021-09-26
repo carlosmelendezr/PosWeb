@@ -16,8 +16,10 @@ public class TestPrint {
         BixolonServicios svr = new BixolonServicios();
         if (svr.abrirPuerto("COM5")) {
             if (svr.CheckPrinter()) {
+                String Serial = svr.obtenerSerial();
+                int ultimo = svr.ultimoNumero();
                 svr.cerrarPuerto();
-                System.out.println("Impresora OK");
+                System.out.println("Impresora OK - Serial "+Serial+" Ultima Factura "+ultimo);
 
             }
         }
