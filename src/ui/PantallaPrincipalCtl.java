@@ -33,7 +33,7 @@ public class PantallaPrincipalCtl implements Initializable {
     private Button btnImportarProducto;
 
     @FXML
-    private Button btnPackages;
+    private Button btnArticulos;
 
     @FXML
     private Button btnSettings;
@@ -91,9 +91,10 @@ public class PantallaPrincipalCtl implements Initializable {
             pnlMenus.toFront();
             Acciones.ventanaImportarProductos();
         }
-        if (actionEvent.getSource() == btnOverview) {
+        if (actionEvent.getSource() == btnArticulos) {
             pnlOverview.setStyle("-fx-background-color : #02030A");
             pnlOverview.toFront();
+            Acciones.ventanaMaestroArticulos();
         }
         if(actionEvent.getSource()==btnOrders)
         {

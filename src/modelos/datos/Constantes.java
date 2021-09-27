@@ -28,8 +28,6 @@ public class Constantes {
             + "	fecha date, "
             + " hora text, "
             + " idtasa integer, "
-            + " serialfiscal string, "
-            + " facturafiscal string, "
             + "	docweb text, "
             + "	fecsync date) ";
 
@@ -94,6 +92,16 @@ public class Constantes {
     public static String SQL_IND_LINFAC_IDPRO = "CREATE INDEX IF NOT EXISTS ilinfacpr  ON fac_articulos (idproducto)";
     public static String SQL_IND_LINFAC_BARRA = "CREATE INDEX IF NOT EXISTS ilinfacbar ON fac_articulos (codbarra)";
 
+    public static String SQL_DATOS_FISCALES= "CREATE TABLE IF NOT EXISTS fac_fiscal ("
+            + "	id integer PRIMARY KEY,"
+            + " idfactura integer,"
+            + " numero integer,"
+            + "	serial text ,"
+            + ");";
+
+    public static String SQL_INSERTAR_DATOS_FISCALES = "INSERT INTO fac_fiscal " +
+            "(idfactura,numero,serial) VALUES (?,?,?)";
+
     public static List<String> crearTablasFactura() {
         List<String> queris = new ArrayList<>();
         queris.add(SQL_CREAR_FACTURA);
@@ -109,6 +117,8 @@ public class Constantes {
         queris.add(SQL_CREAR_PAGOS);
         queris.add(SQL_IND_PAGO_IDFAC);
         queris.add(SQL_IND_PAGO_IDBAN);
+
+        queris.add(SQL_DATOS_FISCALES);
         return queris;
 
     }
@@ -166,12 +176,7 @@ public class Constantes {
     public static String SQL_BUSCAR_PAGOS ="SELECT * FROM fac_pagos WHERE idfactura=";
 
 
-    public static String FacturaDatosFiscales= "CREATE TABLE IF NOT EXISTS fac_fiscal ("
-            + "	id integer PRIMARY KEY,"
-            + " idfactura integer,"
-            + " numero integer,"
-            + "	serial text ,"
-            + ");";
+
 
     public static String SQL_IND_DATFIS_IDFAC = "CREATE INDEX IF NOT EXISTS idatfisidfac  ON fac_fiscal (idfactura)";
 
@@ -204,6 +209,10 @@ public class Constantes {
     public static String SQL_INSERTAR_PRODUCTO = "INSERT INTO productos" +
             "(idtipoprod,descrip,imagen,idtipoimp,idcategoria,idmarca,unmedida,precio,costo,stock,ref,refprov,codigo,idprov) VALUES " +
             "(   ?      ,    ?  ,   ? ,      ?   ,     ?     ,   ?   ,   ?    ,  ?   ,  ?  ,  ?  , ?,   ?    ,  ?   ,   ?  ) ";
+
+    public static String SQL_ACTUALIZAR_PRODUCTO = "UPDATE productos SET " +
+            "descrip=?,precio=?,costo=?,stock=?,ref=?,codigo=? WHERE id=? ";
+
 
     public static String SQL_INSERTAR_PRODUC_BUSCAR = "INSERT INTO producbuscar" +
             "(id,descrip,ref,codigo) VALUES " +

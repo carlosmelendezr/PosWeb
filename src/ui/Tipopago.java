@@ -61,4 +61,24 @@ public class Tipopago implements Initializable {
         ((Node)(event.getSource())).getScene().getWindow().hide();
 
     }
+
+    public void botonMaster(MouseEvent event) {
+        Banco ban = new Banco();
+        ban.setId(2);
+        ban.setCodigo("MASTER");
+        ban.setDescripcion("MASTER");
+        Contexto.bancoSeleccionado = ban;
+        ((Node)(event.getSource())).getScene().getWindow().hide();
+
+    }
+
+    public void botonMaestro(MouseEvent event) {
+        Banco ban = new Banco();
+        ban.setId(3);
+        ban.setCodigo("MAESTRO");
+        ban.setDescripcion("MAESTRO");
+        Contexto.bancoSeleccionado = ban;
+        ((Node)(event.getSource())).getScene().getWindow().hide();
+
+    }
 }

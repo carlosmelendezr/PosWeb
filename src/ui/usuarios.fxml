@@ -26,5 +26,7 @@
             </buttons>
         </ButtonBar>
       <PasswordField fx:id="clave" layoutX="156.0" layoutY="123.0" />
+      <PasswordField fx:id="clave2" layoutX="156.0" layoutY="157.0" />
+      <Label layoutX="18.0" layoutY="161.0" text="Confirmación" />
     </children>
 </AnchorPane>

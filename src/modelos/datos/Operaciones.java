@@ -5,10 +5,7 @@ import modelos.factura.*;
 import java.sql.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.List;
+import java.util.*;
 
 import static modelos.datos.Connect.connect;
 
@@ -181,6 +178,31 @@ public class Operaciones {
       return exito;
     }
 
+    public static boolean ActualizarProducto(Producto pro) {
+        boolean exito = false;
+
+        Connection conn;
+        try {
+            conn = connect(Constantes.dbPrincipal);
+            PreparedStatement pstmt = conn.prepareStatement(Constantes.SQL_ACTUALIZAR_PRODUCTO);
+
+            pstmt.setString(1,pro.getDescripcion().toUpperCase(Locale.ROOT));
+            pstmt.setDouble(2,pro.getPrecio().getValor().doubleValue());
+            pstmt.setDouble(3,pro.getCosto().getValor().doubleValue());
+            pstmt.setDouble(4,pro.getStock());
+            pstmt.setString(5,pro.getReferencia().toUpperCase(Locale.ROOT));
+            pstmt.setString(6,pro.getCodigo());
+            pstmt.setInt(7,pro.getId());
+
+
+            pstmt.execute();
+            exito = true;
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return exito;
+    }
+
     public static Integer InsertarFactura(Factura fac) {
 
         Integer lastId = 0;
@@ -304,11 +326,6 @@ public class Operaciones {
 
 
             Exito = true;
-           /* try {
-                conn.close();
-            } catch(SQLException e) {
-                System.out.println(e.getMessage());
-            }*/
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -374,6 +391,27 @@ public class Operaciones {
 
         return Exito;
     }
+
+    public static boolean insertarDatosFiscales(DatosFiscales dat, Integer idfactura) {
+        boolean Exito=false;
+
+        try {
+            Connection conn = connect(Constantes.dbPrincipal);
+            PreparedStatement pstmt = conn.prepareStatement(Constantes.SQL_INSERTAR_DATOS_FISCALES);
+
+            pstmt.setInt(1, idfactura);
+            pstmt.setInt(2, dat.getFacturaFiscal());
+            pstmt.setString(3, dat.getSerialImpresora());
+            pstmt.execute();
+            pstmt.close();
+            Exito = true;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return Exito;
+
+    }
+
 
     public static boolean insertarProducBuscar(List<ProductoBuscar> lista) {
         boolean Exito=false;

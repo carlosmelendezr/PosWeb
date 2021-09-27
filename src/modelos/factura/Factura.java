@@ -1,6 +1,7 @@
 package modelos.factura;
 
 import modelos.datos.Operaciones;
+import servicios.impresion.BixolonServicios;
 import servicios.impresion.DatosImpresora;
 import servicios.impresion.ImpBixolonSRP812;
 import ui.Contexto;
@@ -240,6 +241,16 @@ public class Factura  {
             Bixolon.enviarImpresora();
             Bixolon.finalizar();
 
+            BixolonServicios svr = new BixolonServicios();
+            if (svr.abrirPuerto(impresora.getPuerto())) {
+                if (svr.CheckPrinter()) {
+                    String Serial = svr.obtenerSerial();
+                    int ultimo = svr.ultimoNumero();
+                    svr.cerrarPuerto();
+                    DatosFiscales dat = new DatosFiscales(ultimo,Serial);
+                    Operaciones.insertarDatosFiscales(dat,this.id);
+                }
+            }
         }
 
         this.Activa = false;

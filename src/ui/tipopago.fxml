@@ -4,14 +4,13 @@
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
 <AnchorPane prefHeight="66.0" prefWidth="375.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.Tipopago">
    <children>
       <ButtonBar layoutX="14.0" prefHeight="66.0" prefWidth="345.0">
         <buttons>
           <Button fx:id="btnVisa" mnemonicParsing="false" onMouseClicked="#botonVisa" />
-            <Button fx:id="btnMaster" mnemonicParsing="false" />
-            <Button fx:id="btnMaestro" mnemonicParsing="false" />
+            <Button fx:id="btnMaster" mnemonicParsing="false" onMouseClicked="#botonMaster" />
+            <Button fx:id="btnMaestro" mnemonicParsing="false" onMouseClicked="#botonMaestro" />
         </buttons>
       </ButtonBar>
    </children>

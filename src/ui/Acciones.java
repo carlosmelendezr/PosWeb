@@ -145,6 +145,28 @@ public class Acciones {
         }
         return exito;
     }
+
+    public static boolean ventanaMaestroArticulos() {
+        boolean exito = false;
+        try {
+
+            Stage stage = new Stage();
+            Parent root = FXMLLoader.load(
+                    Controller.class.getResource("MaestroArticulos.fxml"));
+            stage.setScene(new Scene(root));
+            stage.setTitle("Maestro de Articulos");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+            exito = true;
+
+        } catch (IOException e) {
+            System.out.println("Error:" + e.getMessage());
+            e.printStackTrace();
+        }
+        return exito;
+    }
+
+
     public static Integer dialogoCantidad(String texto) {
         Integer Cantidad = 0;
 

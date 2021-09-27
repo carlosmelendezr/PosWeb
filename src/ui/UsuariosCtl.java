@@ -27,6 +27,8 @@ public class UsuariosCtl implements Initializable {
     TextField razonsoc;
     @FXML
     TextField clave;
+    @FXML
+    TextField clave2;
 
     @FXML
     Button guardar;
@@ -69,6 +71,11 @@ public class UsuariosCtl implements Initializable {
         if (razonsoc.getText().isEmpty()) {
             razonsoc.setStyle("-fx-background-color: red");
             mensajes.setText("El nombre no puede estar en blanco.");
+            return;
+        }
+
+        if (!clave.equals(clave2)) {
+            mensajes.setText("Las contraseñas con coinciden");
             return;
         }
 
