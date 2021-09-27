@@ -241,16 +241,26 @@ public class Factura  {
             Bixolon.enviarImpresora();
             Bixolon.finalizar();
 
-            BixolonServicios svr = new BixolonServicios();
+            try {
+                Thread.sleep(3000);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            /*BixolonServicios svr = new BixolonServicios();
+            System.out.println("Guardando datos fiscales");
             if (svr.abrirPuerto(impresora.getPuerto())) {
+                System.out.println("Verifivcando estatus");
                 if (svr.CheckPrinter()) {
+                    System.out.println("onteniendo datos");
                     String Serial = svr.obtenerSerial();
                     int ultimo = svr.ultimoNumero();
                     svr.cerrarPuerto();
+                    System.out.println("guardando...");
                     DatosFiscales dat = new DatosFiscales(ultimo,Serial);
                     Operaciones.insertarDatosFiscales(dat,this.id);
                 }
-            }
+            }*/
         }
 
         this.Activa = false;

@@ -28,23 +28,51 @@ public class ImprimirEtiqueta {
         agregarComandoEPL( "ZT");
         agregarComandoEPL( "TTh:m");
         agregarComandoEPL( "TDy2.mn.dd");
-        agregarComandoEPL( "A30,05,0,2,1,1,N,\""+p.getDescripcion()+'"');
-        agregarComandoEPL( "B57,25,0,E80,3,3,102,B,\""+p.getCodigo()+'"');
-        agregarComandoEPL( "A30,156,4,4,1,1,N,REF: \""+p.getPrecioFormato()+'"');
-        agregarComandoEPL( "A61,191,0,4,1,1,N,Cod:\"");
-        agregarComandoEPL( "A144,193,0,4,1,1,N,\""+p.getReferencia()+'"');
+        agregarComandoEPL( "A20,05,0,3,1,1,N,\""+p.getDescripcion()+'"');
+        agregarComandoEPL( "A20,30,0,4,1,1,N,\""+p.getCodigo()+'"');
+        agregarComandoEPL( "A20,110,0,4,2,2,N,\"REF "+p.getPrecioFormato()+'"');
+        agregarComandoEPL( "A20,55,0,4,1,1,N,\""+p.getReferencia()+'"');
 
         agregarComandoEPL( "A61,205,0,4,1,1,N,Fecha :\"");
         agregarComandoEPL( "A144,205,0,4,1,1,N,\""+df.format(new Date())+'"');
         agregarComandoEPL( "P1" );
 
         try {
-            ZebraUtils.printZpl(etiq.toString(), "ARKSCAN 2054A");
+            ZebraUtils.printZpl(etiq.toString(), "ELTRON");
 
 
         } catch (Exception e) {
 
         e.printStackTrace();
+
+        }
+
+
+
+    }
+
+    public void Barra(Producto p) {
+
+        agregarComandoEPL("N");
+        agregarComandoEPL( "q456" );
+        agregarComandoEPL( "Q248,2+0");
+        agregarComandoEPL( "S2");
+        agregarComandoEPL( "D8");
+        agregarComandoEPL( "ZT");
+        agregarComandoEPL( "TTh:m");
+        agregarComandoEPL( "TDy2.mn.dd");
+        agregarComandoEPL( "A20,05,0,3,1,1,N,\""+p.getDescripcion()+'"');
+        agregarComandoEPL( "B57,40,0,E30,3,3,102,B,\""+p.getCodigo()+'"');
+        agregarComandoEPL( "A144,183,0,4,1,1,N,\""+p.getReferencia()+'"');
+        agregarComandoEPL( "P1" );
+
+        try {
+            ZebraUtils.printZpl(etiq.toString(), "ELTRON");
+
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
 
         }
 

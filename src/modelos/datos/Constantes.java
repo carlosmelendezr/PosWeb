@@ -96,7 +96,7 @@ public class Constantes {
             + "	id integer PRIMARY KEY,"
             + " idfactura integer,"
             + " numero integer,"
-            + "	serial text ,"
+            + "	serial text"
             + ");";
 
     public static String SQL_INSERTAR_DATOS_FISCALES = "INSERT INTO fac_fiscal " +

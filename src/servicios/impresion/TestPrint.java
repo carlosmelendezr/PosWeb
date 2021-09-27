@@ -1,5 +1,6 @@
 package servicios.impresion;
 
+import modelos.datos.Operaciones;
 import modelos.factura.*;
 
 import java.util.ArrayList;
@@ -12,8 +13,13 @@ public class TestPrint {
 
         TipoMoneda  Bolivar = new TipoMoneda(2,"VES","BOLIVAR","Bs.",new Moneda(4.3), MonedaUtil.formatoBs);
 
+        Producto p = Operaciones.buscarProductoCodigo("7450008009834");
+        ImprimirEtiqueta etiq = new ImprimirEtiqueta();
+        etiq.Precio(p);
+        etiq.Barra(p);
+
         //ImpBixolonSRP812 Bixolon = new ImpBixolonSRP812();
-        BixolonServicios svr = new BixolonServicios();
+        /*BixolonServicios svr = new BixolonServicios();
         if (svr.abrirPuerto("COM5")) {
             if (svr.CheckPrinter()) {
                 String Serial = svr.obtenerSerial();
@@ -22,7 +28,7 @@ public class TestPrint {
                 System.out.println("Impresora OK - Serial "+Serial+" Ultima Factura "+ultimo);
 
             }
-        }
+        }*/
 
         /*Bixolon.inicializar("COM5", Bolivar, 1);
         Bixolon.cargarTablaComandos();
