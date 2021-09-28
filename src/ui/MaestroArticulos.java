@@ -10,6 +10,7 @@ import modelos.factura.LineaFactura;
 import modelos.factura.Moneda;
 import modelos.factura.Producto;
 import modelos.factura.ProductoBuscar;
+import servicios.impresion.ImprimirEtiqueta;
 
 
 import java.net.URL;
@@ -119,7 +120,17 @@ public class MaestroArticulos implements
 
     }
 
-    public void imprimirEtiqueta() {
+    public void etiquetaPrecio() {
+
+        ImprimirEtiqueta etiq = new ImprimirEtiqueta();
+        etiq.Precio(pro);
+
+
+    }
+
+    public void etiquetaProducto() {
+        ImprimirEtiqueta etiq = new ImprimirEtiqueta();
+        etiq.Barra(pro);
 
     }
 

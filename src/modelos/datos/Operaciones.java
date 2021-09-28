@@ -652,7 +652,7 @@ public class Operaciones {
     public static void borrarProductosImportar() {
         try {
             Connection conn = connect(Constantes.dbPrincipal);
-            PreparedStatement pstmt = conn.prepareStatement("DELETE FROM productos_importar");
+            PreparedStatement pstmt = conn.prepareStatement("DELETE FROM importar_productos");
             pstmt.execute();
             pstmt.close();
         } catch (SQLException e) {
@@ -667,7 +667,7 @@ public class Operaciones {
         try {
             Statement stmt = conn.createStatement();
 
-            ResultSet rs = stmt.executeQuery("SELECT * FROM productos_importar ");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM importar_productos ");
 
             while (rs.next()) {
                 Producto pro = ResulToProducto(rs);

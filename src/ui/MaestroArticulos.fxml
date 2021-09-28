@@ -10,14 +10,14 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="501.0" prefWidth="709.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.MaestroArticulos">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="501.0" prefWidth="709.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.MaestroArticulos">
     <children>
         <Pane layoutX="2.0" layoutY="475.0" prefHeight="25.0" prefWidth="696.0" style="-fx-background-color: lightgreen;">
          <children>
                 <Label fx:id="mensajes" layoutX="8.0" layoutY="4.0" prefHeight="17.0" prefWidth="600.0" text="Mensajes" />
          </children>
         </Pane>
-        <ButtonBar layoutX="478.0" layoutY="435.0" prefHeight="40.0" prefWidth="217.0">
+        <ButtonBar layoutX="481.0" layoutY="424.0" prefHeight="40.0" prefWidth="217.0">
             <buttons>
                 <Button fx:id="guardar" mnemonicParsing="false" onAction="#guardar" text="Guardar" />
             </buttons>
@@ -58,9 +58,10 @@
       </GridPane>
       <Label layoutX="26.0" layoutY="14.0" text="Referencia o Código de Barra" />
       <TextField fx:id="buscar" layoutX="26.0" layoutY="31.0" prefHeight="25.0" prefWidth="261.0" />
-      <ButtonBar layoutX="14.0" layoutY="435.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="200.0">
+      <ButtonBar layoutX="9.0" layoutY="425.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="244.0">
         <buttons>
-          <Button mnemonicParsing="false" onAction="#imprimirEtiqueta" text="Etiqueta Precio" />
+          <Button mnemonicParsing="false" onAction="#etiquetaProducto" text="Código de Barra" />
+            <Button layoutX="114.0" layoutY="18.0" mnemonicParsing="false" onAction="#etiquetaPrecio" text="Etiqueta Precio" />
         </buttons>
       </ButtonBar>
     </children>

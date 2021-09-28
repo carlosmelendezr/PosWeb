@@ -1,6 +1,8 @@
 package servicios.impresion;
 
 
+import modelos.factura.Moneda;
+import modelos.factura.MonedaUtil;
 import modelos.factura.Producto;
 import zpl.utils.ZebraUtils;
 
@@ -30,7 +32,13 @@ public class ImprimirEtiqueta {
         agregarComandoEPL( "TDy2.mn.dd");
         agregarComandoEPL( "A20,05,0,3,1,1,N,\""+p.getDescripcion()+'"');
         agregarComandoEPL( "A20,30,0,4,1,1,N,\""+p.getCodigo()+'"');
-        agregarComandoEPL( "A20,110,0,4,2,2,N,\"REF "+p.getPrecioFormato()+'"');
+
+        Moneda precioIVA = p.getPrecio();
+        precioIVA.sumarIVA(new Moneda(16));
+
+        String precioFormato = MonedaUtil.formatoUsd.format( precioIVA.getValor());
+
+        agregarComandoEPL( "A20,110,0,4,2,2,N,\"REF "+precioFormato+'"');
         agregarComandoEPL( "A20,55,0,4,1,1,N,\""+p.getReferencia()+'"');
 
         agregarComandoEPL( "A61,205,0,4,1,1,N,Fecha :\"");

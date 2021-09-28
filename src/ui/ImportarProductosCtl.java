@@ -82,7 +82,7 @@ public class ImportarProductosCtl implements Initializable {
 
     public void procesar() {
         Servicios svr = new Servicios();
-        svr.importarProductos(archivo.getText().trim(),"productos_importar");
+        svr.importarProductos(archivo.getText().trim(),"importar_productos");
         productos = observableArrayList();
         lista=Operaciones.consultarImportarProducto();
         System.out.println("Articulos :"+lista.size());
@@ -104,6 +104,7 @@ public class ImportarProductosCtl implements Initializable {
         if (exito) {
             Acciones.dialogoAlerta("Resultado del Proceso", "Proceso existoso,"+count+" articulos creados.");
             Operaciones.borrarProductosImportar();
+            Operaciones.actualizarProducBuscar();
         } else {
             Acciones.dialogoAlerta("Resultado del Proceso", "Error en el proceso,"+count+" articulos creados.");
         }
