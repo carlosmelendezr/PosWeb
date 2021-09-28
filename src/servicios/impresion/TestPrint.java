@@ -13,10 +13,18 @@ public class TestPrint {
 
         TipoMoneda  Bolivar = new TipoMoneda(2,"VES","BOLIVAR","Bs.",new Moneda(4.3), MonedaUtil.formatoBs);
 
-        Producto p = Operaciones.buscarProductoCodigo("7450008009834");
-        ImprimirEtiqueta etiq = new ImprimirEtiqueta();
-        etiq.Precio(p);
-        etiq.Barra(p);
+        Producto p = Operaciones.buscarProductoCodigo("7450120115024");
+        Moneda precioIVA = p.getPrecio();
+        precioIVA.sumarIVA(p.getAlicuota());
+        precioIVA.redondear();
+
+        String precioFormato = MonedaUtil.formatoUsd.format( precioIVA.getValor());
+        System.out.println(precioFormato);
+
+
+        //ImprimirEtiqueta etiq = new ImprimirEtiqueta();
+        //etiq.Precio(p);
+        //etiq.Barra(p);
 
         //ImpBixolonSRP812 Bixolon = new ImpBixolonSRP812();
         /*BixolonServicios svr = new BixolonServicios();

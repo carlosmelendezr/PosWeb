@@ -79,6 +79,7 @@ public class BuscadorCtl implements Initializable {
             Contexto.ProductoBuscado = pro;
             LineaFactura lin = new LineaFactura(0,
                     Contexto.ProductoBuscado,1.0);
+
             Contexto.agregarLineaFactura(lin);
             TextoBuscar.setText("");
 

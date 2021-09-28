@@ -2,6 +2,7 @@ package modelos.factura;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.math.RoundingMode;
 
 public class Moneda {
     public static int precisionDefault = 4;
@@ -43,6 +44,8 @@ public class Moneda {
         this.precision =  new MathContext(precisionDefault);
         this.valor = new BigDecimal(valor);
     }
+
+    public void redondear() {this.valor = this.valor.round(new MathContext(2, RoundingMode.HALF_UP));}
 
     public void sumar( Moneda valor ) {
         this.valor = this.valor.add(valor.getValor());

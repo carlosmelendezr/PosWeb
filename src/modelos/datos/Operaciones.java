@@ -667,7 +667,8 @@ public class Operaciones {
         try {
             Statement stmt = conn.createStatement();
 
-            ResultSet rs = stmt.executeQuery("SELECT * FROM importar_productos ");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM importar_productos " +
+                    "LEFT JOIN tabla_tasaimp ON importar_productos.idtipoimp=tabla_tasaimp.id ");
 
             while (rs.next()) {
                 Producto pro = ResulToProducto(rs);

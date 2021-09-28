@@ -50,8 +50,8 @@ public class Servicios {
                 int secuencia = 0;
                 while (scan.hasNext()) {
                     String dato = scan.next();
-                    dato = dato.trim();
-
+                    dato = dato = dato.trim();
+                    dato = dato.replaceAll("[^\\.A-Za-z0-9_ ]", "");
                     if (count == 0) {
 
                         System.out.println("Campo " + dato + " indice " + secuencia);

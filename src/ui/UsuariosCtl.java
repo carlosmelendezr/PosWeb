@@ -19,8 +19,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class UsuariosCtl implements Initializable {
-    @FXML
-    ComboBox codcelular;
+
     @FXML
     TextField cedula;
     @FXML
@@ -60,6 +59,7 @@ public class UsuariosCtl implements Initializable {
         cedula.setText("");
         razonsoc.setText("");
         clave.setText("");
+        clave2.setText("");
     }
 
     public void guardarusuario() {
@@ -74,8 +74,8 @@ public class UsuariosCtl implements Initializable {
             return;
         }
 
-        if (!clave.equals(clave2)) {
-            mensajes.setText("Las contraseñas con coinciden");
+        if (!clave.getText().equals(clave2.getText())) {
+            mensajes.setText("Las contraseñas NO coinciden !!!");
             return;
         }
 

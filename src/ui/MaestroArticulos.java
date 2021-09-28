@@ -6,10 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import modelos.datos.Operaciones;
-import modelos.factura.LineaFactura;
-import modelos.factura.Moneda;
-import modelos.factura.Producto;
-import modelos.factura.ProductoBuscar;
+import modelos.factura.*;
 import servicios.impresion.ImprimirEtiqueta;
 
 
@@ -30,6 +27,8 @@ public class MaestroArticulos implements
     TextField idtipoimp;
     @FXML
     TextField precio;
+    @FXML
+    TextField precioiva;
     @FXML
     TextField costo;
     @FXML
@@ -110,8 +109,16 @@ public class MaestroArticulos implements
             precio.setText(pro.getPrecioFormato());
             stock.setText(pro.getStock().toString());
             ref.setText(pro.getReferencia());
-            codbarra.setText(pro.getReferencia());
+            codbarra.setText(pro.getCodigo());
             buscar.setText("");
+
+            Moneda precioIVA = new Moneda();
+
+            precioIVA.setValor(pro.getPrecio().getValor());
+            precioIVA.sumarIVA(pro.getAlicuota());
+            precioIVA.redondear();
+            String precioFormato = MonedaUtil.formatoUsd.format( precioIVA.getValor());
+            precioiva.setText(precioFormato);
 
         } else {
             mensajes.setText("El código "+buscar.getText()+" NO existe.");

@@ -72,7 +72,7 @@ public class LineaItemBixolon
     }
 
     public void setCodigo(String codigo) {
-        this.codigo = codigo;
+        this.codigo = codigo.replaceAll("[^\\.A-Za-z0-9_ ]", "");
     }
 
     public String getDescripcion() {
@@ -80,7 +80,7 @@ public class LineaItemBixolon
     }
 
     public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+        this.descripcion = descripcion.replaceAll("[^\\.A-Za-z0-9_ ]", "");
     }
 
     public List<TasaImpresora> getTasas() {
