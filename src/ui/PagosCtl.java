@@ -49,6 +49,8 @@ public class PagosCtl implements Initializable {
     @FXML
     TextField referencia;
     @FXML
+    TextField descuento;
+    @FXML
     Button botonImprimir;
 
 
@@ -138,6 +140,20 @@ public class PagosCtl implements Initializable {
             }
         } );
 
+        descuento.textProperty().addListener(new soloNumero(descuento) );
+        descuento.setOnKeyPressed( event -> {
+            if( event.getCode() == KeyCode.ENTER ) {
+                if (descuento.getText().isEmpty()) {
+                    llenarDesc();
+                    return;
+                }
+                entradaDescuento();
+            } else {
+                //Utilidades.entradaFormatoBs(efectivoBs);
+
+            }
+        } );
+
         TableColumn coltipo = new TableColumn("Moneda");
         coltipo.setMinWidth(100);
         coltipo.setCellValueFactory(
@@ -174,6 +190,7 @@ public class PagosCtl implements Initializable {
         tarjetaInt.setText("");
         zelle.setText("");
         referencia.setText("");
+        descuento.setText("");
 
         Contexto.actualizaPagos();
 
@@ -209,10 +226,8 @@ public class PagosCtl implements Initializable {
         Moneda vueltoBs = new Moneda(0);
 
         if (!efecBs.igualZero()) {
-
             Pago pagoEfecBs = new Pago(Contexto.Bolivar, efecBs, vueltoBs);
             pagoEfecBs.setReferencia("EFECTIVO");
-
 
             Contexto.enviarEstus(Contexto.facturaActual.agregarPago(pagoEfecBs));
             inicializa();
@@ -231,6 +246,23 @@ public class PagosCtl implements Initializable {
             Pago pagoEfecDolar = new Pago(Contexto.Dolar, efecDolar, vueltoBs);
             pagoEfecDolar.setReferencia("EFECTIVO $");
 
+
+            Contexto.enviarEstus(Contexto.facturaActual.agregarPago(pagoEfecDolar));
+            inicializa();
+        }
+    }
+
+    void entradaDescuento() {
+
+        if (descuento.getText().isEmpty()) return;
+
+        Moneda efecDolar = Utilidades.textoToMoneda(descuento.getText());
+        Moneda vueltoBs = new Moneda(0);
+
+        if (!efecDolar.igualZero()) {
+
+            Pago pagoEfecDolar = new Pago(Contexto.Dolar, efecDolar, vueltoBs);
+            pagoEfecDolar.setReferencia("DESCUENTO");
 
             Contexto.enviarEstus(Contexto.facturaActual.agregarPago(pagoEfecDolar));
             inicializa();
@@ -290,6 +322,15 @@ public class PagosCtl implements Initializable {
         if (MouseClicks>1) {
             String txt = Contexto.totalSaldo().replace(".", "");
             efectivoDolar.setText(txt.replace(",", "."));
+            MouseClicks = 0;
+        }
+    }
+
+    public void llenarDesc() {
+        MouseClicks ++;
+        if (MouseClicks>1) {
+            String txt = Contexto.totalSaldo().replace(".", "");
+            descuento.setText(txt.replace(",", "."));
             MouseClicks = 0;
         }
     }

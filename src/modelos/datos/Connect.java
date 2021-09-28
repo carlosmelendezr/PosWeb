@@ -70,7 +70,8 @@ public class  Connect {
 
             //Tabla.crearBatch(conn,dboBanco.crearTablasBancos());
 
-            Tabla.crearBatch(conn,dboDatosImpresora.crearTablaImpresora());
+            //Tabla.crearBatch(conn,dboDatosImpresora.crearTablaImpresora());
+
 
 
             try {

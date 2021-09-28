@@ -19,6 +19,7 @@ public class Operaciones {
             pstmt.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+            Util.guardarLogError("[IncrementaConsecutivo] "+e.getMessage());
         }
     }
 
@@ -57,6 +58,7 @@ public class Operaciones {
         } catch (Exception e) {
             System.out.println("Error al recuperar la factura");
             e.printStackTrace();
+            Util.guardarLogError("[ResultToFactura] "+e.getMessage()+e.getStackTrace());
 
         }
         return fac;
@@ -74,6 +76,7 @@ public class Operaciones {
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+            Util.guardarLogError("[BuscarFacturaActiva] "+e.getMessage()+e.getStackTrace());
         }
         return factura;
     }
@@ -93,6 +96,7 @@ public class Operaciones {
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+            Util.guardarLogError("[BuscarFacturaEspera] "+e.getMessage()+e.getStackTrace());
         }
 
         return facturas;
@@ -141,6 +145,7 @@ public class Operaciones {
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+            Util.guardarLogError("[UltimoNumeroFactura] "+e.getMessage()+e.getStackTrace());
         }
 
         return lastId;
@@ -174,6 +179,7 @@ public class Operaciones {
             exito = true;
         }catch (Exception e) {
            System.out.println(e.getMessage());
+            Util.guardarLogError("[InsertarProducto] "+e.getMessage()+e.getStackTrace());
         }
       return exito;
     }
@@ -199,6 +205,7 @@ public class Operaciones {
             exito = true;
         }catch (Exception e) {
             System.out.println(e.getMessage());
+            Util.guardarLogError("[ActualizarProducto] "+e.getMessage()+e.getStackTrace());
         }
         return exito;
     }
@@ -235,6 +242,7 @@ public class Operaciones {
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+            Util.guardarLogError("[InsertarFactura] "+e.getMessage()+e.getStackTrace());
         }
 
         System.out.println("Last ID="+lastId);
@@ -273,6 +281,7 @@ public class Operaciones {
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+            Util.guardarLogError("[getLineasFactura] "+e.getMessage()+e.getStackTrace());
         }
 
         return lineas;
@@ -299,6 +308,7 @@ public class Operaciones {
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+            Util.guardarLogError("[ObtenerPagosFactura] "+e.getMessage()+e.getStackTrace());
         }
 
         return lineas;
@@ -329,6 +339,7 @@ public class Operaciones {
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+            Util.guardarLogError("[ InsertarLineaFactura] "+e.getMessage()+e.getStackTrace());
         }
         return Exito;
 
@@ -355,6 +366,7 @@ public class Operaciones {
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+            Util.guardarLogError("[ActualizarLineaFactura] "+e.getMessage()+e.getStackTrace());
         }
         return Exito;
 
@@ -385,6 +397,7 @@ public class Operaciones {
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+            Util.guardarLogError("[actualizarProducBuscar] "+e.getMessage()+e.getStackTrace());
         }
 
         insertarProducBuscar(productos);
@@ -407,6 +420,7 @@ public class Operaciones {
             Exito = true;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+            Util.guardarLogError("[insertarDatosFiscales] "+e.getMessage()+e.getStackTrace());
         }
         return Exito;
 
@@ -436,6 +450,7 @@ public class Operaciones {
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+            Util.guardarLogError("[insertarProducBuscar] "+e.getMessage()+e.getStackTrace());
         }
         return Exito;
 
@@ -477,6 +492,7 @@ public class Operaciones {
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+            Util.guardarLogError("[ActualizaEstatusFactura] "+e.getMessage()+e.getStackTrace());
         }
         return Exito;
 
@@ -507,15 +523,9 @@ public class Operaciones {
 
             pstmt.close();
             Exito = true;
-            /*try {
-                conn.close();
-            } catch(SQLException e) {
-                System.out.println(e.getMessage());
-
-            }*/
-
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+            Util.guardarLogError("[InsertarPagoFactura] "+e.getMessage()+e.getStackTrace());
         }
 
 
@@ -536,15 +546,11 @@ public class Operaciones {
 
             pstmt.close();
             Exito = true;
-            /*try {
-                conn.close();
-            } catch(SQLException e) {
-                System.out.println(e.getMessage());
 
-            }*/
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+            Util.guardarLogError("[LimpiarPagoFactur] "+e.getMessage()+e.getStackTrace());
         }
 
 
@@ -584,6 +590,7 @@ public class Operaciones {
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+            Util.guardarLogError("[buscarProductoDescrip] "+e.getMessage()+e.getStackTrace());
         }
         return lista;
 
@@ -618,6 +625,7 @@ public class Operaciones {
             pro.setIdProveedor(rs.getInt("idprov"));
         } catch (Exception e) {
             System.out.println("Error en ResulToProducto :"+e.getMessage());
+            Util.guardarLogError("[ResulToProducto] "+e.getMessage()+e.getStackTrace());
         }
 
         return pro;
@@ -643,6 +651,7 @@ public class Operaciones {
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+            Util.guardarLogError("[buscarProductoCodigo] "+e.getMessage()+e.getStackTrace());
         }
         return pro;
 
@@ -657,6 +666,7 @@ public class Operaciones {
             pstmt.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+            Util.guardarLogError("[borrarProductosImportar] "+e.getMessage()+e.getStackTrace());
         }
     }
 
@@ -679,6 +689,7 @@ public class Operaciones {
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+            Util.guardarLogError("[consultarImportarProducto] "+e.getMessage()+e.getStackTrace());
         }
         return lista;
 
@@ -702,6 +713,7 @@ public class Operaciones {
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+            Util.guardarLogError("[buscarProductoId] "+e.getMessage()+e.getStackTrace());
         }
         return pro;
 
@@ -755,15 +767,11 @@ public class Operaciones {
 
             pstmt.close();
             Exito = true;
-           /* try {
-                conn.close();
-            } catch(SQLException e) {
-                System.out.println(e.getMessage());
 
-            }*/
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+            Util.guardarLogError("[InsertarCliente] "+e.getMessage()+e.getStackTrace());
         }
 
 
@@ -800,6 +808,7 @@ public class Operaciones {
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+            Util.guardarLogError("[buscarClienteCedula] "+e.getMessage()+e.getStackTrace());
         }
         return cli;
     }
@@ -825,15 +834,10 @@ public class Operaciones {
             pstmt.close();
 
             Exito = true;
-            /*try {
-                conn.close();
-            } catch(SQLException e) {
-                System.out.println(e.getMessage());
-
-            }*/
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+            Util.guardarLogError("[insertarMovimientoInventario] "+e.getMessage()+e.getStackTrace());
         }
 
         try {
@@ -846,14 +850,10 @@ public class Operaciones {
             pstmt.execute();
             pstmt.close();
             Exito = true;
-            /*try {
-                conn.close();
-            } catch(SQLException e) {
-                System.out.println(e.getMessage());
-            }*/
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+            Util.guardarLogError("[insertarMovimientoInventario] "+e.getMessage()+e.getStackTrace());
         }
         return Exito;
 
