@@ -21,14 +21,23 @@ public class dboBanco {
 
     public static String SQL_CARGAR_BANCOS = "SELECT * FROM bancos WHERE activo=1";
 
+    public static String SQL_BUSCAR_BANCO_ID = "SELECT * FROM bancos WHERE id=?";
+
     public static String SQL_INSERTAR_BANCO_INICIAL = "INSERT INTO BANCOS (id,codigo,descrip,activo) " +
             "VALUES " +
-            "(1,'VISA','VISA',1)," +
-            "(2,'MASTER','MASTER CARD',1)," +
+            "(1,'VISABS','VISA BS',1)," +
+            "(2,'MASTERBS','MASTER CARD BS',1)," +
             "(3,'MAESTRO','MAESTRO',1), "+
             "(4,'TRANSF','TRANSFERENCIA',1), "+
             "(5,'MOVIL','PAGO MOVIL',1), "+
-            "(6,'ZELLE','ZELLE',1) ";
+            "(6,'ZELLE','ZELLE',1) " +
+            "(7,'VISAINT','VISA INT',1) " +
+            "(8,'MASTERINT','MASTER INT',1) " +
+            "(9,'TRANSFINT','TRANSFERENCIA INT',1) " +
+            "(10,'DESC','DESCUENTO INT',1) " +
+            "(11,'EFECBS','EFECTIVO BS',1) " +
+            "(12,'EFECUSD','EFECTIVO USD',1) " +
+            "(13,'EFECEUR','EFECTIVO EURO',1) " ;
 
 
     public static String SQL_INSERTAR_BANCO = "INSERT INTO bancos " +
@@ -62,6 +71,7 @@ public class dboBanco {
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+            Util.guardarLogError("[InsertarBanco] "+e.getMessage()+e.getStackTrace());
         }
         return Exito;
     }
@@ -81,15 +91,43 @@ public class dboBanco {
 
                 ban.setId(rs.getInt("id"));
                 ban.setCodigo(rs.getString("codigo"));
-                ban.setDescripcion(rs.getString("descripcion"));
+                ban.setDescripcion(rs.getString("descrip"));
                 lista.add(ban);
             }
             rs.close();
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+            Util.guardarLogError("[cargarBancos] "+e.getMessage()+e.getStackTrace());
         }
         return lista;
+    }
+
+    public static Banco obtenerBanco(Integer id) {
+        Banco ban = null;
+        Connection conn = connect(Constantes.dbPrincipal);
+
+        try {
+            Statement stmt = conn.createStatement();
+            PreparedStatement pstmt = conn.prepareStatement(SQL_BUSCAR_BANCO_ID);
+            pstmt.setInt(1,id);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                ban =  new Banco();
+
+                ban.setId(rs.getInt("id"));
+                ban.setCodigo(rs.getString("codigo"));
+                ban.setDescripcion(rs.getString("descrip"));
+
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            Util.guardarLogError("[obtenerBanco] "+e.getMessage()+e.getStackTrace());
+        }
+        return ban;
     }
 
 }

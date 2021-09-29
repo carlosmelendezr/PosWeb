@@ -11,6 +11,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.MouseEvent;
+import modelos.datos.dboBanco;
+import modelos.factura.Banco;
 import modelos.factura.Moneda;
 import modelos.factura.Pago;
 import modelos.factura.TipoMoneda;
@@ -58,6 +60,7 @@ public class PagosCtl implements Initializable {
     TableView listaPagos;
 
     private int MouseClicks;
+    private Banco ban;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -226,8 +229,10 @@ public class PagosCtl implements Initializable {
         Moneda vueltoBs = new Moneda(0);
 
         if (!efecBs.igualZero()) {
+            ban = dboBanco.obtenerBanco(11);
             Pago pagoEfecBs = new Pago(Contexto.Bolivar, efecBs, vueltoBs);
             pagoEfecBs.setReferencia("EFECTIVO");
+            pagoEfecBs.setBanco(ban);
 
             Contexto.enviarEstus(Contexto.facturaActual.agregarPago(pagoEfecBs));
             inicializa();
@@ -242,10 +247,10 @@ public class PagosCtl implements Initializable {
         Moneda vueltoBs = new Moneda(0);
 
         if (!efecDolar.igualZero()) {
-
+            ban = dboBanco.obtenerBanco(12);
             Pago pagoEfecDolar = new Pago(Contexto.Dolar, efecDolar, vueltoBs);
             pagoEfecDolar.setReferencia("EFECTIVO $");
-
+            pagoEfecDolar.setBanco(ban);
 
             Contexto.enviarEstus(Contexto.facturaActual.agregarPago(pagoEfecDolar));
             inicializa();
@@ -260,9 +265,11 @@ public class PagosCtl implements Initializable {
         Moneda vueltoBs = new Moneda(0);
 
         if (!efecDolar.igualZero()) {
+            ban = dboBanco.obtenerBanco(10);
 
             Pago pagoEfecDolar = new Pago(Contexto.Dolar, efecDolar, vueltoBs);
             pagoEfecDolar.setReferencia("DESCUENTO");
+            pagoEfecDolar.setBanco(ban);
 
             Contexto.enviarEstus(Contexto.facturaActual.agregarPago(pagoEfecDolar));
             inicializa();
@@ -281,6 +288,14 @@ public class PagosCtl implements Initializable {
             valor = tarjetaInt.getText();
             mon = Contexto.Dolar;
             Acciones.tipoPago();
+            switch (Contexto.bancoSeleccionado) {
+                case 1:
+                    {Contexto.bancoSeleccionado = 7;break;}
+                case 2:
+                    {Contexto.bancoSeleccionado = 8;break;}
+
+            }
+
         }
 
         if (!tarjetaBs.getText().isEmpty()) {
@@ -297,11 +312,13 @@ public class PagosCtl implements Initializable {
         Moneda tarjetaValor = Utilidades.textoToMoneda(valor);
         Moneda vueltoBs = new Moneda(0);
 
+        ban = dboBanco.obtenerBanco(Contexto.bancoSeleccionado);
+
         if (!tarjetaValor.igualZero()) {
 
             Pago pagoTarDolar = new Pago(mon, tarjetaValor, vueltoBs);
             pagoTarDolar.setReferencia(referencia.getText());
-            pagoTarDolar.setBanco(Contexto.bancoSeleccionado);
+            pagoTarDolar.setBanco(ban);
 
             Contexto.enviarEstus(Contexto.facturaActual.agregarPago(pagoTarDolar));
             inicializa();

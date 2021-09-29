@@ -36,7 +36,7 @@ public class Contexto {
     public static SimpleStringProperty tasaDolar = new SimpleStringProperty();
     public static Tasa TasaDia;
     public static Usuario usuarioActivo;
-    public static Banco bancoSeleccionado;
+    public static Integer bancoSeleccionado;
     public static DatosImpresora impresora;
 
 
@@ -61,11 +61,14 @@ public class Contexto {
         Bolivar = new TipoMoneda(2,"VES","BOLIVAR","Bs.",tasaDolarHoy, MonedaUtil.formatoBs);
 
         facturaActual = Operaciones.UltimaFacturaActiva();
+        System.out.println();
 
         if (facturaActual==null) {
+            System.out.println("No hay facturas pendientes");
             facturaActual = Operaciones.CrearFactura(Dolar,TasaDia.getId());
             facturaActual.setIdTasa(TasaDia.getId());
         } else {
+            System.out.println("hay facturas pendientes");
             if (facturaActual.getNumeroFactura()==0) {
                 facturaActual.setNumeroFactura(facturaActual.getId());
             }

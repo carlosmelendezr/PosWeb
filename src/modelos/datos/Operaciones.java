@@ -24,6 +24,8 @@ public class Operaciones {
     }
 
     public static Factura ResultToFactura(ResultSet rs) {
+
+
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
         TipoMoneda Dolar = new TipoMoneda(1,"USD","DOLAR","$",
@@ -32,6 +34,7 @@ public class Operaciones {
 
         Factura fac = new Factura(Dolar);
         try {
+            if (rs.isClosed()) return null;
 
             Cliente cli = Operaciones.buscarClienteCedula(rs.getString("idcliente"));
 
@@ -71,7 +74,9 @@ public class Operaciones {
         try {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(Constantes.SQL_FACTURAS_ACTIVA);
-            factura = ResultToFactura(rs);
+            if(!rs.isClosed()) {
+                factura = ResultToFactura(rs);
+            }
             rs.close();
 
         } catch (SQLException e) {
