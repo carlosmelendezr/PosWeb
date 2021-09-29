@@ -30,13 +30,13 @@ public class dboBanco {
             "(3,'MAESTRO','MAESTRO',1), "+
             "(4,'TRANSF','TRANSFERENCIA',1), "+
             "(5,'MOVIL','PAGO MOVIL',1), "+
-            "(6,'ZELLE','ZELLE',1) " +
-            "(7,'VISAINT','VISA INT',1) " +
-            "(8,'MASTERINT','MASTER INT',1) " +
-            "(9,'TRANSFINT','TRANSFERENCIA INT',1) " +
-            "(10,'DESC','DESCUENTO INT',1) " +
-            "(11,'EFECBS','EFECTIVO BS',1) " +
-            "(12,'EFECUSD','EFECTIVO USD',1) " +
+            "(6,'ZELLE','ZELLE',1), " +
+            "(7,'VISAINT','VISA INT',1), " +
+            "(8,'MASTERINT','MASTER INT',1), " +
+            "(9,'TRANSFINT','TRANSFERENCIA INT',1), " +
+            "(10,'DESC','DESCUENTO INT',1), " +
+            "(11,'EFECBS','EFECTIVO BS',1), " +
+            "(12,'EFECUSD','EFECTIVO USD',1), " +
             "(13,'EFECEUR','EFECTIVO EURO',1) " ;
 
 

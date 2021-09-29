@@ -41,6 +41,10 @@ public class PagosCtl implements Initializable {
     TextField efectivoDolar;
     @FXML
     TextField efectivoEuro;
+    @FXML
+    TextField transferenciaBs;
+    @FXML
+    TextField PagoMovil;
 
     @FXML
     TextField tarjetaBs;
@@ -54,6 +58,8 @@ public class PagosCtl implements Initializable {
     TextField descuento;
     @FXML
     Button botonImprimir;
+    @FXML
+    Button botonGuardar;
 
 
     @FXML
@@ -120,7 +126,17 @@ public class PagosCtl implements Initializable {
         referencia.textProperty().addListener(new soloNumero(referencia) );
         referencia.setOnKeyPressed( event -> {
             if( event.getCode() == KeyCode.ENTER ) {
-                entradaTarjeta();
+                if (!(tarjetaInt.getText().isEmpty()
+                        && tarjetaBs.getText().isEmpty()
+                        && zelle.getText().isEmpty())) {
+                    entradaTarjeta();
+                } else {
+                    if (!transferenciaBs.getText().isEmpty()) {
+                        entradaTransferencia();
+                    } else {
+                        entradaPagoMovil();
+                    }
+                }
 
             } else {
                 //Utilidades.entradaFormatoBs(efectivoBs);
@@ -157,10 +173,32 @@ public class PagosCtl implements Initializable {
             }
         } );
 
+        transferenciaBs.textProperty().addListener(new soloNumero(transferenciaBs) );
+        transferenciaBs.setOnKeyPressed( event -> {
+            if( event.getCode() == KeyCode.ENTER ) {
+                referencia.requestFocus();
+
+            }
+        } );
+
+        PagoMovil.textProperty().addListener(new soloNumero(PagoMovil) );
+        PagoMovil.setOnKeyPressed( event -> {
+            if( event.getCode() == KeyCode.ENTER ) {
+                referencia.requestFocus();
+
+
+            }
+        } );
+
         TableColumn coltipo = new TableColumn("Moneda");
         coltipo.setMinWidth(100);
         coltipo.setCellValueFactory(
                 new PropertyValueFactory<Pago, String>("destipoMoneda"));
+
+        TableColumn desbanco = new TableColumn("Pago");
+        desbanco.setMinWidth(100);
+        desbanco.setCellValueFactory(
+                new PropertyValueFactory<Pago, String>("descBanco"));
 
         TableColumn colmonto = new TableColumn("Monto");
         colmonto.setMinWidth(100);
@@ -178,7 +216,7 @@ public class PagosCtl implements Initializable {
                 new PropertyValueFactory<Pago, String>("montoformatobase"));
 
 
-        listaPagos.getColumns().addAll(coltipo,colmonto,colref,colmontodolar);
+        listaPagos.getColumns().addAll(coltipo,desbanco,colmonto,colref,colmontodolar);
         listaPagos.setItems(Contexto.facturaListapagos);
 
 
@@ -194,6 +232,8 @@ public class PagosCtl implements Initializable {
         zelle.setText("");
         referencia.setText("");
         descuento.setText("");
+        transferenciaBs.setText("");
+        PagoMovil.setText("");
 
         Contexto.actualizaPagos();
 
@@ -205,6 +245,7 @@ public class PagosCtl implements Initializable {
 
         if (Contexto.facturaActual.getImprimible()) {
             botonImprimir.setVisible(true);
+            botonGuardar.setVisible(true);
         }
 
         MouseClicks = 0;
@@ -212,7 +253,6 @@ public class PagosCtl implements Initializable {
 
         Scene sc = efectivoBs.getScene();
 
-//        sc.getAccelerators().put(new KeyCodeCombination(KeyCode.F5), botonImprimir::fire);
 
     }
 
@@ -307,6 +347,7 @@ public class PagosCtl implements Initializable {
         if (!zelle.getText().isEmpty()) {
             valor = zelle.getText();
             mon = Contexto.Dolar;
+            Contexto.bancoSeleccionado = 6;
         }
 
         Moneda tarjetaValor = Utilidades.textoToMoneda(valor);
@@ -317,6 +358,58 @@ public class PagosCtl implements Initializable {
         if (!tarjetaValor.igualZero()) {
 
             Pago pagoTarDolar = new Pago(mon, tarjetaValor, vueltoBs);
+            pagoTarDolar.setReferencia(referencia.getText());
+            pagoTarDolar.setBanco(ban);
+
+            Contexto.enviarEstus(Contexto.facturaActual.agregarPago(pagoTarDolar));
+            inicializa();
+        }
+    }
+
+    void entradaTransferencia() {
+        String valor="";
+        TipoMoneda mon = null;
+
+        if (transferenciaBs.getText().isEmpty())
+                 return;
+
+        if (!transferenciaBs.getText().isEmpty()) {
+            valor = transferenciaBs.getText();
+            mon = Contexto.Bolivar;
+        }
+
+        Moneda Valor = Utilidades.textoToMoneda(valor);
+        Moneda vueltoBs = new Moneda(0);
+
+        if (!Valor.igualZero()) {
+            ban = dboBanco.obtenerBanco(4);
+            Pago pagoTarDolar = new Pago(mon, Valor, vueltoBs);
+            pagoTarDolar.setReferencia(referencia.getText());
+            pagoTarDolar.setBanco(ban);
+
+            Contexto.enviarEstus(Contexto.facturaActual.agregarPago(pagoTarDolar));
+            inicializa();
+        }
+    }
+
+    void entradaPagoMovil() {
+        String valor="";
+        TipoMoneda mon = null;
+
+        if (PagoMovil.getText().isEmpty())
+            return;
+
+        if (!PagoMovil.getText().isEmpty()) {
+            valor = PagoMovil.getText();
+            mon = Contexto.Bolivar;
+        }
+
+        Moneda Valor = Utilidades.textoToMoneda(valor);
+        Moneda vueltoBs = new Moneda(0);
+
+        if (!Valor.igualZero()) {
+            ban = dboBanco.obtenerBanco(5);
+            Pago pagoTarDolar = new Pago(mon, Valor, vueltoBs);
             pagoTarDolar.setReferencia(referencia.getText());
             pagoTarDolar.setBanco(ban);
 
@@ -354,8 +447,13 @@ public class PagosCtl implements Initializable {
 
     public void imprimirFactura(MouseEvent event) {
 
-        //Contexto.facturaActual.GuardarPagos();
         Contexto.finalizarFactura();
+        ((Node)(event.getSource())).getScene().getWindow().hide();
+    }
+
+    public void guardarFactura(MouseEvent event) {
+
+        Contexto.guardarFactura();
         ((Node)(event.getSource())).getScene().getWindow().hide();
     }
 

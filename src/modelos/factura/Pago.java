@@ -20,6 +20,7 @@ public class Pago {
     private Calendar fechapago;
     private Calendar   fechareg;
     private String destipoMoneda;
+    private String descBanco;
 
     public Pago(TipoMoneda tipoMoneda, Moneda monto, Moneda vuelto) {
         this.tipoMoneda = tipoMoneda;
@@ -31,6 +32,15 @@ public class Pago {
         this.banco = new Banco();
         total.restar(vuelto);
 
+    }
+
+    public String getDescBanco() {
+        descBanco = banco.getDescripcion();
+        return descBanco;
+    }
+
+    public void setDescBanco(String descBanco) {
+        this.descBanco = descBanco;
     }
 
     public Moneda getMontoMonedaBase() {

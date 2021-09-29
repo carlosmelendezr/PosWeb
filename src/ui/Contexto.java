@@ -149,6 +149,16 @@ public class Contexto {
             return;
         }
         facturaActual.FinalizarImprimir();
+        reiniciarFactura();
+
+    }
+
+    public static void guardarFactura() {
+        facturaActual.Finalizar();
+        reiniciarFactura();
+    }
+
+    public static void reiniciarFactura() {
         facturaListaproductos.clear();
         facturaListaproductos.addAll(facturaActual.getLineas());
 

@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="581.0" prefWidth="955.0" style="-fx-background-color: white;" stylesheets="@estilos.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.PagosCtl">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="581.0" prefWidth="955.0" style="-fx-background-color: white;" stylesheets="@estilos.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.PagosCtl">
     <children>
       <Button layoutX="690.0" layoutY="257.0" mnemonicParsing="false" onAction="#limpiarPagos" prefHeight="26.0" prefWidth="117.0" styleClass="botones-rojo" text="Limpiar Pagos" />
         <ScrollPane layoutX="7.0" layoutY="2.0" prefHeight="252.0" prefWidth="799.0">
@@ -68,13 +68,13 @@
             </Label>
             <HBox prefHeight="66.0" prefWidth="538.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <children>
-                  <TextField prefHeight="50.0" prefWidth="160.0" promptText="Transferencia" />
-                  <TextField layoutX="10.0" layoutY="10.0" prefHeight="50.0" prefWidth="160.0" promptText="Pago Móvil" />
+                  <TextField fx:id="transferenciaBs" prefHeight="50.0" prefWidth="160.0" promptText="Transferencia" />
+                  <TextField fx:id="PagoMovil" layoutX="10.0" layoutY="10.0" prefHeight="50.0" prefWidth="160.0" promptText="Pago Móvil" />
                </children>
             </HBox>
          </children>
       </GridPane>
-      <VBox layoutX="807.0" layoutY="1.0" prefHeight="252.0" prefWidth="147.0">
+      <VBox layoutX="807.0" layoutY="1.0" prefHeight="86.0" prefWidth="147.0">
          <children>
             <Button fx:id="botonImprimir" mnemonicParsing="false" onMouseClicked="#imprimirFactura" prefHeight="26.0" prefWidth="147.0" styleClass="botones-verde" text="Imprimir" visible="false" />
          </children>
@@ -116,6 +116,11 @@
       </GridPane>
       <Label fx:id="totalPagos" alignment="CENTER_RIGHT" layoutX="87.0" layoutY="258.0" prefHeight="43.0" prefWidth="161.0" styleClass="pagos-totales-divisa" text="Total Pagos" />
       <Label layoutX="7.0" layoutY="270.0" text="Total Pagos" />
+      <VBox layoutX="807.0" layoutY="210.0" prefHeight="43.0" prefWidth="148.0">
+         <children>
+            <Button fx:id="botonGuardar" mnemonicParsing="false" onMouseClicked="#guardarFactura" prefHeight="26.0" prefWidth="148.0" text="Guardar" visible="false" />
+         </children>
+      </VBox>
 
     </children>
 
