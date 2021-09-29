@@ -104,7 +104,7 @@ public class ImportarProductosCtl implements Initializable {
         if (exito) {
             Acciones.dialogoAlerta("Resultado del Proceso", "Proceso existoso,"+count+" articulos creados.");
             Operaciones.borrarProductosImportar();
-            Operaciones.actualizarProducBuscar();
+            Operaciones.actualizarProducBuscar(lista);
         } else {
             Acciones.dialogoAlerta("Resultado del Proceso", "Error en el proceso,"+count+" articulos creados.");
         }

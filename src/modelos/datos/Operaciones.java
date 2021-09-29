@@ -378,32 +378,33 @@ public class Operaciones {
     }
 
 
-    public static boolean actualizarProducBuscar() {
+    public static boolean actualizarProducBuscar(List<Producto> lista) {
         boolean Exito=false;
         List<ProductoBuscar> productos = new ArrayList<>();
 
-        Connection conn = connect(Constantes.dbPrincipal);
+        //Connection conn = connect(Constantes.dbPrincipal);
 
-        try {
+        /*try {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT id,descrip,codigo,ref FROM productos  " );
 
 
-            while (rs.next()) {
+            while (rs.next()) {*/
+        for(Producto pro:lista){
+            ProductoBuscar probus = new ProductoBuscar(pro.getId(),
+                    pro.getDescripcion(),
+                    pro.getCodigo(),
+                    pro.getReferencia());
+            productos.add(probus);
+        }
 
-                ProductoBuscar pro = new ProductoBuscar(rs.getInt("id"),
-                        rs.getString("descrip"),
-                        rs.getString("codigo"),
-                        rs.getString("ref"));
-                productos.add(pro);
-
-            }
+            /*}
             rs.close();
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             Util.guardarLogError("[actualizarProducBuscar] "+e.getMessage()+e.getStackTrace());
-        }
+        }*/
 
         insertarProducBuscar(productos);
 
