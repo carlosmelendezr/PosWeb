@@ -1,5 +1,7 @@
 package modelos.factura;
 
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.List;
 
 public class FacturaTotal {
@@ -68,15 +70,29 @@ public class FacturaTotal {
         inicializa();
         for (LineaFactura lin:lineas) {
             Moneda addmonto = new Moneda(lin.getPreciobase());
-            addmonto.multiplicar(new Moneda(lin.getCantidad()));
+            addmonto.setPrecision(new MathContext(2, RoundingMode.HALF_UP));
+            //addmonto.redondear();
+            Moneda cant = new Moneda(lin.getCantidad());
+            cant.setPrecision(new MathContext(2, RoundingMode.HALF_UP));
+            System.out.println("Monto Base "+addmonto.getValor().toString());
+            addmonto.multiplicar(cant);
+
+            System.out.println("Monto Base x cantidad "+addmonto.getValor().toString());
+
             this.montoBase.sumar( addmonto );
 
             Moneda imp = new Moneda(addmonto);
-            imp.multiplicar(lin.getProducto().getAlicuota());
+            Moneda alicuota = lin.getProducto().getAlicuota();
+            alicuota.setPrecision(new MathContext(2, RoundingMode.HALF_UP));
+            imp.multiplicar(alicuota);
             imp.dividir(new Moneda("100"));
             this.montoImpuesto.sumar(imp);
+            System.out.println("Monto Impuesto "+imp.getValor().toString());
+
+
         }
         totalizar();
+        System.out.println("Total "+getMontoTotal().getValor().toString());
 
     }
 

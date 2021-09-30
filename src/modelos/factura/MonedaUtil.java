@@ -28,6 +28,7 @@ public class MonedaUtil {
     public static Moneda ConvertirValor(TipoMoneda origen, TipoMoneda destino, Moneda valor) {
 
         Moneda resultante = new Moneda(valor) ;
+        //resultante.setPrecision(new MathContext(2,MathContext.));
         String Operacion="*";
 
         for (MonedaConversion mon:listaMonedaConversion) {
@@ -40,10 +41,11 @@ public class MonedaUtil {
             resultante.multiplicar(destino.getTasacambio());
          } else {
             resultante.dividir(origen.getTasacambio());
-            /*System.out.println("Valor = "+valor.getValor());
-            System.out.println("Tasa = "+origen.getTasacambio().getValor());
-            System.out.println("Resul = "+resultante.getValor());*/
          }
+
+        System.out.println("Valor = "+valor.getValor());
+        System.out.println("Tasa = "+origen.getTasacambio().getValor());
+        System.out.println("Resul = "+resultante.getValor());
          return resultante;
     }
 

@@ -84,7 +84,9 @@ public class Factura  {
     }*/
 
     public void obtenerLineas() {
+
         this.lineas = Operaciones.ObtenerLineasFactura(this.id);
+
         this.totales.actualizar(lineas);
     }
 
@@ -102,7 +104,7 @@ public class Factura  {
         }
         exito = Operaciones.InsertarLineaFactura(linea,this.id);
         if (exito) {
-            lineas.add(linea);
+            //lineas.add(linea);
             obtenerLineas();
             Operaciones.ActualizaEstatusFactura(this);
         }
@@ -111,8 +113,8 @@ public class Factura  {
     }
 
     public void modificarLinea(int Index, LineaFactura linea) {
+
         if (Index >= 0 && Index <=this.lineas.size()) {
-            this.lineas.set(Index,linea);
             Operaciones.ActualizarLineaFactura(linea);
             obtenerLineas();
 

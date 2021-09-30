@@ -116,7 +116,7 @@ public class MaestroArticulos implements
 
             precioIVA.setValor(pro.getPrecio().getValor());
             precioIVA.sumarIVA(pro.getAlicuota());
-            precioIVA.redondear();
+
             String precioFormato = MonedaUtil.formatoUsd.format( precioIVA.getValor());
             precioiva.setText(precioFormato);
 

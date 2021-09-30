@@ -37,8 +37,6 @@ public class ImprimirEtiqueta {
         Moneda precioIVA = p.getPrecio();
 
         precioIVA.sumarIVA(p.getAlicuota());
-        precioIVA.redondear();
-
         String precioFormato = MonedaUtil.formatoUsd.format( p.getPrecio().getValor());
 
 

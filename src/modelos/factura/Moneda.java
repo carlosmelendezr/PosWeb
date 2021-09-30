@@ -78,6 +78,7 @@ public class Moneda {
 
     public void sumarIVA( Moneda alicuota ) {
         BigDecimal base = this.valor;
+        alicuota.setPrecision(new MathContext(2, RoundingMode.HALF_UP));
         base = base.multiply(alicuota.getValor());
         base = base.divide(new BigDecimal(100));
         this.valor = valor.add(base);

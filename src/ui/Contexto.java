@@ -98,7 +98,8 @@ public class Contexto {
     public static void agregarLineaFactura(LineaFactura lin) {
 
         if (facturaActual.agregarLinea(lin)) {
-            facturaListaproductos.add(lin);
+            facturaListaproductos.clear();
+            facturaListaproductos.addAll(facturaActual.getLineas());
             ProductoBuscado = null;
             actulizaTotales();
             enviarEstus("Producto agregado correctamente.");
