@@ -58,7 +58,9 @@ public class Contexto {
 
         Dolar = new TipoMoneda(1,"USD","DOLAR","$",new Moneda("1"),MonedaUtil.formatoUsd);
         Dolar.setEsMonedaBase(true);
+        Dolar.setPrecision(4);
         Bolivar = new TipoMoneda(2,"VES","BOLIVAR","Bs.",tasaDolarHoy, MonedaUtil.formatoBs);
+        Bolivar.setPrecision(2);
 
         facturaActual = Operaciones.UltimaFacturaActiva();
         System.out.println();

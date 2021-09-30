@@ -19,7 +19,7 @@ public class ImpBixolonSRP812
         implements ImpresoraFiscal {
 
     //public static Integer maximo_Digitos_Precio  = 10;
-    public static Integer maximo_Digitos_Cantidad_Enteros = 5;
+    public static Integer maximo_Digitos_Cantidad_Enteros = 14;
     public static Integer maximo_Digitos_Cantidad_Decimales = 3;
 
     private String marca="Bixolon";

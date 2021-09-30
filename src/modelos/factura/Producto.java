@@ -50,7 +50,7 @@ public class Producto {
        this.precio = precio;
        this.alicuota = alicuota;
        this.codbarra = codbarra;
-       this.precio.sumarIVA(alicuota);
+
    }
 
     public String getCodigo() {

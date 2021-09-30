@@ -5,7 +5,7 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 
 public class Moneda {
-    public static int precisionDefault = 4;
+    public static int precisionDefault = 2;
     private MathContext precision ;
     private BigDecimal  valor;
 
