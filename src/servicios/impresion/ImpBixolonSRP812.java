@@ -75,7 +75,8 @@ public class ImpBixolonSRP812
         Impresora = new tfhka.ve.Tfhka();
         puertoAbierto = false;
         abrirPuerto();
-        datosInternos();
+
+
 
     }
 
@@ -177,25 +178,28 @@ public class ImpBixolonSRP812
     }
 
     public void agregarCliente(Cliente cli) {
-        if (cli==null) {return;}
-
-        if (cli.getRif()==null) {return;}
+        if (cli==null || cli.getRif()==null) {
+            return;
+        }
 
         String Comando = new String();
-        Comando = "iR*"+cli.getTiporif()+cli.getRif();
-        listaComandos.add(Comando);
+        Comando = "iR*"+cli.getTiporif().trim()+cli.getRif();
+        listaComandos.add(Comando.trim());
 
-        Comando = "iS*"+cli.getRazonsocial();;
+        Comando = "iS*"+cli.getRazonsocial().trim();
         listaComandos.add(Comando);
 
         Integer lin=0;
         if (cli.getDirecciones()!=null) {
             for (Direccion dir : cli.getDirecciones()) {
-                Comando = "i" + Util.llenarIzq(lin.toString(), 2, "0") + dir.getTexto();
-                listaComandos.add(Comando);
-                lin++;
+                if (!dir.getTexto().isEmpty()) {
+                    Comando = "i" + Util.llenarIzq(lin.toString(), 2, "0") + dir.getTexto();
+                    listaComandos.add(Comando);
+                    lin++;
+                }
             }
         }
+
     }
 
     public void Totalizar() {

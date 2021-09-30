@@ -58,17 +58,19 @@ public class Contexto {
 
         Dolar = new TipoMoneda(1,"USD","DOLAR","$",new Moneda("1"),MonedaUtil.formatoUsd);
         Dolar.setEsMonedaBase(true);
+        Dolar.setPrecision(4);
         Bolivar = new TipoMoneda(2,"VES","BOLIVAR","Bs.",tasaDolarHoy, MonedaUtil.formatoBs);
+        Bolivar.setPrecision(2);
 
         facturaActual = Operaciones.UltimaFacturaActiva();
         System.out.println();
 
         if (facturaActual==null) {
-            System.out.println("No hay facturas pendientes");
+
             facturaActual = Operaciones.CrearFactura(Dolar,TasaDia.getId());
             facturaActual.setIdTasa(TasaDia.getId());
         } else {
-            System.out.println("hay facturas pendientes");
+
             if (facturaActual.getNumeroFactura()==0) {
                 facturaActual.setNumeroFactura(facturaActual.getId());
             }
@@ -164,6 +166,7 @@ public class Contexto {
         facturaListaproductos.addAll(facturaActual.getLineas());
 
         facturaActual = Operaciones.CrearFactura(Dolar,TasaDia.getId());
+        facturaActual.setNumeroFactura(facturaActual.getId());
         numeroFactura.set(facturaActual.getNumeroFactura().toString());
         facturaActual.setImpresora(impresora);
 

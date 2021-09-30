@@ -575,9 +575,10 @@ public class Operaciones {
             ResultSet rs = stmt.executeQuery("SELECT producbuscar.id," +
                     "producbuscar.descrip," +
                     "producbuscar.codigo," +
-                    "producbuscar.ref,precio,stock  " +
+                    "producbuscar.ref,precio,stock,alicuota  " +
                     "FROM producbuscar " +
                     "LEFT JOIN productos ON producbuscar.id = productos.id " +
+                    "LEFT JOIN tabla_tasaimp ON productos.idtipoimp = tabla_tasaimp.id "+
                     "WHERE producbuscar.descrip MATCH '"+desc.trim()+"'  ");
 
             while (rs.next()) {
@@ -588,7 +589,10 @@ public class Operaciones {
                         rs.getString("ref"));
 
                 pro.setStock(rs.getDouble("stock"));
-                pro.setPrecio(new Moneda(rs.getDouble("precio")));
+                Moneda precioIVA = new Moneda(rs.getDouble("precio"));
+                precioIVA.sumarIVA(new Moneda(rs.getDouble("alicuota")));
+
+                pro.setPrecio(precioIVA);
 
                 lista.add(pro);
             }
@@ -748,7 +752,7 @@ public class Operaciones {
             Tel2 = cli.getTelefonos().get(1).toString();
         }
 
-        if (cli.getTelefonos().size()==2) {
+        if (cli.getTelefonos().size()==3) {
             Tel3 = cli.getTelefonos().get(2).toString();
         }
 

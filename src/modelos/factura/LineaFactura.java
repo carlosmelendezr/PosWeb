@@ -40,6 +40,7 @@ public class LineaFactura {
 
         if (producto.getAlicuota()!=null) {
             this.precio.sumarIVA(producto.getAlicuota());
+
         }
 
     }

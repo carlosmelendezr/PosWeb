@@ -207,10 +207,10 @@ public class Factura  {
         this.totales.setTotalPago(totalpago);
 
 
-        if (this.totales.getTotalSaldo().menorOigual(new Moneda("0")) &&
-                this.totales.getMontoTotal().mayorOigual(new Moneda("0"))) {
+        if (this.totales.getTotalSaldo().menorOigual(new Moneda(0)) &&
+                this.totales.getMontoTotal().mayor(new Moneda(0))) {
             System.out.println("!!! La Factura es Imprimible !!!");
-            this.Imprimible = true;
+            this.Imprimible = false;
             this.Pagada = true;
 
         }
@@ -220,11 +220,11 @@ public class Factura  {
 
     public boolean FinalizarImprimir() {
         boolean exito=false;
-
         List<LineaFactura> lineasAgrupadas = Operaciones.ObtenerLineasFacturaAgrupado(this.id);
 
-        if (this.Imprimible) {
+        if (this.Pagada) {
             this.numeroFactura = Operaciones.NuevaFacturaFiscal();
+
             Operaciones.ActualizaEstatusFactura(this);
 
             ImpBixolonSRP812 Bixolon = new ImpBixolonSRP812();
@@ -235,6 +235,7 @@ public class Factura  {
             if (this.getCliente()!=null) {
                 Bixolon.agregarCliente(this.getCliente());
             }
+            Bixolon.datosInternos();
             for (LineaFactura lin:lineasAgrupadas) {
                 Bixolon.agregarItem(lin);
             }
@@ -242,6 +243,8 @@ public class Factura  {
             Bixolon.Totalizar();
             Bixolon.enviarImpresora();
             Bixolon.finalizar();
+
+            this.Imprimible = true;
 
             try {
                 Thread.sleep(3000);
