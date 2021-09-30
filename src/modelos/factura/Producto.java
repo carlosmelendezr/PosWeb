@@ -46,9 +46,11 @@ public class Producto {
        this.id = id;
        this.descripcion = descripcion;
        this.referencia = referencia;
+       this.alicuota = alicuota;
        this.precio = precio;
        this.alicuota = alicuota;
        this.codbarra = codbarra;
+       this.precio.sumarIVA(alicuota);
    }
 
     public String getCodigo() {

@@ -243,7 +243,7 @@ public class PagosCtl implements Initializable {
         saldo.setText(Contexto.totalSaldo());
         saldobs.setText(Contexto.totalSaldoBs());
 
-        if (Contexto.facturaActual.getImprimible()) {
+        if (Contexto.facturaActual.getPagada()) {
             botonImprimir.setVisible(true);
             botonGuardar.setVisible(true);
         }

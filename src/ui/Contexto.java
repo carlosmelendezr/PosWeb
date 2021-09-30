@@ -64,11 +64,11 @@ public class Contexto {
         System.out.println();
 
         if (facturaActual==null) {
-            System.out.println("No hay facturas pendientes");
+
             facturaActual = Operaciones.CrearFactura(Dolar,TasaDia.getId());
             facturaActual.setIdTasa(TasaDia.getId());
         } else {
-            System.out.println("hay facturas pendientes");
+
             if (facturaActual.getNumeroFactura()==0) {
                 facturaActual.setNumeroFactura(facturaActual.getId());
             }
@@ -163,6 +163,7 @@ public class Contexto {
         facturaListaproductos.addAll(facturaActual.getLineas());
 
         facturaActual = Operaciones.CrearFactura(Dolar,TasaDia.getId());
+        facturaActual.setNumeroFactura(facturaActual.getId());
         numeroFactura.set(facturaActual.getNumeroFactura().toString());
         facturaActual.setImpresora(impresora);
 
